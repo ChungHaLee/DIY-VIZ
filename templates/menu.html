@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Synthesizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Style -->
+    <link type="text/css" href="../static/src/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <h1> 장르 선택 화면 </h1>
+    <p> 유저 아이디: {{ UserID }} </p>
+
+    <form action="/ballad" method="POST">
+        <button type="submit">발라드</button>
+    </form> 
+
+    <form action="/hiphop" method="POST">
+        <button type="submit">힙합</button>
+    </form> 
+
+    <form action="/dance" method="POST">
+        <button type="submit">댄스</button>
+    </form> 
+
+    <form action="/electronic" method="POST">
+        <button type="submit">일렉트로닉</button>
+    </form>
+
+    <form action="/intheair" method="POST">
+        <button type="submit">나중에 정하기</button>
+    </form>
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Synthesizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Style -->
+    <link type="text/css" href="../static/src/css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/meyda/dist/web/meyda.min.js"></script>
+</head>
+
+<body>
+    <div id="content">
+        <div class="thetitle" id="title"></div>
+        <label for="thefile" class="file"> visual
+            <input type="file" id="thefile" accept="audio/*" />
+        </label>
+
+        <audio id="audio" controls></audio>
+        <div id="canvas"></div>
+    </div>
+
+    <br>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script type="module" defer src="./static/src/js/dist/circle.js"></script>
+</body>
+</html>

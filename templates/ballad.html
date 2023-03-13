@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Synthesizer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Style -->
+    <link type="text/css" href="../static/src/css/style.css" rel="stylesheet">
+    <script src="https://unpkg.com/meyda/dist/web/meyda.min.js"></script>
+</head>
+
+<body>
+    <h1> 발라드 장르 </h1>
+    <div id="content">
+        <div class="thetitle" id="title"></div>
+        <label for="thefile" class="file">
+            <input type="file" id="thefile" accept="audio/*" />
+        </label>
+
+        <audio id="audio" controls></audio>
+        <canvas id="sparkle-canvas"></canvas>
+        <canvas id="starfield-canvas"></canvas>
+
+    </div>
+
+    <button id="sparkle"> Sparkle </button>
+    <button id="starfield"> Starfield </button>
+
+    <p id="identityVisual"></p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js"></script>
+    <script type="module" defer src="./static/src/js/dist/circle.js"></script>
+    <script type="module" defer src="./static/src/js/dist/sparkle.js"></script>
+    <script type="module" defer src="./static/src/js/dist/starfield.js"></script>
+</body>
+</html>

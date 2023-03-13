@@ -1,0 +1,19 @@
+canvas {
+    width: 60%;
+    height: 60%;
+}
+
+
+#sparkle-canvas{
+    display: none;
+}
+
+
+#starfield-canvas{
+    display: none;
+}
+
+
+p#identityVisual{
+    display: none;
+}
