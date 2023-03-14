@@ -11,19 +11,19 @@ canvas.height = window.innerHeight; //screem height
 function starField_faster(){
     c.fillStyle = "#861388";
     c.strokeStyle = '#ff3562';
-    speed = 0.8;
+    speed = 0.5;
 }
 
 function starField_plain(){
     c.fillStyle = "#f0c808";
     c.strokeStyle = '#086788';
-    speed *= 0.2;
+    speed *= 0.5;
 }
 
 function starField_slower(){
     c.fillStyle = "#27187e";
     c.strokeStyle = '#ff8600';
-    speed *= 0.01;
+    speed *= 0.5;
 }
 
 
@@ -38,10 +38,10 @@ function starField_slower(){
 class Star {
   constructor() {
     //initializing
-    this.x = Math.random()*canvas.width-canvas.width/2;  //random x
-    this.y = Math.random()*canvas.height-canvas.height/2; //random y
+    this.x = Math.random()*canvas.width-canvas.width/6;  //random x
+    this.y = Math.random()*canvas.height-canvas.height/6; //random y
     this.px, this.py;
-    this.z = Math.random()*4; //random z    
+    this.z = Math.random()*3; //random z    
   }
   
   update() {

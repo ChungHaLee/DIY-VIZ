@@ -2,11 +2,9 @@
 import { PitchDetector } from "pitchy";
 import FrequencyMap from "note-frequency-map";
 
-
-
 let file, audio;
 var audio_context;
-
+var myNote;
 
 let analyser, src, bufferLength, dataArray;
 let chroma, maxChroma, energy, amplitudeSpectrum;
@@ -54,8 +52,10 @@ function FileChange(){
 function updatePitch(analyser, detector, input, sampleRate) {
     analyser.getFloatTimeDomainData(input);
     let [pitch, clarity] = detector.findPitch(input, sampleRate);
-    let myNote = FrequencyMap.noteFromFreq(pitch);
+    myNote = FrequencyMap.noteFromFreq(pitch);
 }
+
+
 
 
 
@@ -104,10 +104,4 @@ FileChange();
 
 
 
-
-
-
-
-
-
-export { audio, audio_context, src, analyser, energy, bufferLength, dataArray, pitchDetector  }
+export { audio, audio_context, src, analyser, energy, bufferLength, dataArray, FileChange, updatePitch, pitchDetector, myNote  }

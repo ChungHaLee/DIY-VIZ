@@ -329,7 +329,7 @@ eval("module.exports = JSON.parse('{\"sharp\":[\"#\"],\"flat\":[\"b\",\"♭\"]}'
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module is referenced by other modules so it can't be inlined
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/js/circle.js");
+/******/ 	var __webpack_exports__ = __webpack_require__("./node_modules/vanta/src/vanta.birds.js");
 /******/ 	
 /******/ })()
 ;
