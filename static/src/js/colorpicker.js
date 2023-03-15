@@ -53,20 +53,21 @@ bgColorSaveButton.addEventListener('click', function (){
     bgColor = document.getElementsByClassName('clr-field')[0].style.color
     bgColorArr = colortoList(bgColor);
     bgColor = rgbToHex(bgColorArr);
+    
 })
 
 
 objColor1SaveButton.addEventListener('click', function (){
-  objColor1 = document.getElementsByClassName('clr-field')[1].style.color
-  objColor1Arr = colortoList(objColor1);
-  objColor1 = rgbToHex(objColor1Arr);
+    objColor1 = document.getElementsByClassName('clr-field')[1].style.color
+    objColor1Arr = colortoList(objColor1);
+    objColor1 = rgbToHex(objColor1Arr);
 })
 
 
 objColor2SaveButton.addEventListener('click', function(){
-  objColor2 = document.getElementsByClassName('clr-field')[2].style.color
-  objColor2Arr = colortoList(objColor2);
-  objColor2 = rgbToHex(objColor2Arr);
+    objColor2 = document.getElementsByClassName('clr-field')[2].style.color
+    objColor2Arr = colortoList(objColor2);
+    objColor2 = rgbToHex(objColor2Arr);
 })
 
 
