@@ -1,29 +1,62 @@
+div#content{
+    margin-top: 60px;
+    position: absolute;
+}
 
+div#customSliders{
+    position: absolute;
+    right:0; 
+    bottom:0;
+    margin-bottom: 30px;
+    /* float: right; */
+}
+
+
+.usage-cont {
+    width: 340px;
+    padding: 15px;
+    background: white;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    border-radius: 5px;
+    color: #2b2928;
+    text-align: left;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+    z-index: 100 !important;
+}
+
+
+
+.visualButtons{
+    float: right;
+}
 
 #sparkle-canvas{
     display: none;
-    width: 60%;
-    height: 60%;
+    width: 600px;
+    height: 600px;
 }
 
 
 #starfield-canvas{
     display: none;
-    width: 60%;
-    height: 60%;
+    width: 600px;
+    height: 600px;
 }
 
 #vanta-background{
     display: none;    
     float: left;
-    margin-top: 120px;
+    margin-top: 60px;
 }
 
 
 #vanta-background > canvas.vanta-canvas{
+    
     display: none;
-    width: 60%;
-    height: 60%;
+    width: 600px;
+    height: 600px;
     
 }
 

@@ -3,7 +3,10 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { sparkling, startFauxClicking, fauxClick } from './sparkle.js'
 import { energy, dataArray, analyser, pitchDetector, myNote } from './audio.js'
 import { starField_faster, draw } from './starfield.js'
-import { valueX, valueY, valueZ } from '../../node_modules/vanta/src/vanta.birds.js'
+
+const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
+const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
+const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
 
 
 let controls;
@@ -51,7 +54,7 @@ function init() {
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
     renderer.outputEncoding = THREE.sRGBEncoding;
-  
+   
 
     controls = new OrbitControls( camera, container );
     // controls.update(); 요소가 움직이지 않게 함...
@@ -75,6 +78,12 @@ function optionalVisualization(){
 }
 
 
+function deleteDiv(DIV_ID) {
+  let div = document.getElementById(DIV_ID);
+
+  div.remove();
+} 
+
 // 캔버스 리셋하는 함수
 function clearCanvas(the_canvas)
 {
@@ -97,8 +106,6 @@ function animate() {
   FrameRate = FrameRate + 1
   
 
-
-
     // music rendering
     if (dataArray){
       analyser.getByteFrequencyData(dataArray);
@@ -114,6 +121,7 @@ function animate() {
         vantaCanvas.style.display = 'none';
 
         clearCanvas(starfieldCanvas)
+
         sparkling();
 
 
@@ -137,16 +145,11 @@ function animate() {
         vantaCanvas.style.display = 'inline-block';
         starfieldCanvas.style.display = 'none';
         sparkleCanvas.style.display = 'none';
-
-    
-        // onUpdate();
-        // if (pitchInfo > 120){
-        //   valueX = 20
-        // }
-
+        
         clearCanvas(starfieldCanvas)
         clearCanvas(sparkleCanvas)
       }
+
   }
 }
 

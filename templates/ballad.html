@@ -22,22 +22,39 @@
         <canvas id="sparkle-canvas"></canvas>
         <canvas id="starfield-canvas"></canvas>
         <div id="vanta-background"></div>
-
     </div>
-    <br>
-    <button id="sparkle"> Sparkle </button>
-    <button id="starfield"> Starfield </button>
-    <button id="birds"> Birds </button>
+    </div>
 
+    <div id="visualButtons">
+        <button class="visualButtons" id="sparkle"> Sparkle </button>
+        <button class="visualButtons" id="starfield"> Starfield </button>
+        <button class="visualButtons" id="birds"> Birds </button>
+    </div>
+    
+
+    <div id="customSliders">
+        <button id="backgroundColor">Background Color <input id="backgroundColorID" type="text" data-coloris> </button> <button id="backgroundColorSaveButton"> SAVE </button>
+        <br>
+        <button id="objectColor1">Object Color 1  <input type="text" data-coloris> </button> <button id="objectColor1SaveButton"> SAVE </button>
+        <br>
+        <button id="objectColor2">Object Color 2  <input type="text" data-coloris> </button> <button id="objectColor2SaveButton"> SAVE </button>
+    </div>
+
+    
     <p id="identityVisual"></p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.js"></script>
-    <script type="module" defer src="./static/src/js/dist/birds.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
+    <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script>
+    <!-- <script type="module" defer src="./static/src/js/dist/birds.js"></script> -->
+
     <script type="module" defer src="./static/src/js/dist/circle.js"></script>
     <script type="module" defer src="./static/src/js/dist/sparkle.js"></script>
     <script type="module" defer src="./static/src/js/dist/starfield.js"></script>
     <script type="module" defer src="./static/src/js/dist/vanta.js"></script>
+    <script type="module" defer src="./static/src/js/dist/colorpicker.js"></script>
 </body>
 </html>
