@@ -1,3 +1,12 @@
+import { bgColor, objColor1, objColor2 } from './colorpicker'
+
+
+const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
+const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
+const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
+
+
+
 const canvas = document.getElementById('starfield-canvas');
 const c = canvas.getContext('2d');
 canvas.width = window.innerWidth; //screen width
@@ -5,26 +14,45 @@ canvas.height = window.innerHeight; //screem height
 
 
 
-//on mouse scroll changes speed and color
+// on mouse scroll changes speed and color
 // 이 부분 수정하기
 
+
 function starField_faster(){
-    c.fillStyle = "#861388";
-    c.strokeStyle = '#ff3562';
-    speed = 0.5;
+
+  bgColorSaveButton.addEventListener('click', function (){
+    c.fillStyle = bgColor
+  })
+  
+  
+  objColor1SaveButton.addEventListener('click', function () {
+    c.strokeStyle= objColor1
+  })
+
+  // c.fillStyle = bgColor
+  // c.strokeStyle = objColor1
+  speed = 0.5;
+
 }
 
-function starField_plain(){
-    c.fillStyle = "#f0c808";
-    c.strokeStyle = '#086788';
-    speed *= 0.5;
-}
+// function starField_plain(){
+//   bgColorSaveButton.addEventListener('click', function (){
+//     c.fillStyle = objColor2
+//   })
+  
+  
+//   objColor2SaveButton.addEventListener('click', function () {
+//     c.strokeStyle= bgColor
+//   })
 
-function starField_slower(){
-    c.fillStyle = "#27187e";
-    c.strokeStyle = '#ff8600';
-    speed *= 0.5;
-}
+//   speed *= 0.2;
+// }
+
+// function starField_slower(){
+//     c.fillStyle = "#27187e";
+//     c.strokeStyle = '#ff8600';
+//     speed *= 0.5;
+// }
 
 
 // window.addEventListener('wheel', (event) => {
@@ -77,8 +105,8 @@ let stars = [];
 //create 1500 stars (objects)
 for (let i = 0; i < 1500; i++) stars.push(new Star());
 
-c.fillStyle = 'rgba(0, 0, 0, 0.1)';
-c.strokeStyle = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
+// c.fillStyle = 'rgba(0, 0, 0, 0.1)';
+// c.strokeStyle = 'rgb('+Math.random()*255+', '+Math.random()*255+', '+Math.random()*255+')';
 
 c.translate(canvas.width/2, canvas.height/2);
 
@@ -97,4 +125,4 @@ function draw() {
 
 
 
-export { starField_faster, starField_plain, starField_slower, draw }
+export { starField_faster, draw }

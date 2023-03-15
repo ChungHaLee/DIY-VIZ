@@ -141,6 +141,7 @@ function animate() {
         starField_faster();
 
 
+
       } else if (identityVisualization.innerText == 'birds') {
         vantaCanvas.style.display = 'inline-block';
         starfieldCanvas.style.display = 'none';

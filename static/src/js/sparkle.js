@@ -1,13 +1,39 @@
+import { bgColor, objColor1, objColor2 } from './colorpicker'
+
+const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
+const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
+const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
+
+
 var c = document.getElementById("sparkle-canvas");
 var ctx = c.getContext("2d");
 var cH;
 var cW;
-var bgColor = "#FF6138";
+var bgColors = "#FFFFFF";
 var animations = [];
 var circles = [];
 
+
+
 var colorPicker = (function() {
-  var colors = ['#E56543', '#98D2DD', '#E28294', '#6A9864', '#F5D29B'];
+  var colors = ['#E56543', '#98D2DD', '#ff9df5'];
+  
+  bgColorSaveButton.addEventListener('click', function (){
+    colors[0] = bgColor
+  })
+
+  
+  objColor1SaveButton.addEventListener('click', function () {
+    colors[1] = objColor1
+  })
+  
+  
+  
+  objColor2SaveButton.addEventListener('click', function () {
+    colors[2] = objColor2
+  })
+
+
   var index = 0;
   function next() {
     index = index++ < colors.length-1 ? index : 0;
@@ -71,7 +97,7 @@ function handleEvent(e) {
       duration:  Math.max(targetR / 2 , minCoverDuration ),
       easing: "easeOutQuart",
       complete: function(){
-        bgColor = pageFill.fill;
+        bgColors = pageFill.fill;
         removeAnimation(fillAnimation);
       }
     });
@@ -241,7 +267,7 @@ function sparkling(){
     var animate = anime({
         duration: Infinity,
         update: function() {
-            ctx.fillStyle = bgColor;
+            ctx.fillStyle = bgColors;
             ctx.fillRect(0, 0, cW, cH);
             animations.forEach(function(anim) {
             anim.animatables.forEach(function(animatable) {
