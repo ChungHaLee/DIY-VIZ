@@ -4,7 +4,7 @@ import FrequencyMap from "note-frequency-map";
 
 let file, audio;
 var audio_context;
-var myNote;
+var myNote, octave;
 
 let analyser, src, bufferLength, dataArray;
 let chroma, maxChroma, energy, amplitudeSpectrum;
@@ -53,6 +53,7 @@ function updatePitch(analyser, detector, input, sampleRate) {
     analyser.getFloatTimeDomainData(input);
     let [pitch, clarity] = detector.findPitch(input, sampleRate);
     myNote = FrequencyMap.noteFromFreq(pitch);
+    octave = myNote.octave
 }
 
 
@@ -104,4 +105,4 @@ FileChange();
 
 
 
-export { audio, audio_context, src, analyser, energy, bufferLength, dataArray, FileChange, updatePitch, pitchDetector, myNote  }
+export { audio, audio_context, src, analyser, energy, bufferLength, dataArray, FileChange, updatePitch, pitchDetector, myNote, octave  }

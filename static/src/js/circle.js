@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { sparkling, startFauxClicking, fauxClick } from './sparkle.js'
-import { energy, dataArray, analyser, pitchDetector, myNote } from './audio.js'
+import { energy, dataArray, analyser, pitchDetector, myNote, octave } from './audio.js'
 import { starField_faster, draw } from './starfield.js'
 import { update } from './fluid.js'
 
@@ -29,6 +29,7 @@ const sparkleCanvas = document.getElementById('sparkle-canvas');
 const starfieldCanvas = document.getElementById('starfield-canvas');
 const vantaBackground = document.getElementById('vanta-background');
 const vantaCanvas = document.getElementById('vanta-canvas');
+
 const fluidCanvas = document.getElementById('fluid-canvas');
 
 
@@ -118,7 +119,7 @@ function animate() {
     if (dataArray){
       analyser.getByteFrequencyData(dataArray);
       pitchDetector();
-      pitchInfo = myNote.frequency
+      // console.log(octave)
 
 
       render();
@@ -130,7 +131,8 @@ function animate() {
         fluidCanvas.style.display = 'none';
 
         clearCanvas(starfieldCanvas);
-
+        // clearCanvas(fluidCanvas);
+        // clearCanvas(vantaCanvas);
         sparkling();
 
 
@@ -145,7 +147,6 @@ function animate() {
         vantaBackground.style.display = 'none';
         fluidCanvas.style.display = 'none';
 
-        clearCanvas(starfieldCanvas);
         clearCanvas(sparkleCanvas);
 
         draw();
@@ -164,7 +165,7 @@ function animate() {
       
       
       } else if (identityVisualization.innerText == 'fluid'){
-        console.log('clicked!');
+        // console.log('clicked!');
         fluidCanvas.style.display = 'inline-block';
         vantaBackground.style.display = 'none';
         starfieldCanvas.style.display = 'none';
@@ -172,8 +173,6 @@ function animate() {
 
         clearCanvas(starfieldCanvas)
         clearCanvas(sparkleCanvas)
-        
-        update();
       }
 
   }

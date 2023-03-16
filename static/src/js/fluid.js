@@ -1,68 +1,52 @@
 'use strict';
 
+import { bgColor, objColor1, objColor2 } from './colorpicker'
+import * as dat from './dat.gui.min.js';
 
-// import * as dat from 'dat.gui';
-
-
-// Mobile promo section
-
-const promoPopup = document.getElementsByClassName('promo')[0];
-const promoPopupClose = document.getElementsByClassName('promo-close')[0];
-
-// if (isMobile()) {
-//     setTimeout(() => {
-//         promoPopup.style.display = 'table';
-//     }, 20000);
-// }
-
-// promoPopupClose.addEventListener('click', e => {
-//     promoPopup.style.display = 'none';
-// });
-
-// const appleLink = document.getElementById('apple_link');
-// appleLink.addEventListener('click', e => {
-//     ga('send', 'event', 'link promo', 'app');
-//     window.open('https://apps.apple.com/us/app/fluid-simulation/id1443124993');
-// });
-
-// const googleLink = document.getElementById('google_link');
-// googleLink.addEventListener('click', e => {
-//     ga('send', 'event', 'link promo', 'app');
-//     window.open('https://play.google.com/store/apps/details?id=games.paveldogreat.fluidsimfree');
-// });
 
 // Simulation section
-
+let bg;
 const canvas = document.getElementById('fluid-canvas');
-resizeCanvas();
+// 그냥 여기서 사이즈 지정
+canvas.width = 600;
+canvas.height = 600;
 
 let config = {
     SIM_RESOLUTION: 128,
-    DYE_RESOLUTION: 1024,
+    DYE_RESOLUTION: 256,
     CAPTURE_RESOLUTION: 512,
-    DENSITY_DISSIPATION: 1,
-    VELOCITY_DISSIPATION: 0.2,
-    PRESSURE: 0.8,
+    DENSITY_DISSIPATION: 4,
+    VELOCITY_DISSIPATION: 4,
+    PRESSURE: 1,
     PRESSURE_ITERATIONS: 20,
     CURL: 30,
     SPLAT_RADIUS: 0.25,
     SPLAT_FORCE: 6000,
     SHADING: true,
-    COLORFUL: true,
+    COLORFUL: false,
     COLOR_UPDATE_SPEED: 10,
     PAUSED: false,
-    BACK_COLOR: { r: 0, g: 0, b: 0 },
+    BACK_COLOR: { r: 0, g: 0, b: 0},
     TRANSPARENT: false,
-    BLOOM: true,
+    BLOOM: false,
     BLOOM_ITERATIONS: 8,
     BLOOM_RESOLUTION: 256,
     BLOOM_INTENSITY: 0.8,
     BLOOM_THRESHOLD: 0.6,
     BLOOM_SOFT_KNEE: 0.7,
-    SUNRAYS: true,
+    SUNRAYS: false,
     SUNRAYS_RESOLUTION: 196,
     SUNRAYS_WEIGHT: 1.0,
 }
+
+const hexToRGB = (hex) => {
+    const red = parseInt(hex.substring(1, 3), 16);
+    const green = parseInt(hex.substring(3, 5), 16);
+    const blue = parseInt(hex.substring(5, 7), 16);
+
+    return {r: red, g: green, b: blue};
+}
+
 
 function pointerPrototype () {
     this.id = -1;
@@ -80,12 +64,11 @@ function pointerPrototype () {
 let pointers = [];
 let splatStack = [];
 pointers.push(new pointerPrototype());
+console.log(pointers);
 
 const { gl, ext } = getWebGLContext(canvas);
 
-// if (isMobile()) {
-//     config.DYE_RESOLUTION = 512;
-// }
+
 if (!ext.supportLinearFiltering) {
     config.DYE_RESOLUTION = 512;
     config.SHADING = false;
@@ -186,7 +169,7 @@ function supportRenderTextureFormat (gl, internalFormat, format, type) {
 }
 
 function startGUI () {
-    var gui = new dat.GUI({ width: 100 });
+    var gui = new dat.GUI({ width: 200 });
     gui.add(config, 'DYE_RESOLUTION', { 'high': 1024, 'medium': 512, 'low': 256, 'very low': 128 }).name('quality').onFinishChange(initFramebuffers);
     gui.add(config, 'SIM_RESOLUTION', { '32': 32, '64': 64, '128': 128, '256': 256 }).name('sim resolution').onFinishChange(initFramebuffers);
     gui.add(config, 'DENSITY_DISSIPATION', 0, 4.0).name('density diffusion');
@@ -960,7 +943,7 @@ const gradienSubtractProgram = new Program(baseVertexShader, gradientSubtractSha
 const displayMaterial = new Material(baseVertexShader, displayShaderSource);
 
 function initFramebuffers () {
-    let simRes = getResolution(config.SIM_RESOLUTION);
+    let simRes = getResolution(config.DYE_RESOLUTION);
     let dyeRes = getResolution(config.DYE_RESOLUTION);
 
     const texType = ext.halfFloatTexType;
@@ -1151,12 +1134,11 @@ multipleSplats(parseInt(Math.random() * 20) + 5);
 
 let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
-// update();
+update();
 
 function update () {
     const dt = calcDeltaTime();
-    if (resizeCanvas())
-        initFramebuffers();
+
     updateColors(dt);
     applyInputs();
     if (!config.PAUSED)
@@ -1173,16 +1155,7 @@ function calcDeltaTime () {
     return dt;
 }
 
-function resizeCanvas () {
-    let width = scaleByPixelRatio(canvas);
-    let height = scaleByPixelRatio(canvas);
-    if (canvas.width != width || canvas.height != height) {
-        canvas.width = width;
-        canvas.height = height;
-        return true;
-    }
-    return false;
-}
+
 
 function updateColors (dt) {
     if (!config.COLORFUL) return;
@@ -1199,7 +1172,6 @@ function updateColors (dt) {
 function applyInputs () {
     if (splatStack.length > 0)
         multipleSplats(splatStack.pop());
-
     pointers.forEach(p => {
         if (p.moved) {
             p.moved = false;
@@ -1294,6 +1266,7 @@ function render (target) {
     if (target == null && config.TRANSPARENT)
         drawCheckerboard(target);
     drawDisplay(target);
+    
 }
 
 function drawColor (target, color) {
@@ -1325,6 +1298,7 @@ function drawDisplay (target) {
     if (config.SUNRAYS)
         gl.uniform1i(displayMaterial.uniforms.uSunrays, sunrays.attach(3));
     blit(target);
+
 }
 
 function applyBloom (source, destination) {
@@ -1448,6 +1422,7 @@ canvas.addEventListener('mousedown', e => {
     if (pointer == null)
         pointer = new pointerPrototype();
     updatePointerDownData(pointer, -1, posX, posY);
+
 });
 
 canvas.addEventListener('mousemove', e => {
@@ -1455,7 +1430,9 @@ canvas.addEventListener('mousemove', e => {
     if (!pointer.down) return;
     let posX = scaleByPixelRatio(e.offsetX);
     let posY = scaleByPixelRatio(e.offsetY);
+
     updatePointerMoveData(pointer, posX, posY);
+
 });
 
 window.addEventListener('mouseup', () => {
@@ -1500,7 +1477,10 @@ window.addEventListener('keydown', e => {
     if (e.code === 'KeyP')
         config.PAUSED = !config.PAUSED;
     if (e.key === ' ')
+    // 여기다아아아아
+        // setInterval(splatStack.push.bind(splatStack), 500, parseInt(Math.random() * 20) + 5)
         splatStack.push(parseInt(Math.random() * 20) + 5);
+        // console.log(splatStack);
 });
 
 function updatePointerDownData (pointer, id, posX, posY) {
@@ -1514,6 +1494,7 @@ function updatePointerDownData (pointer, id, posX, posY) {
     pointer.deltaX = 0;
     pointer.deltaY = 0;
     pointer.color = generateColor();
+    // console.log(pointer)
 }
 
 function updatePointerMoveData (pointer, posX, posY) {
@@ -1524,6 +1505,8 @@ function updatePointerMoveData (pointer, posX, posY) {
     pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
     pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
     pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
+    // 위치 바꿔주기 = 위치 지정해서 찍기!
+    console.log(pointer)
 }
 
 function updatePointerUpData (pointer) {
@@ -1543,11 +1526,30 @@ function correctDeltaY (delta) {
 }
 
 function generateColor () {
-    let c = HSVtoRGB(Math.random(), 1.0, 1.0);
+    let c;
+
+    if (objColor1 != undefined) {
+        c = hexToRGB(""+objColor1)
+    } else {
+        c = HSVtoRGB(Math.random(), 1.0, 1.0);
+    }
     c.r *= 0.15;
     c.g *= 0.15;
     c.b *= 0.15;
     return c;
+}
+
+
+function generateBackgroundColor(){
+    if (bgColor != undefined) {
+        bg = hexToRGB(""+bgColor)
+    } else {
+        bg = HSVtoRGB(Math.random(), 1.0, 1.0);
+    }
+    bg.r *= 0.15;
+    bg.g *= 0.15;
+    bg.b *= 0.15;
+    return bg;
 }
 
 function HSVtoRGB (h, s, v) {
@@ -1625,4 +1627,5 @@ function hashCode (s) {
     return hash;
 };
 
-export { update }
+
+// export { update }
