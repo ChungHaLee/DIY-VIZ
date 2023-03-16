@@ -3,6 +3,7 @@ div#content{
     position: absolute;
 }
 
+
 div#customSliders{
     position: absolute;
     right:0; 
@@ -32,12 +33,17 @@ div#customSliders{
     float: right;
 }
 
+
+
+
+
+/* canvas styles */
+
 #sparkle-canvas{
     display: none;
     width: 600px;
     height: 600px;
 }
-
 
 #starfield-canvas{
     display: none;
@@ -49,6 +55,14 @@ div#customSliders{
     display: none;    
     float: left;
     margin-top: 60px;
+}
+
+#fluid-canvas{
+    display: none;    
+    float: left;
+    margin-top: 60px;
+    width: 600px;
+    height: 600px;
 }
 
 

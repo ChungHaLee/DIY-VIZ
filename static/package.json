@@ -31,6 +31,7 @@
         "@tonaljs/time-signature": "^4.8.0",
         "a-color-picker": "^1.2.1",
         "audiomotion-analyzer": "^3.6.1",
+        "dat.gui": "^0.7.9",
         "frequency-calculator": "0.0.8",
         "fs": "^0.0.1-security",
         "howler": "^2.2.3",

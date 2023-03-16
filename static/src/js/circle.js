@@ -3,6 +3,7 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { sparkling, startFauxClicking, fauxClick } from './sparkle.js'
 import { energy, dataArray, analyser, pitchDetector, myNote } from './audio.js'
 import { starField_faster, draw } from './starfield.js'
+import { update } from './fluid.js'
 
 const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
 const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
@@ -22,10 +23,13 @@ var pitchInfo;
 const sparkleButton = document.getElementById('sparkle');
 const starfieldButton = document.getElementById('starfield');
 const birdsButton = document.getElementById('birds');
+const fluidButton = document.getElementById('fluid');
 
 const sparkleCanvas = document.getElementById('sparkle-canvas');
 const starfieldCanvas = document.getElementById('starfield-canvas');
-const vantaCanvas = document.getElementById('vanta-background');
+const vantaBackground = document.getElementById('vanta-background');
+const vantaCanvas = document.getElementById('vanta-canvas');
+const fluidCanvas = document.getElementById('fluid-canvas');
 
 
 // 시각화 구분자 단어
@@ -75,6 +79,10 @@ function optionalVisualization(){
     birdsButton.addEventListener('click', function () {
       identityVisualization.innerText = 'birds'
     })
+
+    fluidButton.addEventListener('click', function (){
+      identityVisualization.innerText = 'fluid'
+    })
 }
 
 
@@ -118,9 +126,10 @@ function animate() {
       if (identityVisualization.innerText == 'sparkle'){
         sparkleCanvas.style.display = 'inline-block';
         starfieldCanvas.style.display = 'none';
-        vantaCanvas.style.display = 'none';
+        vantaBackground.style.display = 'none';
+        fluidCanvas.style.display = 'none';
 
-        clearCanvas(starfieldCanvas)
+        clearCanvas(starfieldCanvas);
 
         sparkling();
 
@@ -133,9 +142,11 @@ function animate() {
       } else if (identityVisualization.innerText == 'starfield'){
         starfieldCanvas.style.display = 'inline-block'
         sparkleCanvas.style.display = 'none'; // 여기 나중에 함수화 시키기
-        vantaCanvas.style.display = 'none';
+        vantaBackground.style.display = 'none';
+        fluidCanvas.style.display = 'none';
 
-        clearCanvas(starfieldCanvas)
+        clearCanvas(starfieldCanvas);
+        clearCanvas(sparkleCanvas);
 
         draw();
         starField_faster();
@@ -143,12 +154,26 @@ function animate() {
 
 
       } else if (identityVisualization.innerText == 'birds') {
-        vantaCanvas.style.display = 'inline-block';
+        vantaBackground.style.display = 'inline-block';
+        fluidCanvas.style.display = 'none';
         starfieldCanvas.style.display = 'none';
         sparkleCanvas.style.display = 'none';
         
         clearCanvas(starfieldCanvas)
         clearCanvas(sparkleCanvas)
+      
+      
+      } else if (identityVisualization.innerText == 'fluid'){
+        console.log('clicked!');
+        fluidCanvas.style.display = 'inline-block';
+        vantaBackground.style.display = 'none';
+        starfieldCanvas.style.display = 'none';
+        sparkleCanvas.style.display = 'none';
+
+        clearCanvas(starfieldCanvas)
+        clearCanvas(sparkleCanvas)
+        
+        update();
       }
 
   }

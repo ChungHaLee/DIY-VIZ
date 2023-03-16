@@ -28,9 +28,7 @@ function starField_faster(){
   objColor1SaveButton.addEventListener('click', function () {
     c.strokeStyle= objColor1
   })
-
-  // c.fillStyle = bgColor
-  // c.strokeStyle = objColor1
+  
   speed = 0.5;
 
 }
@@ -119,8 +117,6 @@ function draw() {
   }
   //infinte call to draw
   requestAnimationFrame(draw);
-
-  
 }
 
 
