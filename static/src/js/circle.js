@@ -74,7 +74,7 @@ function optionalVisualization(){
 
 
 
-// 캔버스 리셋하는 함수
+// 캔버스 리셋하는 함수 (최적화)
 function clearCanvas(the_canvas)
 {
     // canvas
@@ -90,6 +90,7 @@ function clearCanvas(the_canvas)
 
     } else {
       // 이 경우 3D Canvas 이기 때문에 삭제하지 않고 걍 가만히 둔다
+      // 안 그러면 에러남...
       
     }
 
@@ -108,7 +109,6 @@ function animate() {
       pitchDetector();
       // console.log(octave)
 
-
       render();
 
       if (identityVisualization.innerText == 'sparkle'){
@@ -122,7 +122,6 @@ function animate() {
       } 
 
         else if (identityVisualization.innerText == 'fluid'){
-        // console.log('clicked!');
         fluidCanvas.style.display = 'inline-block';
         sparkleCanvas.style.display = 'none';
 

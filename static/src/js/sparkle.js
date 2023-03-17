@@ -243,12 +243,11 @@ function handleInactiveUser() {
 
 function startFauxClicking() {
     fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
-//   setTimeout(function(){
-//     fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
-//     startFauxClicking(); 
-//   }, anime.random(1000, 2000));
+  //   setTimeout(function(){
+  //     fauxClick(anime.random( cW * .2, cW * .8), anime.random(cH * .2, cH * .8));
+  //     startFauxClicking(); 
+  //   }, anime.random(1000, 2000));
 
-//   console.log(anime.random(1000, 2000))
 }
 
 
