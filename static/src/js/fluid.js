@@ -7,6 +7,7 @@ import * as dat from './dat.gui.min.js';
 // Simulation section
 let bg;
 const canvas = document.getElementById('fluid-canvas');
+// let ctx = canvas.getContext("3d");
 // 그냥 여기서 사이즈 지정
 canvas.width = 600;
 canvas.height = 600;
@@ -64,7 +65,6 @@ function pointerPrototype () {
 let pointers = [];
 let splatStack = [];
 pointers.push(new pointerPrototype());
-console.log(pointers);
 
 const { gl, ext } = getWebGLContext(canvas);
 
@@ -238,14 +238,8 @@ function startGUI () {
     let appIcon = document.createElement('span');
     app.domElement.parentElement.appendChild(appIcon);
     appIcon.className = 'icon app';
-
-    // if (isMobile())
-    //     gui.close();
 }
 
-// function isMobile () {
-//     return /Mobi|Android/i.test(navigator.userAgent);
-// }
 
 function captureScreenshot () {
     let res = getResolution(config.CAPTURE_RESOLUTION);
@@ -910,6 +904,10 @@ function CHECK_FRAMEBUFFER_STATUS () {
         console.trace("Framebuffer error: " + status);
 }
 
+
+
+
+
 let dye;
 let velocity;
 let divergence;
@@ -1422,7 +1420,6 @@ canvas.addEventListener('mousedown', e => {
     if (pointer == null)
         pointer = new pointerPrototype();
     updatePointerDownData(pointer, -1, posX, posY);
-
 });
 
 canvas.addEventListener('mousemove', e => {
@@ -1432,7 +1429,6 @@ canvas.addEventListener('mousemove', e => {
     let posY = scaleByPixelRatio(e.offsetY);
 
     updatePointerMoveData(pointer, posX, posY);
-
 });
 
 window.addEventListener('mouseup', () => {
@@ -1494,7 +1490,6 @@ function updatePointerDownData (pointer, id, posX, posY) {
     pointer.deltaX = 0;
     pointer.deltaY = 0;
     pointer.color = generateColor();
-    // console.log(pointer)
 }
 
 function updatePointerMoveData (pointer, posX, posY) {
@@ -1505,8 +1500,7 @@ function updatePointerMoveData (pointer, posX, posY) {
     pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
     pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
     pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
-    // 위치 바꿔주기 = 위치 지정해서 찍기!
-    console.log(pointer)
+    // 여기에서 옥타브값을 받아와서 위치 바꿔주기 = 위치 지정해서 찍기!
 }
 
 function updatePointerUpData (pointer) {
