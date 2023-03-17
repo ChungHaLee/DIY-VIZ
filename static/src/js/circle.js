@@ -1,9 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { sparkling, startFauxClicking, fauxClick } from './sparkle.js'
+import { sparkling, startFauxClicking, } from './sparkle.js'
 import { energy, dataArray, analyser, pitchDetector, myNote, octave } from './audio.js'
-import { starField_faster, draw } from './starfield.js'
-import { update } from './fluid.js'
+import { moving } from './fluid.js'
 
 const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
 const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
@@ -126,6 +125,16 @@ function animate() {
         sparkleCanvas.style.display = 'none';
 
         clearCanvas(sparkleCanvas);
+        if (energy > 20 ){
+          // create a keyboard press event
+          var event = new KeyboardEvent('keydown', {
+            'key': ' '
+          });
+
+          // call / simulate the event every 1000s using dispathEvent method
+          setInterval(() => window.dispatchEvent(event), 1000);
+        }
+    
       }
 
   }

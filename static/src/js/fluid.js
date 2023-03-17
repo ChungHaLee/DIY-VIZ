@@ -6,7 +6,11 @@ import * as dat from './dat.gui.min.js';
 
 // Simulation section
 let bg;
+var pointer;
 const canvas = document.getElementById('fluid-canvas');
+let audio = document.getElementById('audio');
+
+
 // let ctx = canvas.getContext("3d");
 // 그냥 여기서 사이즈 지정
 canvas.width = 600;
@@ -24,7 +28,7 @@ let config = {
     SPLAT_RADIUS: 0.25,
     SPLAT_FORCE: 6000,
     SHADING: true,
-    COLORFUL: false,
+    COLORFUL: true,
     COLOR_UPDATE_SPEED: 10,
     PAUSED: false,
     BACK_COLOR: { r: 0, g: 0, b: 0},
@@ -64,7 +68,14 @@ function pointerPrototype () {
 
 let pointers = [];
 let splatStack = [];
-pointers.push(new pointerPrototype());
+
+function setPointersType(){
+    pointers.push(new pointerPrototype());
+
+    return pointers
+}
+
+setPointersType();
 
 const { gl, ext } = getWebGLContext(canvas);
 
@@ -1134,9 +1145,9 @@ let lastUpdateTime = Date.now();
 let colorUpdateTimer = 0.0;
 update();
 
+
 function update () {
     const dt = calcDeltaTime();
-
     updateColors(dt);
     applyInputs();
     if (!config.PAUSED)
@@ -1244,6 +1255,7 @@ function step (dt) {
 }
 
 function render (target) {
+
     if (config.BLOOM)
         applyBloom(dye.read, bloom);
     if (config.SUNRAYS) {
@@ -1267,17 +1279,24 @@ function render (target) {
     
 }
 
+
+
 function drawColor (target, color) {
     colorProgram.bind();
     gl.uniform4f(colorProgram.uniforms.color, color.r, color.g, color.b, 1);
     blit(target);
 }
 
+
+
 function drawCheckerboard (target) {
     checkerboardProgram.bind();
     gl.uniform1f(checkerboardProgram.uniforms.aspectRatio, canvas.width / canvas.height);
     blit(target);
 }
+
+
+
 
 function drawDisplay (target) {
     let width = target == null ? gl.drawingBufferWidth : target.width;
@@ -1298,6 +1317,10 @@ function drawDisplay (target) {
     blit(target);
 
 }
+
+
+
+
 
 function applyBloom (source, destination) {
     if (bloomFramebuffers.length < 2)
@@ -1413,27 +1436,33 @@ function correctRadius (radius) {
     return radius;
 }
 
+
+
 canvas.addEventListener('mousedown', e => {
     let posX = scaleByPixelRatio(e.offsetX);
     let posY = scaleByPixelRatio(e.offsetY);
-    let pointer = pointers.find(p => p.id == -1);
+    pointer = pointers.find(p => p.id == -1);
     if (pointer == null)
         pointer = new pointerPrototype();
     updatePointerDownData(pointer, -1, posX, posY);
 });
 
+
 canvas.addEventListener('mousemove', e => {
+
     let pointer = pointers[0];
     if (!pointer.down) return;
     let posX = scaleByPixelRatio(e.offsetX);
     let posY = scaleByPixelRatio(e.offsetY);
-
-    updatePointerMoveData(pointer, posX, posY);
+    // 여기를 바꿔주면됨
+    updatePointerMoveData(pointer, 300, 300);
 });
+
 
 window.addEventListener('mouseup', () => {
     updatePointerUpData(pointers[0]);
 });
+
 
 canvas.addEventListener('touchstart', e => {
     e.preventDefault();
@@ -1455,6 +1484,7 @@ canvas.addEventListener('touchmove', e => {
         if (!pointer.down) continue;
         let posX = scaleByPixelRatio(touches[i].pageX);
         let posY = scaleByPixelRatio(touches[i].pageY);
+        // console.log('touchmove: pos value', posX, posY);
         updatePointerMoveData(pointer, posX, posY);
     }
 }, false);
@@ -1465,6 +1495,7 @@ window.addEventListener('touchend', e => {
     {
         let pointer = pointers.find(p => p.id == touches[i].identifier);
         if (pointer == null) continue;
+        // console.log('touchend: pos value', posX, posY);
         updatePointerUpData(pointer);
     }
 });
@@ -1473,10 +1504,8 @@ window.addEventListener('keydown', e => {
     if (e.code === 'KeyP')
         config.PAUSED = !config.PAUSED;
     if (e.key === ' ')
-    // 여기다아아아아
-        // setInterval(splatStack.push.bind(splatStack), 500, parseInt(Math.random() * 20) + 5)
+        // [중요] 이 부분에서 키보드가 스페이스바이면 circle.js 에서 keydown 이벤트 호출!!!!!!
         splatStack.push(parseInt(Math.random() * 20) + 5);
-        // console.log(splatStack);
 });
 
 function updatePointerDownData (pointer, id, posX, posY) {
@@ -1502,6 +1531,19 @@ function updatePointerMoveData (pointer, posX, posY) {
     pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
     // 여기에서 옥타브값을 받아와서 위치 바꿔주기 = 위치 지정해서 찍기!
 }
+
+
+// function updatePointerMoveData (pointer, posX, posY) {
+//     pointer.prevTexcoordX = pointer.texcoordX;
+//     pointer.prevTexcoordY = pointer.texcoordY;
+//     pointer.texcoordX = posX / canvas.width;
+//     pointer.texcoordY = 1.0 - posY / canvas.height;
+//     pointer.deltaX = correctDeltaX(pointer.texcoordX - pointer.prevTexcoordX);
+//     pointer.deltaY = correctDeltaY(pointer.texcoordY - pointer.prevTexcoordY);
+//     pointer.moved = Math.abs(pointer.deltaX) > 0 || Math.abs(pointer.deltaY) > 0;
+//     // 여기에서 옥타브값을 받아와서 위치 바꿔주기 = 위치 지정해서 찍기!
+//     console.log('위치가 바뀌어서 실행됨');
+// }
 
 function updatePointerUpData (pointer) {
     pointer.down = false;
@@ -1622,4 +1664,4 @@ function hashCode (s) {
 };
 
 
-// export { update }
+export { updatePointerMoveData, setPointersType, update }

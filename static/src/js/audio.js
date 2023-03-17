@@ -24,10 +24,6 @@ function FileInit() {
 
 
 
-
-
-
-
 function FileChange(){
 
     file.onchange = function(){

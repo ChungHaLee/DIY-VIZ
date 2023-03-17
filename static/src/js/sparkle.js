@@ -6,6 +6,9 @@ const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
 
 
 var c = document.getElementById("sparkle-canvas");
+c.width = 600;
+c.height = 600;
+
 var ctx = c.getContext("2d");
 var cH;
 var cW;

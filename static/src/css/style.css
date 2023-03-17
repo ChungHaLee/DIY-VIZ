@@ -39,6 +39,7 @@ div#customSliders{
 /* canvas styles */
 
 #sparkle-canvas{
+    margin-top: 10px;
     display: none;
     width: 600px;
     height: 600px;
@@ -61,7 +62,7 @@ div#customSliders{
 #fluid-canvas{
     display: none;    
     float: left;
-    margin-top: 60px;
+    margin-top: 10px;
     width: 600px;
     height: 600px;
 }
