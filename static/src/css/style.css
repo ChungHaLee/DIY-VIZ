@@ -1,19 +1,32 @@
 html, body {
 	height: 100%;
+    overflow: hidden;
 }
 
 div#content{
-    margin-top: 60px;
+    margin-top: 20px;
     position: absolute;
 }
 
+p#identityVisual{
+    display: none;
+}
 
 div.customMenu{
-    margin-top: -500px;
+    margin-top: -550px;
+    margin-right: 30px;
     float: right;
     width: 35rem;
     height: 30rem;
-    background-color: aliceblue;
+    background-color: gainsboro;
+}
+
+
+div.saveTemplate{
+    background-color: gray;
+    width: 35rem;
+    height: 10rem;
+
 }
 
 
@@ -40,13 +53,14 @@ div.customMenu{
 
 
 #customSliders{
-    float: right;
+    margin-top: 300px;
+    /* float: right; */
 }
 
 
 
 /* canvas styles */
-#shape-canvas{
+/* #shape-canvas{
     width: 700px;
     height: 600px;
-}
+} */

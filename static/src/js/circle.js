@@ -3,10 +3,6 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { energy, dataArray, analyser, pitchDetector, myNote, octave } from './audio.js'
 import { bgColor, objColor1, objColor2 } from './colorpicker'
 
-const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
-const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
-const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
-
 
 
 
@@ -25,28 +21,26 @@ var pitchInfo;
 
 
 
-
-
-
-
 const circleButton = document.getElementById('shapeCircle');
 
 // 시각화 구분자 단어
 let identityVisualization = document.getElementById('identityVisual');
 
 
+
+
 // init function
 function init() {
     scene = new THREE.Scene();
     // canvas
-    renderer = new THREE.WebGLRenderer({ alpha: false, antialias: false });
+    renderer = new THREE.WebGLRenderer();
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(700, 600);
+    renderer.setSize(800, 600);
 
 
     camera = new THREE.PerspectiveCamera(30, renderer.domElement.width/renderer.domElement.height, 2, 2000);
-    camera.position.set(1, 10, 30);
+    camera.position.set(0, 10, 30);
   
     container = document.getElementById('shape-canvas')
     
@@ -74,6 +68,8 @@ function init() {
     createCircle_Vanilla();
   
   };
+
+
 
 
 function createCircle_Vanilla(){
@@ -104,8 +100,12 @@ function createCircle(){
 
   let size = custom_energy;
 
-  geometry = new THREE.CircleGeometry( size /2, 60 );
-  material = new THREE.MeshBasicMaterial();
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry( size / 2, 80 );
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  material.transparent = false
+  material.opacity = 0
+
 
 
   compoCenter = new THREE.Mesh(geometry, material);

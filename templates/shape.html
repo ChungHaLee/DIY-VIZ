@@ -6,37 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Style -->
     <link type="text/css" href="../static/src/css/style.css" rel="stylesheet">
+    <!-- <link type="text/css" href="../static/src/css/menu.css" rel="stylesheet"> -->
     <script src="https://unpkg.com/meyda/dist/web/meyda.min.js"></script>
 </head>
 
 <body>
-    <h1> 발라드 장르 </h1>
+
+    <div id="shape-canvas"></div>
+
     <div id="content">
-        <div class="thetitle" id="title"></div>
+        <h4>Music Input</h4>
+        <!-- <div class="thetitle" id="title"></div> -->
         <label for="thefile" class="file">
             <input type="file" id="thefile" accept="audio/*" />
         </label>
-
         <audio id="audio" controls></audio>
-        
-        <canvas id="sparkle-canvas"></canvas>
-        <canvas id="fluid-canvas"></canvas>
-    </div>
+
+        <div id="timestamp">
+            <h4>Time Stamp</h4>
+        </div>
     </div>
 
-    <div id="visualButtons">
-        <button class="visualButtons" id="sparkle"> Sparkle </button>
-        <button class="visualButtons" id="fluid"> Fluid </button>
-    </div>
-    
 
-    <div id="customSliders">
-        <button id="backgroundColor">Background Color <input id="backgroundColorID" type="text" data-coloris> </button> <button id="backgroundColorSaveButton"> SAVE </button>
+
+    <div class="customMenu">
+        <div class="shapeMenuClass">
+            <h4>Custom Menu</h4>
+            <br>
+            <button class="shapeButtonClass" id="shapeCircle">Circle</button>
+            <button class="shapeButtonClass" id="shapeBox">Box</button> 
+            <button class="shapeButtonClass" id="shapeCone">Cone</button>
+            <button class="shapeButtonClass" id="shapeIcosahedron">Icosahedron</button>
+            <button class="shapeButtonClass" id="shapeTorus">Torus</button>
+        </div>
         <br>
-        <button id="objectColor1">Object Color 1  <input type="text" data-coloris> </button> <button id="objectColor1SaveButton"> SAVE </button>
-        <br>
-        <button id="objectColor2">Object Color 2  <input type="text" data-coloris> </button> <button id="objectColor2SaveButton"> SAVE </button>
+        <div id="customSliders">
+            <button id="backgroundColor">Background Color <input id="backgroundColorID" type="text" data-coloris> </button> <button id="backgroundColorSaveButton"> SAVE </button>
+            <br>
+            <button id="objectColor1">Object Color 1  <input type="text" data-coloris> </button> <button id="objectColor1SaveButton"> SAVE </button>
     </div>
+    <br>
+
+    <div class="saveTemplate">
+        <h4>Save Template</h4>
+
+    </div>
+
+
 
     
     <p id="identityVisual"></p>
@@ -52,9 +68,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.css"/>
     <script src="https://cdn.jsdelivr.net/gh/mdbassit/Coloris@latest/dist/coloris.min.js"></script>
 
+
     <script type="module" defer src="./static/src/js/dist/circle.js"></script>
-    <script type="module" defer src="./static/src/js/dist/sparkle.js"></script>
-    <script type="module" defer src="./static/src/js/dist/fluid.js"></script>
     <script type="module" defer src="./static/src/js/dist/colorpicker.js"></script>
 </body>
 </html>

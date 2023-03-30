@@ -1,6 +1,6 @@
 const bgColorSaveButton = document.getElementById('backgroundColorSaveButton');
 const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
-const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
+// const objColor2SaveButton = document.getElementById('objectColor2SaveButton');
 
 var bgColor, objColor1, objColor2
 var bgColorArr, objColor1Arr, objColor2Arr
@@ -32,14 +32,14 @@ document.querySelector('#objectColor1').addEventListener('click', e => {
 });
 
 
-document.querySelector('#objectColor2').addEventListener('click', e => {
-  Coloris({
-    themeMode: 'light',
-    alpha: true,
-    formatToggle: false
-  });
+// document.querySelector('#objectColor2').addEventListener('click', e => {
+//   Coloris({
+//     themeMode: 'light',
+//     alpha: true,
+//     formatToggle: false
+//   });
 
-});
+// });
 
 
 function colortoList(colorpick){
@@ -64,14 +64,14 @@ objColor1SaveButton.addEventListener('click', function (){
 })
 
 
-objColor2SaveButton.addEventListener('click', function(){
-    objColor2 = document.getElementsByClassName('clr-field')[2].style.color
-    objColor2Arr = colortoList(objColor2);
-    objColor2 = rgbToHex(objColor2Arr);
-})
+// objColor2SaveButton.addEventListener('click', function(){
+//     objColor2 = document.getElementsByClassName('clr-field')[2].style.color
+//     objColor2Arr = colortoList(objColor2);
+//     objColor2 = rgbToHex(objColor2Arr);
+// })
 
 
 
 
 
-export { bgColor, objColor1, objColor2 };
+export { bgColor, objColor1 };
