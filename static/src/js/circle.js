@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { energy, dataArray, analyser, pitchDetector, myNote, octave } from './audio.js'
-import { bgColor, objColor1, objColor2 } from './colorpicker'
+import { bgColor, objColor1, objColor2, setBgColor, setObjColor1 } from './colorpicker'
 
 
 
@@ -18,6 +18,8 @@ let group;
 let ambientLight, spotLight, pointLight;
 var pitchInfo;
 
+let currentTempleteNumber = 0;
+const saveButtonColorList = ["#FFCC99", "#FFCC00","#99FF99", "#9999FF", "#666699", "#FF66FF", "#FF9999"]
 
 // html 버튼 요소
 const circleButton = document.getElementById('shapeCircle');
@@ -28,6 +30,10 @@ const sphereButton = document.getElementById('shapeSphere');
 const coneButton = document.getElementById('shapeCone');
 const boxButton = document.getElementById('shapeBox');
 const dodeButton = document.getElementById('shapeDodecahedron');
+
+
+const templateSaveButton = document.getElementById("templateSave")
+const templateButton1 = document.getElementById("template1")
 
 
 // 시각화 구분자 단어
@@ -124,7 +130,6 @@ function createCircle_Vanilla(){
 
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
-
     // spotLight.lookAt(compoCenter);
     pointLight = new THREE.PointLight(0xffffff, 1);
     pointLight.position.set(200, 200, 200);
@@ -157,7 +162,6 @@ function createCircle(){
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
-
 
   group.add( compoCenter );
 }
@@ -355,16 +359,76 @@ function createDodecahedron(){
   scene.add(pointLight);
 
   group.add( compoCenter );
-
-
-
 }
 
+let visualizationList = []
+let backgroundColorList = []
+let objectColorList = []
+let objectPositionXList = []
+let objectPositionYList = []
+let objectPositionZList = []
 
 
+function loadTemplate(buttonId){
+  console.log("Load Button Id : ",buttonId);
+  identityVisualization.innerText = visualizationList[buttonId-1];
+  setBgColor(backgroundColorList[buttonId-1]);
+  setObjColor1(objectColorList[buttonId-1]);
+  camera.position.x = objectPositionXList[buttonId-1];
+  camera.position.y = objectPositionYList[buttonId-1];
+  camera.position.z = objectPositionZList[buttonId-1];
+  console.log(camera.position.x);
+  console.log(camera.position.y);
+  console.log(camera.position.z);
 
+  //console.log("Load Button Id : ",buttonId);
+  //console.log("-------load Template-------");
+  //console.log("visualization Type: ", identityVisualization.innerText);
+  //console.log("background Color : ", bgColor);
+  //console.log("object Color : ", objColor1);
+  //console.log(controls.object.position);
+  //console.log("---------------------------");
+}
 
+function saveTemplate(){
+  visualizationList.push(identityVisualization.innerText);
+  backgroundColorList.push(bgColor);
+  objectColorList.push(objColor1);
+  objectPositionXList.push(camera.position.x);
+  objectPositionYList.push(camera.position.y);
+  objectPositionZList.push(camera.position.z);
+  console.log(objectPositionXList);
+  console.log(objectPositionYList);
+  console.log(objectPositionZList);
+  //console.log("-------Save Template-------");
+  //console.log("visualization Type: ", identityVisualization.innerText);
+  //console.log("background Color : ", bgColor);
+  //console.log("object Color : ", objColor1);
+  //console.log(controls.object.position);
+  //console.log("---------------------------");
+}
 
+templateSaveButton.addEventListener('click', function (){
+  if(identityVisualization.innerText != "" && document.getElementById("audio").src != ""){
+    currentTempleteNumber += 1
+    console.log("Template Save Button Click")
+    var button = document.createElement('button');
+    button.type = 'button';
+    button.style = "font-size: 1.4em;" + "background-color: " + saveButtonColorList[(currentTempleteNumber%(saveButtonColorList.length+1))]
+    if(currentTempleteNumber < 10){
+      button.innerHTML = "0" + String(currentTempleteNumber);
+    }
+    else{
+      button.innerHTML = String(currentTempleteNumber);
+    }
+    button.onclick = function() {
+      loadTemplate(parseInt(button.innerHTML));
+    };
+    var container = document.getElementById('templateContainer');
+    container.appendChild(button);
+    saveTemplate()
+  }
+})
 
 
 

@@ -73,7 +73,6 @@ function AnalyzerPlay(audio_context, src) {
     analyser.fftSize = 512;
     bufferLength = analyser.frequencyBinCount;
     dataArray = new Uint8Array(bufferLength);
-
     // energy = 0;
 
 
@@ -89,7 +88,6 @@ function AnalyzerPlay(audio_context, src) {
         }
     })
     meyda_analyser.start();
-
 }
 
 

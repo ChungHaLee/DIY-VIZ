@@ -43,6 +43,12 @@ document.querySelector('#objectColor1').addEventListener('click', e => {
 
 // });
 
+function setBgColor(color){
+  bgColor = color
+}
+function setObjColor1(color){
+  objColor1 = color
+}
 
 function colortoList(colorpick){
   let colors = colorpick.replace('rgb(', '').replace(')', '')
@@ -76,4 +82,4 @@ objColor1SaveButton.addEventListener('click', function (){
 
 
 
-export { bgColor, objColor1 };
+export { bgColor, objColor1, setBgColor, setObjColor1 };
