@@ -20,14 +20,14 @@ var pitchInfo;
 
 
 // html 버튼 요소
-const circleButton = document.getElementById('shapeCircle');
-const triangleButton = document.getElementById('shapeTriangle');
-const rectangleButton = document.getElementById('shapeRectangle');
-const pentagonButton = document.getElementById('shapePentagon');
-const sphereButton = document.getElementById('shapeSphere');
-const coneButton = document.getElementById('shapeCone');
-const boxButton = document.getElementById('shapeBox');
-const dodeButton = document.getElementById('shapeDodecahedron');
+const circleButtonScale = document.getElementById('shapeCircle-Scale');
+const triangleButtonScale = document.getElementById('shapeTriangle-Scale');
+const rectangleButtonScale = document.getElementById('shapeRectangle-Scale');
+const pentagonButtonScale = document.getElementById('shapePentagon-Scale');
+const sphereButtonScale = document.getElementById('shapeSphere-Scale');
+const coneButtonScale = document.getElementById('shapeCone-Scale');
+const boxButtonScale = document.getElementById('shapeBox-Scale');
+const dodeButtonScale = document.getElementById('shapeDodecahedron-Scale');
 
 
 // 시각화 구분자 단어
@@ -36,35 +36,35 @@ let identityVisualization = document.getElementById('identityVisual');
 
 // 버튼 클릭에 따라 보여주는 시각화가 달라지는 함수
 function optionalVisualization(){
-  circleButton.addEventListener('click', function (){
+  circleButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'circle';
   })
 
-  triangleButton.addEventListener('click', function (){
+  triangleButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'triangle';
   })
 
-  rectangleButton.addEventListener('click', function (){
+  rectangleButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'rectangle';
   })
 
-  pentagonButton.addEventListener('click', function (){
+  pentagonButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'pentagon';
   })
 
-  sphereButton.addEventListener('click', function (){
+  sphereButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'sphere';
   })
 
-  coneButton.addEventListener('click', function (){
+  coneButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'cone'
   })
 
-  boxButton.addEventListener('click', function( ){
+  boxButtonScale.addEventListener('click', function( ){
     identityVisualization.innerText = 'box'
   })
 
-  dodeButton.addEventListener('click', function (){
+  dodeButtonScale.addEventListener('click', function (){
     identityVisualization.innerText = 'dode'
   })
 }

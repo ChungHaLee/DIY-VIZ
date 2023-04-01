@@ -29,39 +29,55 @@
 
     
     <div class="shapeEffectClass">
-        <button class="effectButtonClass"> Scale </button>
-        <button class="effectButtonClass"> Blink </button>
-        <button class="effectButtonClass"> Rotate </button>
-        <button class="effectButtonClass"> Gradient </button>
-        <button class="effectButtonClass"> Horizontal </button>
-        <button class="effectButtonClass"> Veritcal </button>
-        <button class="effectButtonClass"> Increasing </button>
-        <button class="effectButtonClass"> Decreasing </button>
+        <button class="effectButtonClass" id="effectScale"> Scale </button>
+        <button class="effectButtonClass" id="effectBlink"> Blink </button>
+        <button class="effectButtonClass" id="effectRotate"> Rotate </button>
+        <button class="effectButtonClass" id="effectGraident"> Gradient </button>
+        <button class="effectButtonClass" id="effectHorizontal"> Horizontal </button>
+        <button class="effectButtonClass" id="effectVertical"> Veritcal </button>
+        <button class="effectButtonClass" id="effectIncreasing"> Increasing </button>
+        <button class="effectButtonClass" id="effectDecreasing"> Decreasing </button>
     </div>
 
     <div class="customMenu">
-        <div class="shapeMenuClass">
-            <h4>Custom Menu</h4>
+        <div class="shapeMenuClass" id="shapeMenu-Scale">
+            <h4>Scale Menu</h4>
             <h5>Circle</h5>
-            <button class="shapeButtonClass" id="shapeCircle">Circle</button>
-            <button class="shapeButtonClass" id="shapeSphere">Sphere</button>
+            <button class="shapeButtonClass" id="shapeCircle-Scale">Circle Scale</button>
+            <button class="shapeButtonClass" id="shapeSphere-Scale">Sphere Scale</button>
             <h5>Triangle</h5>
-            <button class="shapeButtonClass" id="shapeTriangle">Trianlge</button>
-            <button class="shapeButtonClass" id="shapeCone">Cone</button>
+            <button class="shapeButtonClass" id="shapeTriangle-Scale">Trianlge Scale</button>
+            <button class="shapeButtonClass" id="shapeCone-Scale">Cone Scale</button>
             <h5>Rectangle</h5>
-            <button class="shapeButtonClass" id="shapeRectangle">Rectangle</button>
-            <button class="shapeButtonClass" id="shapeBox">Box</button>
+            <button class="shapeButtonClass" id="shapeRectangle-Scale">Rectangle Scale</button>
+            <button class="shapeButtonClass" id="shapeBox-Scale">Box Scale</button>
             <h5>Pentagon</h5>
-            <button class="shapeButtonClass" id="shapePentagon">Pentagon</button>
-            <button class="shapeButtonClass" id="shapeDodecahedron">Dodecahedron</button>
+            <button class="shapeButtonClass" id="shapePentagon-Scale">Pentagon Scale</button>
+            <button class="shapeButtonClass" id="shapeDodecahedron-Scale">Dodecahedron Scale</button>
         </div>
 
+        <div class="shapeMenuClass" id="shapeMenu-Blink">
+            <h4>Blink Menu</h4>
+            <h5>Circle</h5>
+            <button class="shapeButtonClass" id="shapeCircle">Circle Blink</button>
+            <button class="shapeButtonClass" id="shapeSphere">Sphere Blink</button>
+            <h5>Triangle</h5>
+            <button class="shapeButtonClass" id="shapeTriangle">Trianlge Blink</button>
+            <button class="shapeButtonClass" id="shapeCone">Cone Blink</button>
+            <h5>Rectangle</h5>
+            <button class="shapeButtonClass" id="shapeRectangle">Rectangle Blink</button>
+            <button class="shapeButtonClass" id="shapeBox">Box Blink</button>
+            <h5>Pentagon</h5>
+            <button class="shapeButtonClass" id="shapePentagon">Pentagon Blink</button>
+            <button class="shapeButtonClass" id="shapeDodecahedron">Dodecahedron Blink</button>
+        </div>
+        <br>
         <div id="customSliders">
             <h4>Color Menu</h4>
             <button id="backgroundColor">Background Color <input id="backgroundColorID" type="text" data-coloris> </button> <button id="backgroundColorSaveButton"> SAVE </button>
             <br>
             <button id="objectColor1">Object Color 1  <input type="text" data-coloris> </button> <button id="objectColor1SaveButton"> SAVE </button>
-    </div>
+        </div>
 
     <div class="saveTemplate">
         <h4>Save Template</h4>
@@ -87,5 +103,6 @@
 
     <script type="module" defer src="./static/src/js/dist/circle.js"></script>
     <script type="module" defer src="./static/src/js/dist/colorpicker.js"></script>
+    <script type="module" defer src="./static/src/js/dist/ui.js"></script>
 </body>
 </html>

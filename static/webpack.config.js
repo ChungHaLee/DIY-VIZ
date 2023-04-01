@@ -6,7 +6,8 @@ module.exports = {
     entry: {
         audio: path.resolve(__dirname, "src", "js", "audio.js"),
         circle: path.resolve(__dirname, "src", "js", "circle.js"),
-        colorpicker: path.resolve(__dirname, "src", "js", "colorpicker.js")
+        colorpicker: path.resolve(__dirname, "src", "js", "colorpicker.js"),
+        ui: path.resolve(__dirname, "src", "js", "ui.js")
     },
     mode: "development",
     target: "web",
