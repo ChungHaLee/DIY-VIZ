@@ -23,12 +23,51 @@ var pitchInfo;
 const circleButton = document.getElementById('shapeCircle');
 const triangleButton = document.getElementById('shapeTriangle');
 const rectangleButton = document.getElementById('shapeRectangle');
+const pentagonButton = document.getElementById('shapePentagon');
 const sphereButton = document.getElementById('shapeSphere');
 const coneButton = document.getElementById('shapeCone');
+const boxButton = document.getElementById('shapeBox');
+const dodeButton = document.getElementById('shapeDodecahedron');
 
 
 // 시각화 구분자 단어
 let identityVisualization = document.getElementById('identityVisual');
+
+
+// 버튼 클릭에 따라 보여주는 시각화가 달라지는 함수
+function optionalVisualization(){
+  circleButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'circle';
+  })
+
+  triangleButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'triangle';
+  })
+
+  rectangleButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'rectangle';
+  })
+
+  pentagonButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'pentagon';
+  })
+
+  sphereButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'sphere';
+  })
+
+  coneButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'cone'
+  })
+
+  boxButton.addEventListener('click', function( ){
+    identityVisualization.innerText = 'box'
+  })
+
+  dodeButton.addEventListener('click', function (){
+    identityVisualization.innerText = 'dode'
+  })
+}
 
 
 
@@ -118,10 +157,6 @@ function createCircle(){
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
 
-  // spotLight.lookAt(compoCenter);
-  // pointLight = new THREE.PointLight(0xffffff, 1);
-  // pointLight.position.set(200, 200, 200);
-  // scene.add(pointLight);
 
   group.add( compoCenter );
 }
@@ -148,10 +183,6 @@ function createTriangle(){
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
 
-  // spotLight.lookAt(compoCenter);
-  // pointLight = new THREE.PointLight(0xffffff, 1);
-  // pointLight.position.set(200, 200, 200);
-  // scene.add(pointLight);
 
   group.add( compoCenter );
 
@@ -180,13 +211,38 @@ function createRectangle(){
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
 
-  // spotLight.lookAt(compoCenter);
-  // pointLight = new THREE.PointLight(0xffffff, 1);
-  // pointLight.position.set(200, 200, 200);
-  // scene.add(pointLight);
 
   group.add( compoCenter );
 
+}
+
+
+
+function createPentagon(){
+
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+
+  geometry = new THREE.CircleGeometry( size / 2, 5 );
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  material.transparent = false
+  material.opacity = 0
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+  
 }
 
 
@@ -246,37 +302,60 @@ function createCone(){
 
 }
 
+function createBox(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.BoxGeometry( size/2, size/2, size/2 );
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 0
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
 
 
+}
 
 
+function createDodecahedron(){
+
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.DodecahedronGeometry( size/2, 0);
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 0
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
 
 
-
-
-
-
-// 버튼 클릭에 따라 보여주는 시각화가 달라지는 함수
-function optionalVisualization(){
-    circleButton.addEventListener('click', function (){
-      identityVisualization.innerText = 'circle';
-    })
-
-    triangleButton.addEventListener('click', function (){
-      identityVisualization.innerText = 'triangle';
-    })
-
-    rectangleButton.addEventListener('click', function (){
-      identityVisualization.innerText = 'rectangle';
-    })
-
-    sphereButton.addEventListener('click', function (){
-      identityVisualization.innerText = 'sphere';
-    })
-
-    coneButton.addEventListener('click', function (){
-      identityVisualization.innerText = 'cone'
-    })
 
 }
 
@@ -287,27 +366,16 @@ function optionalVisualization(){
 
 
 
-// 캔버스 리셋하는 함수 (최적화)
-// function clearCanvas(the_canvas)
-// {
-//     // canvas
-//     let cnvs = the_canvas
-//     // context
-//     let ctx = cnvs.getContext('2d');
 
-//     if (ctx != null){
-//       // 픽셀 정리
-//       ctx.clearRect(0, 0, cnvs.width, cnvs.height);
-//       // 컨텍스트 리셋
-//       ctx.beginPath();
 
-//     } else {
-//       // 이 경우 3D Canvas 이기 때문에 삭제하지 않고 걍 가만히 둔다
-//       // 안 그러면 에러남...
-      
-//     }
 
-// }
+
+
+
+
+
+
+
 
 
 function animate() {
@@ -336,6 +404,10 @@ function animate() {
               deleteBasics();
               createRectangle();
               render();
+          } else if (identityVisualization.innerText == 'pentagon'){
+              deleteBasics();
+              createPentagon();
+              render();
           } else if (identityVisualization.innerText == 'sphere'){
               deleteBasics();
               createSphere();
@@ -343,6 +415,14 @@ function animate() {
           } else if (identityVisualization.innerText == 'cone'){
               deleteBasics()
               createCone();
+              render();
+          } else if (identityVisualization.innerText == 'box'){
+              deleteBasics();
+              createBox();
+              render();
+          } else if (identityVisualization.innerText == 'dode'){
+              deleteBasics();
+              createDodecahedron();
               render();
           }
     

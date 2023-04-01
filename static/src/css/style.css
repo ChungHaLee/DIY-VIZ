@@ -8,9 +8,9 @@ div#content{
     position: absolute;
 }
 
-/* p#identityVisual{
+p#identityVisual{
     display: none;
-} */
+}
 
 div.customMenu{
     margin-top: -550px;
