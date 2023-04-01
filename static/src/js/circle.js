@@ -93,15 +93,16 @@ function init() {
     renderer.toneMappingExposure = 1.25;
     renderer.outputEncoding = THREE.sRGBEncoding;
 
-    ambientLight = new THREE.AmbientLight(0xaaaaaa);
-    scene.add(ambientLight);
+    // ambientLight = new THREE.AmbientLight(0xaaaaaa);
+    // scene.add(ambientLight);
   
-    spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.intensity = 0.9;
-    spotLight.position.set(-10, 40, 20);
+    // spotLight = new THREE.SpotLight(0xffffff);
+    // spotLight.intensity = 0.9;
+    // spotLight.position.set(-10, 40, 20);
   
-    spotLight.castShadow = true;
-    scene.add(spotLight);
+    // spotLight.castShadow = true;
+    // scene.add(spotLight);
+
     group = new THREE.Group();
     scene.add(group);
    
@@ -124,7 +125,7 @@ function createCircle_Vanilla(){
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
 
-    spotLight.lookAt(compoCenter);
+    // spotLight.lookAt(compoCenter);
     pointLight = new THREE.PointLight(0xffffff, 1);
     pointLight.position.set(200, 200, 200);
     scene.add(pointLight);
