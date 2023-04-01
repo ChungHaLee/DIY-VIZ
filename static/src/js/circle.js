@@ -12,16 +12,20 @@ let geometry, material, compoCenter;
 let container;
 let FrameRate = 0;
 
-
-let backgroundColor;
+// let backgroundColor;
 
 let group;
 let ambientLight, spotLight, pointLight;
 var pitchInfo;
 
 
-
+// html 버튼 요소
 const circleButton = document.getElementById('shapeCircle');
+const triangleButton = document.getElementById('shapeTriangle');
+const rectangleButton = document.getElementById('shapeRectangle');
+const sphereButton = document.getElementById('shapeSphere');
+const coneButton = document.getElementById('shapeCone');
+
 
 // 시각화 구분자 단어
 let identityVisualization = document.getElementById('identityVisual');
@@ -39,7 +43,7 @@ function init() {
     renderer.setSize(800, 600);
 
 
-    camera = new THREE.PerspectiveCamera(30, renderer.domElement.width/renderer.domElement.height, 2, 2000);
+    camera = new THREE.PerspectiveCamera(70, renderer.domElement.width/renderer.domElement.height, 2, 2000);
     camera.position.set(0, 10, 30);
   
     container = document.getElementById('shape-canvas')
@@ -71,6 +75,7 @@ function init() {
 
 
 
+// 베이스 도형
 
 function createCircle_Vanilla(){
     geometry = new THREE.CircleGeometry( 10, 60 );
@@ -89,10 +94,13 @@ function createCircle_Vanilla(){
 }
 
 
+// 2D 도형
+
+
 function createCircle(){
   let custom_energy = energy * 5;
 
-  if(custom_energy > 15){
+  if(custom_energy > 50){
     custom_energy = 15;
   } else if(custom_energy < 10){
     custom_energy = custom_energy / 2 + 5
@@ -107,17 +115,142 @@ function createCircle(){
   material.opacity = 0
 
 
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  // spotLight.lookAt(compoCenter);
+  // pointLight = new THREE.PointLight(0xffffff, 1);
+  // pointLight.position.set(200, 200, 200);
+  // scene.add(pointLight);
+
+  group.add( compoCenter );
+}
+
+
+function createTriangle(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry( size / 2, 0 );
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  material.transparent = false
+  material.opacity = 0
+
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
 
-  spotLight.lookAt(compoCenter);
-  pointLight = new THREE.PointLight(0xffffff, 1);
-  pointLight.position.set(200, 200, 200);
+  // spotLight.lookAt(compoCenter);
+  // pointLight = new THREE.PointLight(0xffffff, 1);
+  // pointLight.position.set(200, 200, 200);
+  // scene.add(pointLight);
+
+  group.add( compoCenter );
+
+}
+
+
+function createRectangle(){
+
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+
+  geometry = new THREE.PlaneGeometry( size/2, size/2 );
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  material.transparent = false
+  material.opacity = 0
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  // spotLight.lookAt(compoCenter);
+  // pointLight = new THREE.PointLight(0xffffff, 1);
+  // pointLight.position.set(200, 200, 200);
+  // scene.add(pointLight);
+
+  group.add( compoCenter );
+
+}
+
+
+
+
+// 3D 도형
+
+function createSphere(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.SphereGeometry( size/2, 64, 32 );
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 0
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
   scene.add(pointLight);
 
   group.add( compoCenter );
 }
+
+
+function createCone(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.ConeGeometry( size/2, size/2, 3 );
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 0
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+
+}
+
+
+
+
+
+
 
 
 
@@ -127,6 +260,22 @@ function createCircle(){
 function optionalVisualization(){
     circleButton.addEventListener('click', function (){
       identityVisualization.innerText = 'circle';
+    })
+
+    triangleButton.addEventListener('click', function (){
+      identityVisualization.innerText = 'triangle';
+    })
+
+    rectangleButton.addEventListener('click', function (){
+      identityVisualization.innerText = 'rectangle';
+    })
+
+    sphereButton.addEventListener('click', function (){
+      identityVisualization.innerText = 'sphere';
+    })
+
+    coneButton.addEventListener('click', function (){
+      identityVisualization.innerText = 'cone'
     })
 
 }
@@ -139,26 +288,26 @@ function optionalVisualization(){
 
 
 // 캔버스 리셋하는 함수 (최적화)
-function clearCanvas(the_canvas)
-{
-    // canvas
-    let cnvs = the_canvas
-    // context
-    let ctx = cnvs.getContext('2d');
+// function clearCanvas(the_canvas)
+// {
+//     // canvas
+//     let cnvs = the_canvas
+//     // context
+//     let ctx = cnvs.getContext('2d');
 
-    if (ctx != null){
-      // 픽셀 정리
-      ctx.clearRect(0, 0, cnvs.width, cnvs.height);
-      // 컨텍스트 리셋
-      ctx.beginPath();
+//     if (ctx != null){
+//       // 픽셀 정리
+//       ctx.clearRect(0, 0, cnvs.width, cnvs.height);
+//       // 컨텍스트 리셋
+//       ctx.beginPath();
 
-    } else {
-      // 이 경우 3D Canvas 이기 때문에 삭제하지 않고 걍 가만히 둔다
-      // 안 그러면 에러남...
+//     } else {
+//       // 이 경우 3D Canvas 이기 때문에 삭제하지 않고 걍 가만히 둔다
+//       // 안 그러면 에러남...
       
-    }
+//     }
 
-}
+// }
 
 
 function animate() {
@@ -166,22 +315,42 @@ function animate() {
   // 여기를 기점으로 색깔 등 요소 변경을 추가하면됨
   FrameRate = FrameRate + 1
   
+  if (FrameRate % 4 == 0){
 
-    // music rendering
-    if (dataArray){
-      analyser.getByteFrequencyData(dataArray);
-      pitchDetector();
+        // music rendering
+        if (dataArray){
+          analyser.getByteFrequencyData(dataArray);
+          pitchDetector();
+    
+    
+          if (identityVisualization.innerText == 'circle'){
+            // geometry rendering (firstly, delete the basic geometry in the base.)
+              deleteBasics();
+              createCircle();
+              render();
+          } else if (identityVisualization.innerText == 'triangle'){
+              deleteBasics();
+              createTriangle();
+              render();
+          } else if (identityVisualization.innerText == 'rectangle'){
+              deleteBasics();
+              createRectangle();
+              render();
+          } else if (identityVisualization.innerText == 'sphere'){
+              deleteBasics();
+              createSphere();
+              render();
+          } else if (identityVisualization.innerText == 'cone'){
+              deleteBasics()
+              createCone();
+              render();
+          }
+    
+      }
 
-      // render();
-
-      if (identityVisualization.innerText == 'circle'){
-          // geometry rendering (firstly, delete the basic geometry in the base.)
-          deleteBasics();
-          createCircle();
-          render();
-      } 
 
   }
+
 }
 
 

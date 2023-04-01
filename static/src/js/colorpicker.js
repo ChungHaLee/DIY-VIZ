@@ -5,6 +5,8 @@ const objColor1SaveButton = document.getElementById('objectColor1SaveButton');
 var bgColor, objColor1, objColor2
 var bgColorArr, objColor1Arr, objColor2Arr
 
+objColor1 = '#FFFFFF'
+bgColor = '#FFFFFF'
 
 function rgbToHex([r, g, b]) {
   return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
