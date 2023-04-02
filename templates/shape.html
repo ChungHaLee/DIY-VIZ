@@ -8,6 +8,12 @@
     <link type="text/css" href="../static/src/css/style.css" rel="stylesheet">
     <!-- <link type="text/css" href="../static/src/css/menu.css" rel="stylesheet"> -->
     <script src="https://unpkg.com/meyda/dist/web/meyda.min.js"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+
+
 </head>
 
 <body>
@@ -19,12 +25,25 @@
         <!-- <div class="thetitle" id="title"></div> -->
         <label for="thefile" class="file">
             <input type="file" id="thefile" accept="audio/*" />
+            <pre id="filepath" style = "display: none;"> None </pre>
         </label>
         <audio id="audio" controls></audio>
 
         <div id="timestamp">
             <h4>Time Stamp</h4>
             <button class="TemplateSaveButton"id="templateSave"> Template Save </button>
+            <p>
+                <input type="text" id="rangeTime" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            <div id="slider"></div>
+            <p>
+                <input type="text" id="playTime" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>
+            <div id="slider-range"></div>
+        
+        
+        
+        
+        
         </div>
     </div>
 

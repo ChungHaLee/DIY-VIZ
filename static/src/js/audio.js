@@ -9,7 +9,7 @@ let analyser, src, bufferLength, dataArray;
 let chroma, maxChroma, energy, amplitudeSpectrum;
 
 
-
+let filepath = document.getElementById("filepath")
 
 // LOAD MUSIC (vizInit)
 
@@ -18,6 +18,7 @@ function FileInit() {
     file = document.getElementById("thefile");
     audio = document.getElementById("audio");
     audio_context = audio_context || new AudioContext();
+    //filepath.innerHTML = audio.src
 
   }
 
@@ -33,11 +34,14 @@ function FileChange(){
         let files = this.files;
 
         audio.src = URL.createObjectURL(files[0]);
+
+        
         analyser  = audio_context.createAnalyser();
         src = audio_context.createMediaElementSource(audio)
-        audio.volume = 0.4;
+        console.log(src)
 
         AnalyzerPlay(audio_context, src);
+        //filepath.innerHTML = audio.src
     }
 
 }

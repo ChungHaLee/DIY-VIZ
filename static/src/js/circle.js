@@ -32,10 +32,10 @@ const boxButtonScale = document.getElementById('shapeBox-Scale');
 const dodeButtonScale = document.getElementById('shapeDodecahedron-Scale');
 
 
-const templateSaveButton = document.getElementById("templateSave")
-const templateButton1 = document.getElementById("template1")
-
-
+const templateSaveButton = document.getElementById("templateSave");
+const AudioObject = document.getElementById("audio");
+const filepath = document.getElementById("filepath");
+let musicDuration = 60;
 // 시각화 구분자 단어
 let identityVisualization = document.getElementById('identityVisual');
 
@@ -409,7 +409,7 @@ function saveTemplate(){
 }
 
 templateSaveButton.addEventListener('click', function (){
-  if(identityVisualization.innerText != "" && document.getElementById("audio").src != ""){
+  if(identityVisualization.innerText != "" && AudioObject.src != ""){
     currentTempleteNumber += 1
     console.log("Template Save Button Click")
     var button = document.createElement('button');
@@ -430,7 +430,57 @@ templateSaveButton.addEventListener('click', function (){
   }
 })
 
+function sec2Timer(time){
+  let m = String(parseInt(parseFloat(time)/60))
+  let s = String(parseInt(parseFloat(time)%60))
+  let _s = String(parseInt((parseFloat(time)-parseInt(time))*100))
+  if(s.length <2){s = "0" + s}
+  if(_s.length <2){_s = "0" + _s}
+  return m + ":" +  s + ":" + _s
+}
 
+// AudioObject.addEventListener("change", function (){
+//   console.log("Audio Changed", AudioObject.src)
+// })
+
+// AudioObject.addEventListener('click', function (){
+//   console.log("test", AudioObject.currentTime)
+// })
+AudioObject.addEventListener("change", function (){
+  musicDuration = AudioObject.duration;
+  console.log("test", musicDuration);
+})
+
+
+
+
+// 음악 시간 컨트롤용 슬라이더
+$("#slider").slider({
+  value:0,
+  min: 0,
+  max: musicDuration,
+  step: 0.01,
+  slide: function( event, ui ) {
+      $( "#rangeTime" ).val(sec2Timer(ui.value));
+      console.log("test", AudioObject.currentTime);
+      console.log("duration", AudioObject.duration);
+      //AudioObject.currentTime = parseFloat(ui.value);
+  }
+});
+$("#rangeTime").val(sec2Timer($( "#slider" ).slider( "value" )));
+
+// 음악 Template 범위 지정용 슬라이더랑 연결
+$("#slider-range").slider({
+    range: true,
+    min: 0,
+    max: musicDuration,
+    values: [0, 0],
+    step: 0.01,
+    slide: function(event, ui) {
+        $("#playTime").val(sec2Timer(ui.values[0]) + " - " + sec2Timer(ui.values[1]));
+    }
+  });
+  $("#playTime").val(sec2Timer($("#slider-range").slider("values", 0)) + " - " + sec2Timer($("#slider-range").slider("values", 1)));
 
 
 
