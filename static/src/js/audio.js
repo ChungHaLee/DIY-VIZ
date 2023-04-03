@@ -36,8 +36,6 @@ function FileChange(){
         audio.src = URL.createObjectURL(files[0]);
 
         
-        //analyser  = audio_context.createAnalyser();
-        //src = audio_context.createMediaElementSource(audio)
         if (!src) {
             src = audio_context.createMediaElementSource(audio);
             analyser = audio_context.createAnalyser();
@@ -69,6 +67,7 @@ function pitchDetector(){
     const detector = PitchDetector.forFloat32Array(analyser.fftSize);
     const input = new Float32Array(detector.inputLength);
     updatePitch(analyser, detector, input, audio_context.sampleRate);
+
 }
 
 

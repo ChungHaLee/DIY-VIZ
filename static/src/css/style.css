@@ -49,14 +49,19 @@ button.shapeButtonClass{
 
 
 
-div#shapeMenu-Scale{
-    /* display: none; */
-}
+/* div#shapeMenu-Scale{
 
+} */
 
 div#shapeMenu-Blink{
     display: none;
 }
+
+div#shapeMenu-Gradient{
+    display: none;
+}
+
+
 
 button#effectScale{
     border: 3px solid black;
@@ -101,8 +106,4 @@ div.saveTemplate{
     /* margin-top: 50px; */
     margin-top: 50px;
 }
-
-
-
-/* canvas styles */
 
