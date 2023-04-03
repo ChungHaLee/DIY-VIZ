@@ -1,4 +1,8 @@
 import * as THREE from 'three';
+
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass'
+import { RenderPass } from 'three/addons/postprocessing/RenderPass'
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { energy, dataArray, analyser, pitchDetector, myNote, octave } from './audio.js'
 import { bgColor, objColor1, objColor2, setBgColor, setObjColor1 } from './colorpicker'
@@ -6,7 +10,7 @@ import { bgColor, objColor1, objColor2, setBgColor, setObjColor1 } from './color
 
 
 
-let controls;
+let controls, bloomComposer;
 let camera, scene, renderer;
 let geometry, material, compoCenter;
 let container;
@@ -45,6 +49,16 @@ const coneButtonBlink = document.getElementById('shapeCone-Blink');
 const boxButtonBlink = document.getElementById('shapeBox-Blink');
 const dodeButtonBlink = document.getElementById('shapeDodecahedron-Blink');
 
+
+// Effect: Bloom
+const circleButtonBloom = document.getElementById('shapeCircle-Bloom');
+const triangleButtonBloom = document.getElementById('shapeTriangle-Bloom');
+const rectangleButtonBloom= document.getElementById('shapeRectangle-Bloom');
+const pentagonButtonBloom = document.getElementById('shapePentagon-Bloom');
+const sphereButtonBloom = document.getElementById('shapeSphere-Bloom');
+const coneButtonBloom = document.getElementById('shapeCone-Bloom');
+const boxButtonBloom = document.getElementById('shapeBox-Bloom');
+const dodeButtonBloom = document.getElementById('shapeDodecahedron-Bloom');
 
 
 // Effect: Gradient
@@ -139,6 +153,39 @@ function optionalVisualization(){
     identityVisualization.innerText = 'dode-blink'
   })
 
+  // Effect: Bloom
+  circleButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'circle-bloom';
+  })
+
+  triangleButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'triangle-bloom';
+  })
+
+  rectangleButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'rectangle-bloom';
+  })
+
+  pentagonButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'pentagon-bloom';
+  })
+
+  sphereButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'sphere-bloom';
+  })
+
+  coneButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'cone-bloom'
+  })
+
+  boxButtonBloom.addEventListener('click', function( ){
+    identityVisualization.innerText = 'box-bloom'
+  })
+
+  dodeButtonBloom.addEventListener('click', function (){
+    identityVisualization.innerText = 'dode-bloom'
+  })
+
 
    // Effect: Gradient
    circleButtonGradient.addEventListener('click', function (){
@@ -183,7 +230,7 @@ function optionalVisualization(){
 function init() {
     scene = new THREE.Scene();
     // canvas
-    renderer = new THREE.WebGLRenderer();
+    renderer = new THREE.WebGLRenderer( { antialias: true });
     renderer.setClearColor(0x000000, 0);
     renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(800, 600);
@@ -195,20 +242,12 @@ function init() {
     container = document.getElementById('shape-canvas')
     
     container.appendChild( renderer.domElement )
-    
+    renderer.autoClear = false;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1.25;
     renderer.outputEncoding = THREE.sRGBEncoding;
 
-    // ambientLight = new THREE.AmbientLight(0xaaaaaa);
-    // scene.add(ambientLight);
-  
-    // spotLight = new THREE.SpotLight(0xffffff);
-    // spotLight.intensity = 0.9;
-    // spotLight.position.set(-10, 40, 20);
-  
-    // spotLight.castShadow = true;
-    // scene.add(spotLight);
+
 
     group = new THREE.Group();
     scene.add(group);
@@ -476,8 +515,8 @@ function createCircleBlink(){
     // material.transparent = false
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -527,8 +566,8 @@ function createRectangleBlink(){
 
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -554,8 +593,8 @@ function createPentagonBlink(){
     material.transparent = false
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -583,8 +622,8 @@ function createSphereBlink(){
     material.transparent = false
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -607,8 +646,8 @@ function createConeBlink(){
     material.transparent = false
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -631,8 +670,8 @@ function createBoxBlink(){
     material.transparent = false
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -657,8 +696,8 @@ function createDodecahedronBlink(){
     material.transparent = false
     material.opacity = 1
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
         material.visible = true
     } else {
         material.visible = false
@@ -674,7 +713,297 @@ function createDodecahedronBlink(){
 
 
 
-// Effect 4: Gradient
+// Effect 4: Bloom
+
+function createCircleBloom(){
+
+  //bloom renderer
+  const renderScene = new RenderPass(scene, camera);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.5,
+    0.4,
+    0.85
+  );
+
+  
+  bloomPass.threshold = 0.5;
+
+  let custom_energy = energy * 5;
+  if(custom_energy > 50){
+    bloomPass.strength = 10
+    bloomPass.exposure = 0.8
+    bloomPass.radius = 1;
+  } else {
+    bloomPass.radius = 0;
+    bloomPass.strength = 1
+    bloomPass.exposure = 0.8
+  }
+
+  let size = custom_energy;
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry( size / 5, 80 );
+
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  const pointLight = new THREE.PointLight( 0xffffff, 1);
+  camera.add(pointLight);
+
+  
+  bloomComposer = new EffectComposer(renderer);
+  bloomComposer.setSize(window.innerWidth, window.innerHeight);
+  bloomComposer.renderToScreen = true;
+  bloomComposer.addPass(renderScene);
+  bloomComposer.addPass(bloomPass);
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+  bloomComposer.render();
+
+}
+
+
+
+function createTriangleBloom(){
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry(  10, 0 );
+  let pitchColor = colorByPitch();
+  material = new THREE.ShaderMaterial({
+      uniforms: {
+        color1: {
+          value: new THREE.Color(pitchColor)
+        },
+        color2: {
+          value: new THREE.Color(objColor1)
+        }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+    
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 color1;
+        uniform vec3 color2;
+      
+        varying vec2 vUv;
+        
+        void main() {
+          
+          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+        }
+      `,
+      wireframe: false
+    });
+
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+
+}
+
+
+function createRectangleBloom(){
+  scene.background = new THREE.Color( bgColor );
+
+  geometry = new THREE.PlaneGeometry(  10,  10);
+  let pitchColor = colorByPitch();
+  material = new THREE.ShaderMaterial({
+      uniforms: {
+        color1: {
+          value: new THREE.Color(pitchColor)
+        },
+        color2: {
+          value: new THREE.Color(objColor1)
+        }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+    
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 color1;
+        uniform vec3 color2;
+      
+        varying vec2 vUv;
+        
+        void main() {
+          
+          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+        }
+      `,
+      wireframe: false
+    });
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+
+}
+
+
+
+function createPentagonBloom(){
+
+  scene.background = new THREE.Color( bgColor );
+
+  geometry = new THREE.CircleGeometry(  10, 5 );
+  let pitchColor = colorByPitch();
+  material = new THREE.ShaderMaterial({
+      uniforms: {
+        color1: {
+          value: new THREE.Color(pitchColor)
+        },
+        color2: {
+          value: new THREE.Color(objColor1)
+        }
+      },
+      vertexShader: `
+        varying vec2 vUv;
+    
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 color1;
+        uniform vec3 color2;
+      
+        varying vec2 vUv;
+        
+        void main() {
+          
+          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+        }
+      `,
+      wireframe: false
+    });
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+
+}
+
+
+
+
+// 3D 도형
+
+function createSphereBloom(){
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.SphereGeometry(  10, 64, 32 );
+  let pitchColor = colorByPitch();
+  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50, vertexColors: true} )
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+}
+
+
+function createConeBloom(){
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.ConeGeometry( 10, 10, 3 );
+  let pitchColor = colorByPitch();
+  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
+
+  let custom_energy = energy * 2;
+  if(custom_energy > 100){
+      material.visible = true
+  } else {
+      material.visible = false
+  }
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+
+}
+
+function createBoxBloom(){
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.BoxGeometry(  10,  10,  10 );
+  let pitchColor = colorByPitch();
+  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
+
+  let custom_energy = energy * 2;
+  if(custom_energy > 100){
+      material.visible = true
+  } else {
+      material.visible = false
+  }
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+
+
+}
+
+
+function createDodecahedronBloom(){
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.DodecahedronGeometry( 10, 0);
+  let pitchColor = colorByPitch();
+  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
+
+  let custom_energy = energy * 2;
+  if(custom_energy > 100){
+      material.visible = true
+  } else {
+      material.visible = false
+  }
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+}
+
+
+
+// Effect 5: Gradient
 // 2D 도형
 
 
@@ -891,8 +1220,7 @@ function createSphereGradient(){
     scene.background = new THREE.Color( bgColor );
     geometry = new THREE.SphereGeometry(  10, 64, 32 );
     let pitchColor = colorByPitch();
-    material = new THREE.ShaderMaterial({
-      });
+    material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50, vertexColors: true} )
 
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
@@ -907,9 +1235,8 @@ function createConeGradient(){
 
     scene.background = new THREE.Color( bgColor );
     geometry = new THREE.ConeGeometry( 10, 10, 3 );
-    material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
-    material.transparent = false
-    material.opacity = 1
+    let pitchColor = colorByPitch();
+    material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
 
     let custom_energy = energy * 2;
     if(custom_energy > 100){
@@ -931,9 +1258,8 @@ function createBoxGradient(){
 
     scene.background = new THREE.Color( bgColor );
     geometry = new THREE.BoxGeometry(  10,  10,  10 );
-    material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
-    material.transparent = false
-    material.opacity = 1
+    let pitchColor = colorByPitch();
+    material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
 
     let custom_energy = energy * 2;
     if(custom_energy > 100){
@@ -957,9 +1283,8 @@ function createDodecahedronGradient(){
 
     scene.background = new THREE.Color( bgColor );
     geometry = new THREE.DodecahedronGeometry( 10, 0);
-    material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
-    material.transparent = false
-    material.opacity = 1
+    let pitchColor = colorByPitch();
+    material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
 
     let custom_energy = energy * 2;
     if(custom_energy > 100){
@@ -975,15 +1300,6 @@ function createDodecahedronGradient(){
 
     group.add( compoCenter );
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1214,6 +1530,43 @@ function animate() {
           } else if (identityVisualization.innerText == 'dode-blink'){
               deleteBasics();
               createDodecahedronBlink();
+              render();
+          }
+
+
+          // effect: Bloom
+          if (identityVisualization.innerText == 'circle-bloom'){
+              deleteBasics();
+              createCircleBloom();
+              render();
+              bloomComposer.render();
+          } else if (identityVisualization.innerText == 'triangle-bloom'){
+              deleteBasics();
+              createTriangleBloom();
+              render();
+          } else if (identityVisualization.innerText == 'rectangle-bloom'){
+              deleteBasics();
+              createRectangleBloom();
+              render();
+          } else if (identityVisualization.innerText == 'pentagon-bloom'){
+              deleteBasics();
+              createPentagonBloom();
+              render();
+          } else if (identityVisualization.innerText == 'sphere-bloom'){
+              deleteBasics();
+              createSphereBloom();
+              render();
+          } else if (identityVisualization.innerText == 'cone-bloom'){
+              deleteBasics()
+              createConeBloom();
+              render();
+          } else if (identityVisualization.innerText == 'box-bloom'){
+              deleteBasics();
+              createBoxBloom();
+              render();
+          } else if (identityVisualization.innerText == 'dode-bloom'){
+              deleteBasics();
+              createDodecahedronBloom();
               render();
           }
 

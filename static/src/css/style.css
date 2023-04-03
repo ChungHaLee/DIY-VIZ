@@ -57,6 +57,10 @@ div#shapeMenu-Blink{
     display: none;
 }
 
+div#shapeMenu-Bloom{
+    display: none;
+}
+
 div#shapeMenu-Gradient{
     display: none;
 }
