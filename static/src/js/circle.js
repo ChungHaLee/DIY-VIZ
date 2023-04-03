@@ -367,7 +367,7 @@ let objectColorList = []
 let objectPositionXList = []
 let objectPositionYList = []
 let objectPositionZList = []
-
+let timeTableList = []
 
 function loadTemplate(buttonId){
   console.log("Load Button Id : ",buttonId);
@@ -377,6 +377,7 @@ function loadTemplate(buttonId){
   camera.position.x = objectPositionXList[buttonId-1];
   camera.position.y = objectPositionYList[buttonId-1];
   camera.position.z = objectPositionZList[buttonId-1];
+  $("#slider-range").slider("values", timeTableList[buttonId-1]);
   console.log(camera.position.x);
   console.log(camera.position.y);
   console.log(camera.position.z);
@@ -397,6 +398,10 @@ function saveTemplate(){
   objectPositionXList.push(camera.position.x);
   objectPositionYList.push(camera.position.y);
   objectPositionZList.push(camera.position.z);
+  let timeVector = $("#slider-range").slider("values");
+  timeTableList.push(timeVector);
+  $("#slider-range").slider("values", [timeVector[1], musicDuration]);
+  console.log($("#slider-range").slider("values"));
   console.log(objectPositionXList);
   console.log(objectPositionYList);
   console.log(objectPositionZList);
@@ -474,7 +479,7 @@ $("#slider-range").slider({
     range: true,
     min: 0,
     max: musicDuration,
-    values: [0, 0],
+    values: [0, musicDuration],
     step: 0.01,
     slide: function(event, ui) {
         $("#playTime").val(sec2Timer(ui.values[0]) + " - " + sec2Timer(ui.values[1]));
