@@ -36,8 +36,14 @@ function FileChange(){
         audio.src = URL.createObjectURL(files[0]);
 
         
-        analyser  = audio_context.createAnalyser();
-        src = audio_context.createMediaElementSource(audio)
+        //analyser  = audio_context.createAnalyser();
+        //src = audio_context.createMediaElementSource(audio)
+        if (!src) {
+            src = audio_context.createMediaElementSource(audio);
+            analyser = audio_context.createAnalyser();
+            src.connect(analyser);
+            analyser.connect(audio_context.destination);
+        }
         console.log(src)
 
         AnalyzerPlay(audio_context, src);
