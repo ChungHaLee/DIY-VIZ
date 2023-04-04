@@ -27,7 +27,8 @@
             <input type="file" id="thefile" accept="audio/*" />
             <pre id="filepath" style = "display: none;"> None </pre>
         </label>
-        <audio id="audio" controls></audio>
+        <audio id="audio" style = "display: none;" controls></audio>
+        <button class = "playButtonClass" id="playButton">Play</button>
 
         <div id="timestamp">
             <h4>Time Stamp</h4>
@@ -166,6 +167,9 @@
 
     <div class="saveTemplate">
         <h4>Save Template</h4>
+        <button id="TemplateJsonSave">Save Json</button>
+        <button id="TemplateJsonLoad">Load Json</button>
+        <input type="file" id="TemplateFile" style="display:none;">
         <!-- <button class="templateButton" id="template1">Test</button> -->
         <div id="templateContainer"></div>
     </div>

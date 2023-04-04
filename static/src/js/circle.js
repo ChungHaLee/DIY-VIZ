@@ -96,8 +96,8 @@ const dodeButtonHorizontal = document.getElementById('shapeDodecahedron-Horizont
 
 
 const templateSaveButton = document.getElementById("templateSave");
-const AudioObject = document.getElementById("audio");
-const filepath = document.getElementById("filepath");
+let AudioObject = document.getElementById("audio");
+let playButton  = document.getElementById("playButton")
 let musicDuration = 60;
 
 
@@ -2200,13 +2200,21 @@ function createPentagonHorizontal(){
 }
 
 
+
+
+
+let musicName = document.getElementById("thefile")
+let templateFile = document.getElementById("TemplateFile")
+
+
+
 let visualizationList = []
 let backgroundColorList = []
 let objectColorList = []
 let objectPositionXList = []
 let objectPositionYList = []
 let objectPositionZList = []
-let timeTableList = []
+let timeTableList = [0]
 
 
 
@@ -2219,18 +2227,10 @@ function loadTemplate(buttonId){
   camera.position.x = objectPositionXList[buttonId-1];
   camera.position.y = objectPositionYList[buttonId-1];
   camera.position.z = objectPositionZList[buttonId-1];
-  $("#slider-range").slider("values", timeTableList[buttonId-1]);
-  console.log(camera.position.x);
-  console.log(camera.position.y);
-  console.log(camera.position.z);
-
-  //console.log("Load Button Id : ",buttonId);
-  //console.log("-------load Template-------");
-  //console.log("visualization Type: ", identityVisualization.innerText);
-  //console.log("background Color : ", bgColor);
-  //console.log("object Color : ", objColor1);
-  //console.log(controls.object.position);
-  //console.log("---------------------------");
+  $("#slider-range").slider("values", [timeTableList[buttonId-1], timeTableList[buttonId]]);
+  $("#playTime").val(sec2Timer(timeTableList[buttonId-1])+ " - "+sec2Timer(timeTableList[buttonId]));
+  currentTempleteNumber = buttonId-1;
+  //AudioObject.currentTime = timeTableList[buttonId-1];
 }
 
 function saveTemplate(){
@@ -2240,19 +2240,9 @@ function saveTemplate(){
   objectPositionXList.push(camera.position.x);
   objectPositionYList.push(camera.position.y);
   objectPositionZList.push(camera.position.z);
-  let timeVector = $("#slider-range").slider("values");
-  timeTableList.push(timeVector);
-  $("#slider-range").slider("values", [timeVector[1], musicDuration]);
-  console.log($("#slider-range").slider("values"));
-  console.log(objectPositionXList);
-  console.log(objectPositionYList);
-  console.log(objectPositionZList);
-  //console.log("-------Save Template-------");
-  //console.log("visualization Type: ", identityVisualization.innerText);
-  //console.log("background Color : ", bgColor);
-  //console.log("object Color : ", objColor1);
-  //console.log(controls.object.position);
-  //console.log("---------------------------");
+  let finishedTime = $("#slider-range").slider("values")[1];
+  timeTableList.push(finishedTime);
+  $("#slider-range").slider("values", [finishedTime, finishedTime]);
 }
 
 templateSaveButton.addEventListener('click', function (){
@@ -2276,6 +2266,103 @@ templateSaveButton.addEventListener('click', function (){
     saveTemplate()
   }
 })
+function ButtonMaker(index){
+  var button = document.createElement('button');
+  button.type = 'button';
+  button.style = "font-size: 1.4em;" + "background-color: " + saveButtonColorList[(index%(saveButtonColorList.length+1))]
+  if(index < 10){
+    button.innerHTML = "0" + String(index);
+  }
+  else{
+    button.innerHTML = String(index);
+  }
+  button.onclick = function() {
+    loadTemplate(parseInt(button.innerHTML));
+  };
+  var container = document.getElementById('templateContainer');
+  container.appendChild(button);
+}
+
+
+
+function InitializeAllSetting(){
+  //모든 버튼 내용 삭제
+  var container = document.getElementById('templateContainer');
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+  currentTempleteNumber = 0;
+  AudioObject.currentTime = 0;
+  visualizationList = [];
+  backgroundColorList = [];
+  objectColorList = [];
+  objectPositionXList = [];
+  objectPositionYList = [];
+  objectPositionZList = [];
+  timeTableList = [0];
+}
+
+// 객체를 JSON 파일로 다운로드하는 함수
+function downloadJsonFile(filename, data) {
+  const jsonData = JSON.stringify(data);
+  const blob = new Blob([jsonData], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement('a');
+  link.download = filename;
+  link.href = url;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById("TemplateJsonSave").addEventListener('click', function(){
+  let JsonObject = {
+    "music": musicName.files[0].name,
+    "visualization" : visualizationList,
+    "backgroundColorList" : backgroundColorList, 
+    "objectColor" : objectColorList, 
+    "objectPositionX" : objectPositionXList, 
+    "objectPositionY" : objectPositionYList, 
+    "objectPositionZ" : objectPositionZList,
+    "timeTable" : timeTableList
+  }
+  downloadJsonFile("Template_file", JsonObject);
+})
+
+
+document.getElementById("TemplateJsonLoad").addEventListener('click', function(){
+  templateFile.click();
+})
+templateFile.addEventListener('change', function(e){
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const contents = event.target.result;
+      const jsonObject = JSON.parse(contents);
+      if(AudioObject.src == ""){
+        alert("First, Need to input the music")
+      }
+      else if(musicName.files[0].name != jsonObject["music"]){
+        alert("This Template is not used for music")
+      }
+      else{
+        InitializeAllSetting();
+        visualizationList = jsonObject["visualization"];
+        backgroundColorList = jsonObject["backgroundColorList"];
+        objectColorList = jsonObject["objectColor"];
+        objectPositionXList = jsonObject["objectPositionX"];
+        objectPositionYList = jsonObject["objectPositionY"];
+        objectPositionZList = jsonObject["objectPositionZ"];
+        timeTableList = jsonObject["timeTable"];
+        for(var i =1; i< visualizationList.length+1; i++){
+          ButtonMaker(i)
+        }
+      }
+    };
+    reader.readAsText(file);
+  })
 
 function sec2Timer(time){
   let m = String(parseInt(parseFloat(time)/60))
@@ -2286,33 +2373,62 @@ function sec2Timer(time){
   return m + ":" +  s + ":" + _s
 }
 
-// AudioObject.addEventListener("change", function (){
-//   console.log("Audio Changed", AudioObject.src)
-// })
+playButton.addEventListener("click", function(){
+  var musicDuration = AudioObject.duration;
+  var currentPlayTime = AudioObject.currentTime;
+  $("#slider").slider("option", "max", musicDuration);
+  $("#slider").slider("value", currentPlayTime);
+  $("#rangeTime").val(sec2Timer(currentPlayTime));
 
-// AudioObject.addEventListener('click', function (){
-//   console.log("test", AudioObject.currentTime)
-// })
-AudioObject.addEventListener("change", function (){
-  musicDuration = AudioObject.duration;
-  console.log("test", musicDuration);
+  $("#slider-range").slider("option", "max", musicDuration);
+
+  if(playButton.innerHTML == "Play"){
+    playButton.innerHTML = "Pause"
+    console.log("music play");
+    audio.play();
+  }
+  else{
+    playButton.innerHTML = "Play"
+    console.log("music pause");
+    audio.pause();
+  }
+})
+
+AudioObject.addEventListener("timeupdate", function(){
+  var currentPlayTime = AudioObject.currentTime;
+  $("#slider").slider("value", currentPlayTime);
+  $("#rangeTime").val(sec2Timer(currentPlayTime));
+  if(currentPlayTime > timeTableList[timeTableList.length-1]){
+    $("#slider-range").slider("values", [timeTableList[currentTempleteNumber], currentPlayTime]);
+    $("#playTime").val(sec2Timer(timeTableList[currentTempleteNumber])+ " - "+sec2Timer(currentPlayTime));
+  }
+  else{
+    
+    console.log(timeTableList)
+    for(let i=0; i<timeTableList.length; i++){
+      if(currentPlayTime < timeTableList[i]){
+        console.log("loggin template", i);
+        if(i-1 != currentTempleteNumber){
+          loadTemplate(i);
+        }
+        break
+      }
+      //loadTemplate(i+2);
+    }
+  }
 })
 
 
-
-
-
-
-// 음악 시간 컨트롤용 슬라이더
 $("#slider").slider({
   value:0,
   min: 0,
-  max: musicDuration,
+  max: 0,
   step: 0.01,
   slide: function( event, ui ) {
       $( "#rangeTime" ).val(sec2Timer(ui.value));
-      console.log("test", AudioObject.currentTime);
-      console.log("duration", AudioObject.duration);
+      AudioObject.currentTime = ui.value;
+      // console.log("test", AudioObject.currentTime);
+      // console.log("duration", AudioObject.duration);
       //AudioObject.currentTime = parseFloat(ui.value);
   }
 });
@@ -2322,8 +2438,8 @@ $("#rangeTime").val(sec2Timer($( "#slider" ).slider( "value" )));
 $("#slider-range").slider({
     range: true,
     min: 0,
-    max: musicDuration,
-    values: [0, musicDuration],
+    max: 0,
+    values: [0, 0],
     step: 0.01,
     slide: function(event, ui) {
         $("#playTime").val(sec2Timer(ui.values[0]) + " - " + sec2Timer(ui.values[1]));
