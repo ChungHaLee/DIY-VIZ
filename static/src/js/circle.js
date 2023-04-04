@@ -2200,6 +2200,541 @@ function createPentagonHorizontal(){
 }
 
 
+function createSphereHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.SphereGeometry( size/3, 64, 32 );
+  let geometryCenter = new THREE.SphereGeometry( size/2, 64, 32 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-25, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(25, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+
+function createConeHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.ConeGeometry( size/2, size/2, 3 );
+  let geometryCenter = geometry = new THREE.ConeGeometry( size/3, size/3, 3 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-25, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(25, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+function createBoxHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.BoxGeometry( size/3, size/3, size/3 );
+  let geometryCenter = new THREE.BoxGeometry( size/2, size/2, size/2 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-20, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(20, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+
+function createDodecahedronHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.DodecahedronGeometry( size/3, 0);
+  let geometryCenter = new THREE.DodecahedronGeometry( size/2.5, 0);
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-23, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(23, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+
+
+
+
+
+
+
+
+
 let visualizationList = []
 let backgroundColorList = []
 let objectColorList = []
