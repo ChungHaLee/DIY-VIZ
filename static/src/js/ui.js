@@ -64,7 +64,6 @@ for (let i = 0; i < bloom3D.length; i++) {
 
 let clickList = []
 
-
 effectScaleButton.addEventListener('click', function(){
     clickList.push('scale')
     changeDisplay();

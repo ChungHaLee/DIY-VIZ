@@ -38,7 +38,6 @@ const boxButtonScale = document.getElementById('shapeBox-Scale');
 const dodeButtonScale = document.getElementById('shapeDodecahedron-Scale');
 
 
-
 // Effect: Blink
 const circleButtonBlink = document.getElementById('shapeCircle-Blink');
 const triangleButtonBlink = document.getElementById('shapeTriangle-Blink');
@@ -48,6 +47,17 @@ const sphereButtonBlink = document.getElementById('shapeSphere-Blink');
 const coneButtonBlink = document.getElementById('shapeCone-Blink');
 const boxButtonBlink = document.getElementById('shapeBox-Blink');
 const dodeButtonBlink = document.getElementById('shapeDodecahedron-Blink');
+
+
+// Effect: Line
+const circleButtonLine = document.getElementById('shapeCircle-Line');
+const triangleButtonLine = document.getElementById('shapeTriangle-Line');
+const rectangleButtonLine = document.getElementById('shapeRectangle-Line');
+const pentagonButtonLine = document.getElementById('shapePentagon-Line');
+// const sphereButtonLine = document.getElementById('shapeSphere-Line');
+// const coneButtonLine = document.getElementById('shapeCone-Line');
+// const boxButtonLine = document.getElementById('shapeBox-Line');
+// const dodeButtonLine = document.getElementById('shapeDodecahedron-Line');
 
 
 // Effect: Bloom
@@ -120,6 +130,7 @@ function optionalVisualization(){
   })
 
 
+
   // Effect: Blink
   circleButtonBlink.addEventListener('click', function (){
     identityVisualization.innerText = 'circle-blink';
@@ -152,6 +163,41 @@ function optionalVisualization(){
   dodeButtonBlink.addEventListener('click', function (){
     identityVisualization.innerText = 'dode-blink'
   })
+
+
+   // Effect: Line
+   circleButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'circle-line';
+  })
+
+  triangleButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'triangle-line';
+  })
+
+  rectangleButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'rectangle-line';
+  })
+
+  pentagonButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'pentagon-line';
+  })
+
+  // sphereButtonLine.addEventListener('click', function (){
+  //   identityVisualization.innerText = 'sphere-line';
+  // })
+
+  // coneButtonLine.addEventListener('click', function (){
+  //   identityVisualization.innerText = 'cone-line'
+  // })
+
+  // boxButtonLine.addEventListener('click', function( ){
+  //   identityVisualization.innerText = 'box-line'
+  // })
+
+  // dodeButtonBlink.addEventListener('click', function (){
+  //   identityVisualization.innerText = 'dode-blink'
+  // })
+
 
   // Effect: Bloom
   circleButtonBloom.addEventListener('click', function (){
@@ -713,33 +759,130 @@ function createDodecahedronBlink(){
 
 
 
+// Effect 3: Line
+
+function createCircleLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+ 
+  geometry = new THREE.TorusGeometry( size / 3, 0.1, 30, 200);
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  material.transparent = false
+  material.opacity = 1
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+  
+}
+
+
+function createTriangleLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+ 
+  geometry = new THREE.TorusGeometry( size / 3, 0.1, 30, 3);
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  material.transparent = false
+  material.opacity = 1
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+  
+}
+
+
+
+function createRectangleLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+ 
+  geometry = new THREE.TorusGeometry( size / 3, 0.1, 30, 4);
+  material = new THREE.MeshBasicMaterial( { color: objColor1, side: THREE.DoubleSide } );
+  material.transparent = false
+  material.opacity = 1
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+  
+}
+
+
+
+function createPentagonLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+ 
+  geometry = new THREE.TorusGeometry( size / 3, 0.1, 30, 5);
+  material = new THREE.MeshBasicMaterial( { color: objColor1, side: THREE.DoubleSide } );
+  material.transparent = false
+  material.opacity = 1
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+
+  group.add( compoCenter );
+  
+}
+
+
+
+
+
+
+
+
 // Effect 4: Bloom
 
-function blooming(){
-   //bloom renderer
-   const renderScene = new RenderPass(scene, camera);
-   const bloomPass = new UnrealBloomPass(
-     new THREE.Vector2(window.innerWidth, window.innerHeight),
-     1.5,
-     0.4,
-     0.85
-   );
- 
-   
-   bloomPass.threshold = 0.5;
- 
-   let custom_energy = energy * 5;
-   if(custom_energy > 50){
-     bloomPass.strength = 10
-     bloomPass.exposure = 0.8
-     bloomPass.radius = 1;
-   } else {
-     bloomPass.radius = 0;
-     bloomPass.strength = 1
-     bloomPass.exposure = 0.8
-   }
-   bloomComposer.render();
-}
 
 function createCircleBloom(){
 
@@ -1709,85 +1852,105 @@ function animate() {
               render();
           }
 
-
-          // effect: Bloom
-          if (identityVisualization.innerText == 'circle-bloom'){
-              deleteBasics();
-              createCircleBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'triangle-bloom'){
-              deleteBasics();
-              createTriangleBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'rectangle-bloom'){
-              deleteBasics();
-              createRectangleBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'pentagon-bloom'){
-              deleteBasics();
-              createPentagonBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'sphere-bloom'){
-              deleteBasics();
-              createSphereBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'cone-bloom'){
-              deleteBasics()
-              createConeBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'box-bloom'){
-              deleteBasics();
-              createBoxBloom();
-              render();
-              bloomComposer.render();
-          } else if (identityVisualization.innerText == 'dode-bloom'){
-              deleteBasics();
-              createDodecahedronBloom();
-              render();
-              bloomComposer.render();
-          }
+          // effect: line
+          if (identityVisualization.innerText == 'circle-line'){
+            deleteBasics();
+            createCircleLine();
+            render();
+        } else if (identityVisualization.innerText == 'triangle-line'){
+            deleteBasics();
+            createTriangleLine();
+            render();
+        } else if (identityVisualization.innerText == 'rectangle-line'){
+            deleteBasics();
+            createRectangleLine();
+            render();
+        } else if (identityVisualization.innerText == 'pentagon-line'){
+            deleteBasics();
+            createPentagonLine();
+            render();
+        } 
 
 
-          // effect: Gradient
-          if (identityVisualization.innerText == 'circle-gradient'){
-              deleteBasics();
-              createCircleGradient();
-              render();
-          } else if (identityVisualization.innerText == 'triangle-gradient'){
-              deleteBasics();
-              createTriangleGradient();
-              render();
-          } else if (identityVisualization.innerText == 'rectangle-gradient'){
-              deleteBasics();
-              createRectangleGradient();
-              render();
-          } else if (identityVisualization.innerText == 'pentagon-gradient'){
-              deleteBasics();
-              createPentagonGradient();
-              render();
-          } else if (identityVisualization.innerText == 'sphere-gradient'){
-              deleteBasics();
-              createSphereGradient();
-              render();
-          } else if (identityVisualization.innerText == 'cone-gradient'){
-              deleteBasics()
-              createConeGradient();
-              render();
-          } else if (identityVisualization.innerText == 'box-gradient'){
-              deleteBasics();
-              createBoxGradient();
-              render();
-          } else if (identityVisualization.innerText == 'dode-gradient'){
-              deleteBasics();
-              createDodecahedronGradient();
-              render();
-          }
+
+        // effect: Bloom
+        if (identityVisualization.innerText == 'circle-bloom'){
+            deleteBasics();
+            createCircleBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'triangle-bloom'){
+            deleteBasics();
+            createTriangleBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'rectangle-bloom'){
+            deleteBasics();
+            createRectangleBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'pentagon-bloom'){
+            deleteBasics();
+            createPentagonBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'sphere-bloom'){
+            deleteBasics();
+            createSphereBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'cone-bloom'){
+            deleteBasics()
+            createConeBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'box-bloom'){
+            deleteBasics();
+            createBoxBloom();
+            render();
+            bloomComposer.render();
+        } else if (identityVisualization.innerText == 'dode-bloom'){
+            deleteBasics();
+            createDodecahedronBloom();
+            render();
+            bloomComposer.render();
+        }
+
+
+        // effect: Gradient
+        if (identityVisualization.innerText == 'circle-gradient'){
+            deleteBasics();
+            createCircleGradient();
+            render();
+        } else if (identityVisualization.innerText == 'triangle-gradient'){
+            deleteBasics();
+            createTriangleGradient();
+            render();
+        } else if (identityVisualization.innerText == 'rectangle-gradient'){
+            deleteBasics();
+            createRectangleGradient();
+            render();
+        } else if (identityVisualization.innerText == 'pentagon-gradient'){
+            deleteBasics();
+            createPentagonGradient();
+            render();
+        } else if (identityVisualization.innerText == 'sphere-gradient'){
+            deleteBasics();
+            createSphereGradient();
+            render();
+        } else if (identityVisualization.innerText == 'cone-gradient'){
+            deleteBasics()
+            createConeGradient();
+            render();
+        } else if (identityVisualization.innerText == 'box-gradient'){
+            deleteBasics();
+            createBoxGradient();
+            render();
+        } else if (identityVisualization.innerText == 'dode-gradient'){
+            deleteBasics();
+            createDodecahedronGradient();
+            render();
+        }
     
       }
 
