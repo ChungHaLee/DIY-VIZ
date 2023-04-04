@@ -1435,13 +1435,6 @@ function createConeGradient(){
     let pitchColor = colorByPitch();
     material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
 
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
-        material.visible = true
-    } else {
-        material.visible = false
-    }
-
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
 
@@ -1457,13 +1450,6 @@ function createBoxGradient(){
     geometry = new THREE.BoxGeometry(  10,  10,  10 );
     let pitchColor = colorByPitch();
     material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
-
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
-        material.visible = true
-    } else {
-        material.visible = false
-    }
 
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
@@ -1482,13 +1468,6 @@ function createDodecahedronGradient(){
     geometry = new THREE.DodecahedronGeometry( 10, 0);
     let pitchColor = colorByPitch();
     material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
-
-    let custom_energy = energy * 2;
-    if(custom_energy > 100){
-        material.visible = true
-    } else {
-        material.visible = false
-    }
 
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);

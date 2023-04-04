@@ -47,6 +47,24 @@ button.shapeButtonClass{
     height: 2rem;
 }
 
+button.shapeButtonClass_2D{
+    width: 10rem;
+    height: 2rem;
+}
+
+button.shapeButtonClass_3D{
+    width: 10rem;
+    height: 2rem;
+}
+
+
+button#backgroundColorSaveButton{
+    visibility: visible;
+}
+button#objectColor1SaveButton{
+    visibility: visible;
+}
+
 
 
 /* div#shapeMenu-Scale{
@@ -54,6 +72,10 @@ button.shapeButtonClass{
 } */
 
 div#shapeMenu-Blink{
+    display: none;
+}
+
+div#shapeMenu-Line{
     display: none;
 }
 
