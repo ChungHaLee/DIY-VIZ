@@ -715,6 +715,32 @@ function createDodecahedronBlink(){
 
 // Effect 4: Bloom
 
+function blooming(){
+   //bloom renderer
+   const renderScene = new RenderPass(scene, camera);
+   const bloomPass = new UnrealBloomPass(
+     new THREE.Vector2(window.innerWidth, window.innerHeight),
+     1.5,
+     0.4,
+     0.85
+   );
+ 
+   
+   bloomPass.threshold = 0.5;
+ 
+   let custom_energy = energy * 5;
+   if(custom_energy > 50){
+     bloomPass.strength = 10
+     bloomPass.exposure = 0.8
+     bloomPass.radius = 1;
+   } else {
+     bloomPass.radius = 0;
+     bloomPass.strength = 1
+     bloomPass.exposure = 0.8
+   }
+   bloomComposer.render();
+}
+
 function createCircleBloom(){
 
   //bloom renderer
@@ -741,8 +767,8 @@ function createCircleBloom(){
   }
 
   let size = custom_energy;
-  scene.background = new THREE.Color( bgColor );
-  geometry = new THREE.CircleGeometry( size / 5, 80 );
+  scene.background = new THREE.Color( '#FFFFFF' );
+  geometry = new THREE.CircleGeometry( size / 6, 80 );
 
   material = new THREE.MeshBasicMaterial( { color: objColor1 } );
 
@@ -773,93 +799,112 @@ function createCircleBloom(){
 
 function createTriangleBloom(){
 
-  scene.background = new THREE.Color( bgColor );
-  geometry = new THREE.CircleGeometry(  10, 0 );
-  let pitchColor = colorByPitch();
-  material = new THREE.ShaderMaterial({
-      uniforms: {
-        color1: {
-          value: new THREE.Color(pitchColor)
-        },
-        color2: {
-          value: new THREE.Color(objColor1)
-        }
-      },
-      vertexShader: `
-        varying vec2 vUv;
+    //bloom renderer
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1.5,
+      0.4,
+      0.85
+    );
+  
     
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 color1;
-        uniform vec3 color2;
-      
-        varying vec2 vUv;
-        
-        void main() {
-          
-          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-        }
-      `,
-      wireframe: false
-    });
+    bloomPass.threshold = 0.5;
+  
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
+      bloomPass.strength = 10
+      bloomPass.exposure = 0.8
+      bloomPass.radius = 1;
+    } else {
+      bloomPass.radius = 0;
+      bloomPass.strength = 1
+      bloomPass.exposure = 0.8
+    }
+  
+    let size = custom_energy;
+    scene.background = new THREE.Color( '#FFFFFF' );
+    geometry = new THREE.CircleGeometry( size / 6, 0 );
+  
+    material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  
+    compoCenter = new THREE.Mesh(geometry, material);
+    compoCenter.position.set(1, 0, 0);
+  
+    const pointLight = new THREE.PointLight( 0xffffff, 1);
+    camera.add(pointLight);
+  
+    
+    bloomComposer = new EffectComposer(renderer);
+    bloomComposer.setSize(window.innerWidth, window.innerHeight);
+    bloomComposer.renderToScreen = true;
+    bloomComposer.addPass(renderScene);
+    bloomComposer.addPass(bloomPass);
+  
+  
+    compoCenter = new THREE.Mesh(geometry, material);
+    compoCenter.position.set(1, 0, 0);
+  
+  
+    group.add( compoCenter );
+    bloomComposer.render();
 
-
-
-  compoCenter = new THREE.Mesh(geometry, material);
-  compoCenter.position.set(1, 0, 0);
-
-
-  group.add( compoCenter );
+ 
 
 }
 
 
 function createRectangleBloom(){
-  scene.background = new THREE.Color( bgColor );
 
-  geometry = new THREE.PlaneGeometry(  10,  10);
-  let pitchColor = colorByPitch();
-  material = new THREE.ShaderMaterial({
-      uniforms: {
-        color1: {
-          value: new THREE.Color(pitchColor)
-        },
-        color2: {
-          value: new THREE.Color(objColor1)
-        }
-      },
-      vertexShader: `
-        varying vec2 vUv;
+      //bloom renderer
+      const renderScene = new RenderPass(scene, camera);
+      const bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        1.5,
+        0.4,
+        0.85
+      );
     
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 color1;
-        uniform vec3 color2;
       
-        varying vec2 vUv;
-        
-        void main() {
-          
-          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-        }
-      `,
-      wireframe: false
-    });
-
-
-  compoCenter = new THREE.Mesh(geometry, material);
-  compoCenter.position.set(1, 0, 0);
-
-
-  group.add( compoCenter );
+      bloomPass.threshold = 0.5;
+    
+      let custom_energy = energy * 5;
+      if(custom_energy > 50){
+        bloomPass.strength = 10
+        bloomPass.exposure = 0.8
+        bloomPass.radius = 1;
+      } else {
+        bloomPass.radius = 0;
+        bloomPass.strength = 1
+        bloomPass.exposure = 0.8
+      }
+    
+      let size = custom_energy;
+      scene.background = new THREE.Color( '#FFFFFF' );
+      geometry = new THREE.PlaneGeometry( size/6, size/6 );
+    
+      material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+    
+      compoCenter = new THREE.Mesh(geometry, material);
+      compoCenter.position.set(1, 0, 0);
+    
+      const pointLight = new THREE.PointLight( 0xffffff, 1);
+      camera.add(pointLight);
+    
+      
+      bloomComposer = new EffectComposer(renderer);
+      bloomComposer.setSize(window.innerWidth, window.innerHeight);
+      bloomComposer.renderToScreen = true;
+      bloomComposer.addPass(renderScene);
+      bloomComposer.addPass(bloomPass);
+    
+    
+      compoCenter = new THREE.Mesh(geometry, material);
+      compoCenter.position.set(1, 0, 0);
+    
+    
+      group.add( compoCenter );
+      bloomComposer.render();
 
 }
 
@@ -867,46 +912,58 @@ function createRectangleBloom(){
 
 function createPentagonBloom(){
 
-  scene.background = new THREE.Color( bgColor );
+  //bloom renderer
+  const renderScene = new RenderPass(scene, camera);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.5,
+    0.4,
+    0.85
+  );
 
-  geometry = new THREE.CircleGeometry(  10, 5 );
-  let pitchColor = colorByPitch();
-  material = new THREE.ShaderMaterial({
-      uniforms: {
-        color1: {
-          value: new THREE.Color(pitchColor)
-        },
-        color2: {
-          value: new THREE.Color(objColor1)
-        }
-      },
-      vertexShader: `
-        varying vec2 vUv;
-    
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
-        }
-      `,
-      fragmentShader: `
-        uniform vec3 color1;
-        uniform vec3 color2;
-      
-        varying vec2 vUv;
-        
-        void main() {
-          
-          gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
-        }
-      `,
-      wireframe: false
-    });
+  
+  bloomPass.threshold = 0.5;
+
+  let custom_energy = energy * 5;
+  if(custom_energy > 50){
+    bloomPass.strength = 10
+    bloomPass.exposure = 0.8
+    bloomPass.radius = 1;
+  } else {
+    bloomPass.radius = 0;
+    bloomPass.strength = 1
+    bloomPass.exposure = 0.8
+  }
+
+  let size = custom_energy;
+  scene.background = new THREE.Color( '#FFFFFF' );
+  geometry = new THREE.CircleGeometry( size/6, 5 );
+
+  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  const pointLight = new THREE.PointLight( 0xffffff, 1);
+  camera.add(pointLight);
+
+  
+  bloomComposer = new EffectComposer(renderer);
+  bloomComposer.setSize(window.innerWidth, window.innerHeight);
+  bloomComposer.renderToScreen = true;
+  bloomComposer.addPass(renderScene);
+  bloomComposer.addPass(bloomPass);
+
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
 
 
   group.add( compoCenter );
+  bloomComposer.render();
+
+
+  
 
 }
 
@@ -917,95 +974,235 @@ function createPentagonBloom(){
 
 function createSphereBloom(){
 
-  scene.background = new THREE.Color( bgColor );
-  geometry = new THREE.SphereGeometry(  10, 64, 32 );
-  let pitchColor = colorByPitch();
-  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50, vertexColors: true} )
+    //bloom renderer
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      1.5,
+      0.4,
+      0.85
+    );
+  
+    
+    bloomPass.threshold = 0.5;
+  
+    let custom_energy = energy * 5;
+    if(custom_energy > 50){
+      bloomPass.strength = 10
+      bloomPass.exposure = 0.8
+      bloomPass.radius = 1;
+    } else {
+      bloomPass.radius = 0;
+      bloomPass.strength = 1
+      bloomPass.exposure = 0.8
+    }
+  
+    let size = custom_energy;
+    scene.background = new THREE.Color( bgColor );
+    geometry = new THREE.SphereGeometry( size/5, 64, 32 );
+    material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
+  
+    compoCenter = new THREE.Mesh(geometry, material);
+    compoCenter.position.set(1, 0, 0);
+  
+    const pointLight = new THREE.PointLight( 0xffffff, 1);
+    camera.add(pointLight);
+  
+    
+    bloomComposer = new EffectComposer(renderer);
+    bloomComposer.setSize(window.innerWidth, window.innerHeight);
+    bloomComposer.renderToScreen = true;
+    bloomComposer.addPass(renderScene);
+    bloomComposer.addPass(bloomPass);
+  
+  
+    compoCenter = new THREE.Mesh(geometry, material);
+    compoCenter.position.set(1, 0, 0);
+  
+  
+    group.add( compoCenter );
+    bloomComposer.render();
 
-  compoCenter = new THREE.Mesh(geometry, material);
-  compoCenter.position.set(1, 0, 0);
-
-  scene.add(pointLight);
-
-  group.add( compoCenter );
+  
 }
+
 
 
 function createConeBloom(){
 
-  scene.background = new THREE.Color( bgColor );
-  geometry = new THREE.ConeGeometry( 10, 10, 3 );
-  let pitchColor = colorByPitch();
-  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
+  //bloom renderer
+  const renderScene = new RenderPass(scene, camera);
+  const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(window.innerWidth, window.innerHeight),
+    1.5,
+    0.4,
+    0.85
+  );
 
-  let custom_energy = energy * 2;
-  if(custom_energy > 100){
-      material.visible = true
+  
+  bloomPass.threshold = 0.5;
+
+  let custom_energy = energy * 5;
+  if(custom_energy > 50){
+    bloomPass.strength = 10
+    bloomPass.exposure = 0.8
+    bloomPass.radius = 1;
   } else {
-      material.visible = false
+    bloomPass.radius = 0;
+    bloomPass.strength = 1
+    bloomPass.exposure = 0.8
   }
+
+  let size = custom_energy;
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.ConeGeometry( size/5, size/5, 3 );
+  material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
 
-  scene.add(pointLight);
+  const pointLight = new THREE.PointLight( 0xffffff, 1);
+  camera.add(pointLight);
+
+  
+  bloomComposer = new EffectComposer(renderer);
+  bloomComposer.setSize(window.innerWidth, window.innerHeight);
+  bloomComposer.renderToScreen = true;
+  bloomComposer.addPass(renderScene);
+  bloomComposer.addPass(bloomPass);
+
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
 
   group.add( compoCenter );
+  bloomComposer.render();
 
+  
 }
+
+
+
+
 
 function createBoxBloom(){
 
-  scene.background = new THREE.Color( bgColor );
-  geometry = new THREE.BoxGeometry(  10,  10,  10 );
-  let pitchColor = colorByPitch();
-  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
+   //bloom renderer
+   const renderScene = new RenderPass(scene, camera);
+   const bloomPass = new UnrealBloomPass(
+     new THREE.Vector2(window.innerWidth, window.innerHeight),
+     1.5,
+     0.4,
+     0.85
+   );
+ 
+   
+   bloomPass.threshold = 0.5;
+ 
+   let custom_energy = energy * 5;
+   if(custom_energy > 50){
+     bloomPass.strength = 10
+     bloomPass.exposure = 0.8
+     bloomPass.radius = 1;
+   } else {
+     bloomPass.radius = 0;
+     bloomPass.strength = 1
+     bloomPass.exposure = 0.8
+   }
+ 
+   let size = custom_energy;
+   scene.background = new THREE.Color( bgColor );
+   geometry = new THREE.BoxGeometry( size/5, size/5, size/5 );
+   material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
+ 
+   compoCenter = new THREE.Mesh(geometry, material);
+   compoCenter.position.set(1, 0, 0);
+ 
+   const pointLight = new THREE.PointLight( 0xffffff, 1);
+   camera.add(pointLight);
+ 
+   
+   bloomComposer = new EffectComposer(renderer);
+   bloomComposer.setSize(window.innerWidth, window.innerHeight);
+   bloomComposer.renderToScreen = true;
+   bloomComposer.addPass(renderScene);
+   bloomComposer.addPass(bloomPass);
+ 
+ 
+   compoCenter = new THREE.Mesh(geometry, material);
+   compoCenter.position.set(1, 0, 0);
+ 
+ 
+   group.add( compoCenter );
+   bloomComposer.render();
 
-  let custom_energy = energy * 2;
-  if(custom_energy > 100){
-      material.visible = true
-  } else {
-      material.visible = false
-  }
-
-  compoCenter = new THREE.Mesh(geometry, material);
-  compoCenter.position.set(1, 0, 0);
-
-  scene.add(pointLight);
-
-  group.add( compoCenter );
-
+ 
 
 }
 
 
 function createDodecahedronBloom(){
 
-  scene.background = new THREE.Color( bgColor );
-  geometry = new THREE.DodecahedronGeometry( 10, 0);
-  let pitchColor = colorByPitch();
-  material = new THREE.MeshPhongMaterial( {color: objColor1, emissive: pitchColor, specular: pitchColor, shininess: 50} )
+     //bloom renderer
+     const renderScene = new RenderPass(scene, camera);
+     const bloomPass = new UnrealBloomPass(
+       new THREE.Vector2(window.innerWidth, window.innerHeight),
+       1.5,
+       0.4,
+       0.85
+     );
+   
+     
+     bloomPass.threshold = 0.5;
+   
+     let custom_energy = energy * 5;
+     if(custom_energy > 50){
+       bloomPass.strength = 10
+       bloomPass.exposure = 0.8
+       bloomPass.radius = 1;
+     } else {
+       bloomPass.radius = 0;
+       bloomPass.strength = 1
+       bloomPass.exposure = 0.8
+     }
+   
+     let size = custom_energy;
+     scene.background = new THREE.Color( bgColor );
+     geometry = new THREE.DodecahedronGeometry( size/5, 0);
+     material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
+   
+     compoCenter = new THREE.Mesh(geometry, material);
+     compoCenter.position.set(1, 0, 0);
+   
+     const pointLight = new THREE.PointLight( 0xffffff, 1);
+     camera.add(pointLight);
+   
+     
+     bloomComposer = new EffectComposer(renderer);
+     bloomComposer.setSize(window.innerWidth, window.innerHeight);
+     bloomComposer.renderToScreen = true;
+     bloomComposer.addPass(renderScene);
+     bloomComposer.addPass(bloomPass);
+   
+   
+     compoCenter = new THREE.Mesh(geometry, material);
+     compoCenter.position.set(1, 0, 0);
+   
+   
+     group.add( compoCenter );
+     bloomComposer.render();
 
-  let custom_energy = energy * 2;
-  if(custom_energy > 100){
-      material.visible = true
-  } else {
-      material.visible = false
-  }
 
-  compoCenter = new THREE.Mesh(geometry, material);
-  compoCenter.position.set(1, 0, 0);
-
-  scene.add(pointLight);
-
-  group.add( compoCenter );
 }
+
+
+
 
 
 
 // Effect 5: Gradient
 // 2D 도형
-
 
 function colorByPitch(){
     let pitchColor;
@@ -1544,30 +1741,37 @@ function animate() {
               deleteBasics();
               createTriangleBloom();
               render();
+              bloomComposer.render();
           } else if (identityVisualization.innerText == 'rectangle-bloom'){
               deleteBasics();
               createRectangleBloom();
               render();
+              bloomComposer.render();
           } else if (identityVisualization.innerText == 'pentagon-bloom'){
               deleteBasics();
               createPentagonBloom();
               render();
+              bloomComposer.render();
           } else if (identityVisualization.innerText == 'sphere-bloom'){
               deleteBasics();
               createSphereBloom();
               render();
+              bloomComposer.render();
           } else if (identityVisualization.innerText == 'cone-bloom'){
               deleteBasics()
               createConeBloom();
               render();
+              bloomComposer.render();
           } else if (identityVisualization.innerText == 'box-bloom'){
               deleteBasics();
               createBoxBloom();
               render();
+              bloomComposer.render();
           } else if (identityVisualization.innerText == 'dode-bloom'){
               deleteBasics();
               createDodecahedronBloom();
               render();
+              bloomComposer.render();
           }
 
 
