@@ -12,7 +12,8 @@ import { bgColor, objColor1, objColor2, setBgColor, setObjColor1 } from './color
 
 let controls, bloomComposer;
 let camera, scene, renderer;
-let geometry, material, compoCenter;
+let geometry, material, material1, material2, material3;
+let compoCenter, compoCenter1, compoCenter2, compoCenter3;
 let container;
 let FrameRate = 0;
 
@@ -82,11 +83,25 @@ const boxButtonGradient = document.getElementById('shapeBox-Gradient');
 const dodeButtonGradient = document.getElementById('shapeDodecahedron-Gradient');
 
 
+// Effect: Horizontal
+const circleButtonHorizontal = document.getElementById('shapeCircle-Horizontal');
+const triangleButtonHorizontal = document.getElementById('shapeTriangle-Horizontal');
+const rectangleButtonHorizontal = document.getElementById('shapeRectangle-Horizontal');
+const pentagonButtonHorizontal = document.getElementById('shapePentagon-Horizontal');
+const sphereButtonHorizontal = document.getElementById('shapeSphere-Horizontal');
+const coneButtonHorizontal = document.getElementById('shapeCone-Horizontal');
+const boxButtonHorizontal = document.getElementById('shapeBox-Horizontal');
+const dodeButtonHorizontal = document.getElementById('shapeDodecahedron-Horizontal');
+
+
 
 const templateSaveButton = document.getElementById("templateSave");
 const AudioObject = document.getElementById("audio");
 const filepath = document.getElementById("filepath");
 let musicDuration = 60;
+
+
+
 // 시각화 구분자 단어
 let identityVisualization = document.getElementById('identityVisual');
 
@@ -182,22 +197,6 @@ function optionalVisualization(){
     identityVisualization.innerText = 'pentagon-line';
   })
 
-  // sphereButtonLine.addEventListener('click', function (){
-  //   identityVisualization.innerText = 'sphere-line';
-  // })
-
-  // coneButtonLine.addEventListener('click', function (){
-  //   identityVisualization.innerText = 'cone-line'
-  // })
-
-  // boxButtonLine.addEventListener('click', function( ){
-  //   identityVisualization.innerText = 'box-line'
-  // })
-
-  // dodeButtonBlink.addEventListener('click', function (){
-  //   identityVisualization.innerText = 'dode-blink'
-  // })
-
 
   // Effect: Bloom
   circleButtonBloom.addEventListener('click', function (){
@@ -264,6 +263,41 @@ function optionalVisualization(){
 
   dodeButtonGradient.addEventListener('click', function (){
     identityVisualization.innerText = 'dode-gradient'
+  })
+
+
+  // Effect: Horizontal
+
+  circleButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'circle-horizontal';
+  })
+
+  triangleButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'triangle-horizontal';
+  })
+
+  rectangleButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'rectangle-horizontal';
+  })
+
+  pentagonButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'pentagon-horizontal';
+  })
+
+  sphereButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'sphere-horizontal';
+  })
+
+  coneButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'cone-horizontal'
+  })
+
+  boxButtonHorizontal.addEventListener('click', function( ){
+    identityVisualization.innerText = 'box-horizontal'
+  })
+
+  dodeButtonHorizontal.addEventListener('click', function (){
+    identityVisualization.innerText = 'dode-horizontal'
   })
 
 
@@ -1621,13 +1655,549 @@ function createDodecahedronGradient(){
 }
 
 
+// Effect 6: Horizontal
+
+function colorByPitchMulti(){
+  let multipitchColor;
+  if (myNote.name == 'C' || myNote.name == 'C#'){
+      multipitchColor = '#FA2E2E'
+  } else if (myNote.name == 'D' || myNote.name == 'D#' || myNote.name == 'D♭'){
+      multipitchColor = '#FF9319'
+  } else if (myNote.name == 'E' || myNote.name == 'E♭'){
+      multipitchColor = '#FFFC19'
+  } else if (myNote.name == 'F' || myNote.name == 'F#'){
+      multipitchColor = '#66FF19'
+  } else if (myNote.name == 'G' || myNote.name == 'G#' || myNote.name == 'G♭'){
+      multipitchColor = '#1951FF'
+  } else if (myNote.name == 'A' || myNote.name == 'A#' || myNote.name == 'A♭'){
+      multipitchColor = '#8C19FF'
+  } else if (myNote.name == 'B' || myNote.name == 'B♭'){
+      multipitchColor = '#FF19DC'
+  }
+  return multipitchColor;
+}
+
+
+function createCircleHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry( 5, 80 );
+  let geometryCenter = new THREE.CircleGeometry( size/3, 80 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
 
 
 
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-20, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(20, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
 
 
 
+function createTriangleHorizontal(){
+  
+  let custom_energy = energy * 5;
 
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry( 5, 0 );
+  let geometryCenter = new THREE.CircleGeometry( size/3, 0 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-20, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(20, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+function createRectangleHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.PlaneGeometry( 5, 5 );
+  let geometryCenter = new THREE.PlaneGeometry( size/3, size/3);
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-20, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(20, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+function createPentagonHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.CircleGeometry( 5, 5 );
+  let geometryCenter = new THREE.CircleGeometry( size/3, 5 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-20, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(20, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
 
 
 let visualizationList = []
@@ -1727,6 +2297,8 @@ AudioObject.addEventListener("change", function (){
   musicDuration = AudioObject.duration;
   console.log("test", musicDuration);
 })
+
+
 
 
 
@@ -1951,6 +2523,43 @@ function animate() {
             createDodecahedronGradient();
             render();
         }
+
+
+        // effect: Horizontal
+        if (identityVisualization.innerText == 'circle-horizontal'){
+          deleteBasics();
+          createCircleHorizontal();
+          render();
+        } else if (identityVisualization.innerText == 'triangle-horizontal'){
+            deleteBasics();
+            createTriangleHorizontal();
+            render();
+        } else if (identityVisualization.innerText == 'rectangle-horizontal'){
+            deleteBasics();
+            createRectangleHorizontal();
+            render();
+        } else if (identityVisualization.innerText == 'pentagon-horizontal'){
+            deleteBasics();
+            createPentagonHorizontal();
+            render();
+        } else if (identityVisualization.innerText == 'sphere-horizontal'){
+            deleteBasics();
+            createSphereHorizontal();
+            render();
+        } else if (identityVisualization.innerText == 'cone-horizontal'){
+            deleteBasics()
+            createConeHorizontal();
+            render();
+        } else if (identityVisualization.innerText == 'box-horizontal'){
+            deleteBasics();
+            createBoxHorizontal();
+            render();
+        } else if (identityVisualization.innerText == 'dode-horizontal'){
+            deleteBasics();
+            createDodecahedronHorizontal();
+            render();
+        }
+
     
       }
 

@@ -4,6 +4,7 @@ const effectBlinkButton = document.getElementById('effectBlink');
 const effectLineButton = document.getElementById('effectLine')
 const effectBloomButton = document.getElementById('effectBloom');
 const effectGradientButton = document.getElementById('effectGradient');
+const effectHorizontalButton = document.getElementById('effectHorizontal');
 
 // 보여지는 메뉴
 const wholeMenu = document.getElementsByClassName('customMenu')[0];
@@ -13,6 +14,8 @@ const shapemenuLine = document.getElementById('shapeMenu-Line');
 const shapemenuBlink = document.getElementById('shapeMenu-Blink');
 const shapemenuBloom = document.getElementById('shapeMenu-Bloom');
 const shapemenuGradient = document.getElementById('shapeMenu-Gradient');
+const shapemenuHorizontal = document.getElementById('shapeMenu-Horizontal');
+
 
 
 let clickList = []
@@ -91,7 +94,11 @@ effectGradientButton.addEventListener('click', function(){
     changeBorder();
 });
 
-
+effectHorizontalButton.addEventListener('click', function(){
+    clickList.push('horizontal')
+    changeDisplay();
+    changeBorder();
+})
 
 
 
@@ -104,6 +111,7 @@ function changeDisplay(){
         shapemenuGradient.style.display  = 'none';
         shapemenuBloom.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
+        shapemenuHorizontal.style.display  = 'none';
 
         objColor1.style.visibility = 'visible';
         obj1Save.style.visibility = 'visible';
@@ -116,6 +124,7 @@ function changeDisplay(){
         shapemenuGradient.style.display  = 'none';
         shapemenuBloom.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
+        shapemenuHorizontal.style.display  = 'none';
 
         objColor1.style.visibility = 'visible';
         obj1Save.style.visibility = 'visible';
@@ -128,6 +137,7 @@ function changeDisplay(){
         shapemenuScale.style.display  = 'none';
         shapemenuBlink.style.display  = 'none';
         shapemenuBloom.style.display  = 'none';
+        shapemenuHorizontal.style.display  = 'none';
 
         objColor1.style.visibility = 'visible';
         obj1Save.style.visibility = 'visible';
@@ -140,6 +150,7 @@ function changeDisplay(){
         shapemenuScale.style.display  = 'none';
         shapemenuBlink.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
+        shapemenuHorizontal.style.display  = 'none';
 
     } else if (clickList.slice(-1)[0] == 'gradient'){
         shapemenuGradient.style.display  = 'block';
@@ -147,6 +158,20 @@ function changeDisplay(){
         shapemenuBlink.style.display  = 'none';
         shapemenuBloom.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
+        shapemenuHorizontal.style.display  = 'none';
+
+        objColor1.style.visibility = 'visible';
+        obj1Save.style.visibility = 'visible';
+        bgColor.style.visibility = 'visible';
+        bgSave.style.visibility = 'visible';
+        
+    } else if (clickList.slice(-1)[0] == 'horizontal'){
+        shapemenuHorizontal.style.display  = 'block';
+        shapemenuScale.style.display  = 'none';
+        shapemenuBlink.style.display  = 'none';
+        shapemenuBloom.style.display  = 'none';
+        shapemenuLine.style.display  = 'none';
+        shapemenuGradient.style.display  = 'none';
 
         objColor1.style.visibility = 'visible';
         obj1Save.style.visibility = 'visible';
@@ -165,6 +190,7 @@ function changeBorder(){
         effectGradientButton.style.border = 'none';
         effectBloomButton.style.border = 'none';
         effectLineButton.style.border = 'none';
+        effectHorizontalButton.style.border = 'none';
 
     } else if (clickList.slice(-1)[0] == 'blink'){
         effectBlinkButton.style.border = '3px solid black';
@@ -172,6 +198,7 @@ function changeBorder(){
         effectGradientButton.style.border = 'none';
         effectBloomButton.style.border = 'none'
         effectLineButton.style.border = 'none';
+        effectHorizontalButton.style.border = 'none';
 
     } else if (clickList.slice(-1)[0] == 'line'){
         effectLineButton.style.border = '3px solid black';
@@ -179,6 +206,7 @@ function changeBorder(){
         effectGradientButton.style.border = 'none'
         effectBlinkButton.style.border = 'none'
         effectBloomButton.style.border = 'none'
+        effectHorizontalButton.style.border = 'none';
 
     } else if (clickList.slice(-1)[0] == 'bloom'){
         effectBloomButton.style.border = '3px solid black';
@@ -186,6 +214,7 @@ function changeBorder(){
         effectGradientButton.style.border = 'none';
         effectBlinkButton.style.border = 'none';
         effectLineButton.style.border = 'none';
+        effectHorizontalButton.style.border = 'none';
 
     } else if (clickList.slice(-1)[0] == 'gradient'){
         effectGradientButton.style.border = '3px solid black';
@@ -193,7 +222,16 @@ function changeBorder(){
         effectBloomButton.style.border = 'none';
         effectBlinkButton.style.border = 'none';
         effectLineButton.style.border = 'none';
+        effectHorizontalButton.style.border = 'none';
+        
 
+    }  else if (clickList.slice(-1)[0] == 'horizontal'){
+        effectHorizontalButton.style.border = '3px solid black';
+        effectScaleButton.style.border = 'none';
+        effectBloomButton.style.border = 'none';
+        effectBlinkButton.style.border = 'none';
+        effectLineButton.style.border = 'none';
+        effectGradientButton.style.border = 'none';
     }
 }
 

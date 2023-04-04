@@ -43,7 +43,7 @@ div.customMenu{
 }
 
 button.shapeButtonClass{
-    width: 10rem;
+    width: 12rem;
     height: 2rem;
 }
 
@@ -84,6 +84,10 @@ div#shapeMenu-Bloom{
 }
 
 div#shapeMenu-Gradient{
+    display: none;
+}
+
+div#shapeMenu-Horizontal{
     display: none;
 }
 
