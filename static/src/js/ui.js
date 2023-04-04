@@ -15,6 +15,9 @@ const shapemenuBloom = document.getElementById('shapeMenu-Bloom');
 const shapemenuGradient = document.getElementById('shapeMenu-Gradient');
 
 
+let clickList = []
+
+
 
 // 색상 메뉴
 const bloom2D = document.getElementsByClassName('shapeButtonClass_2D');
@@ -32,28 +35,23 @@ const obj1Save = document.getElementById('objectColor1SaveButton')
 
 
 var hideColorMenuBG = function() {
-    bgColor.style.visibility = 'hidden';
-    bgSave.style.visibility = 'hidden';
-    objColor1.style.visibility = 'visible';
-    obj1Save.style.visibility = 'visible';
+    if (clickList.slice(-1)[0] == 'bloom'){
+        bgColor.style.visibility = 'hidden';
+        bgSave.style.visibility = 'hidden';
+        objColor1.style.visibility = 'visible';
+        obj1Save.style.visibility = 'visible';
+    }
 }
 
 
 var hideColorMenuOBJ1 = function() {
-    objColor1.style.visibility = 'hidden';
-    obj1Save.style.visibility = 'hidden';
-    bgColor.style.visibility = 'visible';
-    bgSave.style.visibility = 'visible';
-}
-
-
-for (let i = 0; i < bloom2D.length; i++) {
-    bloom2D[i].addEventListener('click', hideColorMenuBG, false);
-}
-
-
-for (let i = 0; i < bloom3D.length; i++) {
-    bloom3D[i].addEventListener('click', hideColorMenuOBJ1, false);
+    if (clickList.slice(-1)[0] == 'bloom'){
+        
+        objColor1.style.visibility = 'hidden';
+        obj1Save.style.visibility = 'hidden';
+        bgColor.style.visibility = 'visible';
+        bgSave.style.visibility = 'visible';
+    } 
 }
 
 
@@ -61,8 +59,6 @@ for (let i = 0; i < bloom3D.length; i++) {
 
 
 
-
-let clickList = []
 
 effectScaleButton.addEventListener('click', function(){
     clickList.push('scale')
@@ -109,6 +105,11 @@ function changeDisplay(){
         shapemenuBloom.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
 
+        objColor1.style.visibility = 'visible';
+        obj1Save.style.visibility = 'visible';
+        bgColor.style.visibility = 'visible';
+        bgSave.style.visibility = 'visible';
+
     } else if (clickList.slice(-1)[0] == 'blink'){
         shapemenuBlink.style.display  = 'block';
         shapemenuScale.style.display  = 'none';
@@ -116,12 +117,22 @@ function changeDisplay(){
         shapemenuBloom.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
 
+        objColor1.style.visibility = 'visible';
+        obj1Save.style.visibility = 'visible';
+        bgColor.style.visibility = 'visible';
+        bgSave.style.visibility = 'visible';
+
     } else if (clickList.slice(-1)[0] == 'line'){
         shapemenuLine.style.display  = 'block';
         shapemenuGradient.style.display = 'none';
         shapemenuScale.style.display  = 'none';
         shapemenuBlink.style.display  = 'none';
         shapemenuBloom.style.display  = 'none';
+
+        objColor1.style.visibility = 'visible';
+        obj1Save.style.visibility = 'visible';
+        bgColor.style.visibility = 'visible';
+        bgSave.style.visibility = 'visible';
 
     } else if (clickList.slice(-1)[0] == 'bloom'){
         shapemenuBloom.style.display  = 'block';
@@ -136,6 +147,11 @@ function changeDisplay(){
         shapemenuBlink.style.display  = 'none';
         shapemenuBloom.style.display  = 'none';
         shapemenuLine.style.display  = 'none';
+
+        objColor1.style.visibility = 'visible';
+        obj1Save.style.visibility = 'visible';
+        bgColor.style.visibility = 'visible';
+        bgSave.style.visibility = 'visible';
         
     }
 }
@@ -179,4 +195,15 @@ function changeBorder(){
         effectLineButton.style.border = 'none';
 
     }
+}
+
+
+
+for (let i = 0; i < bloom2D.length; i++) {
+    bloom2D[i].addEventListener('click', hideColorMenuBG, false);
+}
+
+
+for (let i = 0; i < bloom3D.length; i++) {
+    bloom3D[i].addEventListener('click', hideColorMenuOBJ1, false);
 }
