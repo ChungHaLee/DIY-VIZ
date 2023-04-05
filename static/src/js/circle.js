@@ -943,11 +943,18 @@ function createCircleBloom(){
     bloomPass.exposure = 0.8
   }
 
+
   let size = custom_energy;
   scene.background = new THREE.Color( '#FFFFFF' );
   geometry = new THREE.CircleGeometry( size / 6, 80 );
 
-  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  if (objColor1 == '#FFFFFF'){
+    material = new THREE.MeshBasicMaterial( { color: '#000000' } );
+  } else {
+    material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  }
+
+  // material = new THREE.MeshBasicMaterial( { color: objColor1 } );
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
@@ -1003,7 +1010,11 @@ function createTriangleBloom(){
     scene.background = new THREE.Color( '#FFFFFF' );
     geometry = new THREE.CircleGeometry( size / 6, 0 );
   
-    material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+    if (objColor1 == '#FFFFFF'){
+      material = new THREE.MeshBasicMaterial( { color: '#000000' } );
+    } else {
+      material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+    }
   
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
@@ -1060,7 +1071,11 @@ function createRectangleBloom(){
       scene.background = new THREE.Color( '#FFFFFF' );
       geometry = new THREE.PlaneGeometry( size/6, size/6 );
     
-      material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+      if (objColor1 == '#FFFFFF'){
+        material = new THREE.MeshBasicMaterial( { color: '#000000' } );
+      } else {
+        material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+      }
     
       compoCenter = new THREE.Mesh(geometry, material);
       compoCenter.position.set(1, 0, 0);
@@ -1116,7 +1131,11 @@ function createPentagonBloom(){
   scene.background = new THREE.Color( '#FFFFFF' );
   geometry = new THREE.CircleGeometry( size/6, 5 );
 
-  material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  if (objColor1 == '#FFFFFF'){
+    material = new THREE.MeshBasicMaterial( { color: '#000000' } );
+  } else {
+    material = new THREE.MeshBasicMaterial( { color: objColor1 } );
+  }
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
@@ -1175,8 +1194,15 @@ function createSphereBloom(){
     }
   
     let size = custom_energy;
-    scene.background = new THREE.Color( bgColor );
+
+    if (bgColor == '#FFFFFF'){
+      scene.background = new THREE.Color( '#000000' );
+    } else {
+      scene.background = new THREE.Color( bgColor );
+    }
+
     geometry = new THREE.SphereGeometry( size/5, 64, 32 );
+
     material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
   
     compoCenter = new THREE.Mesh(geometry, material);
@@ -1231,7 +1257,11 @@ function createConeBloom(){
   }
 
   let size = custom_energy;
-  scene.background = new THREE.Color( bgColor );
+    if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
   geometry = new THREE.ConeGeometry( size/5, size/5, 3 );
   material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
 
@@ -1289,7 +1319,11 @@ function createBoxBloom(){
    }
  
    let size = custom_energy;
-   scene.background = new THREE.Color( bgColor );
+   if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
    geometry = new THREE.BoxGeometry( size/5, size/5, size/5 );
    material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
  
@@ -1345,7 +1379,11 @@ function createDodecahedronBloom(){
      }
    
      let size = custom_energy;
-     scene.background = new THREE.Color( bgColor );
+     if (bgColor == '#FFFFFF'){
+      scene.background = new THREE.Color( '#000000' );
+    } else {
+      scene.background = new THREE.Color( bgColor );
+    }
      geometry = new THREE.DodecahedronGeometry( size/5, 0);
      material = new THREE.MeshPhongMaterial( { emissive: '#FFFFFF', shininess: 80, vertexColors: true} )
    
