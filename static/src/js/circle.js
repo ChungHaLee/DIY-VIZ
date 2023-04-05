@@ -2762,15 +2762,17 @@ function saveTemplate(){
 }
 
 templateSaveButton.addEventListener('click', function (){
-  console.log("check the template", currentTempleteNumber, visualizationList.length);
+  //console.log("check the template", currentTempleteNumber, visualizationList.length);
   if(identityVisualization.innerText != "" && AudioObject.src != ""){
     if(currentTempleteNumber == visualizationList.length){
       currentTempleteNumber += 1
-      console.log("check the template", currentTempleteNumber, visualizationList.length);
+      //console.log("check the template", currentTempleteNumber, visualizationList.length);
       console.log("Template Save Button Click")
       var button = document.createElement('button');
       button.type = 'button';
       button.style = "font-size: 1.4em;" + "background-color: " + saveButtonColorList[(currentTempleteNumber%(saveButtonColorList.length+1))]
+      console.log("Finished Time:", timeTableList[currentTempleteNumber])
+      
       if(currentTempleteNumber < 10){
         button.innerHTML = "0" + String(currentTempleteNumber);
       }
@@ -2873,7 +2875,7 @@ templateFile.addEventListener('change', function(e){
         alert("First, Need to input the music")
       }
       else if(musicName.files[0].name != jsonObject["music"]){
-        alert("This Template is not used for music")
+        alert("It doesn't match the music in this template.")
       }
       else{
         InitializeAllSetting();

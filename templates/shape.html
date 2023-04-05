@@ -27,7 +27,7 @@
             <input type="file" id="thefile" accept="audio/*" />
             <pre id="filepath" style = "display: none;"> None </pre>
         </label>
-        <audio id="audio" style = "display: none;" controls></audio>
+        <audio id="audio"  controls></audio>
         <button class = "playButtonClass" id="playButton">Play</button>
 
         <div id="timestamp">
@@ -39,7 +39,7 @@
             <p>
                 <input type="text" id="playTime" readonly style="border:0; color:#f6931f; font-weight:bold;">
             </p>
-            <div id="slider-range"></div>
+            <div id="slider-range" style="pointer-events: none;" ></div>
         
         
         
@@ -171,7 +171,10 @@
         <button id="TemplateJsonLoad">Load Json</button>
         <input type="file" id="TemplateFile" style="display:none;">
         <!-- <button class="templateButton" id="template1">Test</button> -->
-        <div id="templateContainer"></div>
+        <div id="templateContainer">
+            <br>test</br>
+
+        </div>
     </div>
 
     
