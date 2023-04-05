@@ -2735,6 +2735,7 @@ let objectPositionXList = []
 let objectPositionYList = []
 let objectPositionZList = []
 let timeTableList = [0]
+let volumeList =[]
 
 function loadTemplate(buttonId){
   identityVisualization.innerText = visualizationList[buttonId-1];
@@ -2745,11 +2746,13 @@ function loadTemplate(buttonId){
   camera.position.z = objectPositionZList[buttonId-1];
   $("#slider-range").slider("values", [timeTableList[buttonId-1], timeTableList[buttonId]]);
   $("#playTime").val(sec2Timer(timeTableList[buttonId-1])+ " - "+sec2Timer(timeTableList[buttonId]));
+  $("#volume").slider("value", volumeList[buttonId-1]);
   currentTempleteNumber = buttonId-1;
   //AudioObject.currentTime = timeTableList[buttonId-1];
 }
 
 function saveTemplate(){
+
   visualizationList.push(identityVisualization.innerText);
   backgroundColorList.push(bgColor);
   objectColorList.push(objColor1);
@@ -2759,6 +2762,7 @@ function saveTemplate(){
   let finishedTime = $("#slider-range").slider("values")[1];
   timeTableList.push(finishedTime);
   $("#slider-range").slider("values", [finishedTime, finishedTime]);
+  volumeList.push($("#volume").slider("value"))
 }
 
 templateSaveButton.addEventListener('click', function (){
@@ -2790,9 +2794,10 @@ templateSaveButton.addEventListener('click', function (){
       visualizationList[currentTempleteNumber] = identityVisualization.innerText;
       backgroundColorList[currentTempleteNumber] = bgColor;
       objectColorList[currentTempleteNumber] = objColor1;
-      objectPositionXList[currentTempleteNumber] = camera.position.x
-      objectPositionYList[currentTempleteNumber] = camera.position.y
-      objectPositionZList[currentTempleteNumber] = camera.position.z
+      objectPositionXList[currentTempleteNumber] = camera.position.x;
+      objectPositionYList[currentTempleteNumber] = camera.position.y;
+      objectPositionZList[currentTempleteNumber] = camera.position.z;
+      volumeList[currentTempleteNumber] = $("#volume").slider("value");
       alert("Template Resaved");
     }
   }
@@ -2829,6 +2834,7 @@ function InitializeAllSetting(){
   objectPositionYList = [];
   objectPositionZList = [];
   timeTableList = [0];
+  volumeList = [];
   AudioObject.currentTime = 0;
 }
 
@@ -2856,7 +2862,8 @@ document.getElementById("TemplateJsonSave").addEventListener('click', function()
     "objectPositionX" : objectPositionXList, 
     "objectPositionY" : objectPositionYList, 
     "objectPositionZ" : objectPositionZList,
-    "timeTable" : timeTableList
+    "timeTable" : timeTableList,
+    "volume" : volumeList
   }
   downloadJsonFile("Template_file", JsonObject);
 })
@@ -2886,6 +2893,7 @@ templateFile.addEventListener('change', function(e){
         objectPositionYList = jsonObject["objectPositionY"];
         objectPositionZList = jsonObject["objectPositionZ"];
         timeTableList = jsonObject["timeTable"];
+        visualizationList = jsonObject["volume"];
         for(var i =1; i< visualizationList.length+1; i++){
           ButtonMaker(i)
         }
@@ -2986,8 +2994,35 @@ $("#slider-range").slider({
   $("#playTime").val(sec2Timer($("#slider-range").slider("values", 0)) + " - " + sec2Timer($("#slider-range").slider("values", 1)));
 
 
+// volume control
 
+$("#volume").slider({
+  min: 0,
+  max: 100,
+  value: 0,
+    range: "min",
+  slide: function(event, ui) {
+    setVolume(ui.value / 100);
+  }
+});
 
+var myMedia = document.createElement('audio');
+$('#player').append(myMedia);
+myMedia.id = "myMedia";
+
+//   playAudio(audio, 0);
+
+//   function playAudio(fileName, myVolume) {
+//           myMedia.src = fileName;
+//           myMedia.setAttribute('loop', 'loop');
+//       setVolume(myVolume);
+//       myMedia.play();
+//   }
+
+function setVolume(myVolume) {
+var myMedia = document.getElementById('audio');
+myMedia.volume = myVolume;
+}
 
 
 
