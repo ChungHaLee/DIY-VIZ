@@ -94,6 +94,8 @@ function AnalyzerPlay(audio_context, src) {
         callback: (features) => {
             energy = features['energy']
             energy = energy * 10
+
+            //console.log('energy:', energy);
         }
     })
     meyda_analyser.start();

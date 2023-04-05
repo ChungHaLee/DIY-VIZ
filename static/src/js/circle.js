@@ -2200,13 +2200,533 @@ function createPentagonHorizontal(){
 }
 
 
+function createSphereHorizontal(){
+  
+  let custom_energy = energy * 5;
 
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.SphereGeometry( size/3, 64, 32 );
+  let geometryCenter = new THREE.SphereGeometry( size/2, 64, 32 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-25, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(25, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+
+function createConeHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.ConeGeometry( size/2, size/2, 3 );
+  let geometryCenter = geometry = new THREE.ConeGeometry( size/3, size/3, 3 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-25, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(25, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+function createBoxHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.BoxGeometry( size/3, size/3, size/3 );
+  let geometryCenter = new THREE.BoxGeometry( size/2, size/2, size/2 );
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-20, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(20, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
+
+
+
+
+function createDodecahedronHorizontal(){
+  
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.DodecahedronGeometry( size/3, 0);
+  let geometryCenter = new THREE.DodecahedronGeometry( size/2.5, 0);
+
+
+  let multiColor = colorByPitchMulti();
+  let pitchColor = colorByPitch();
+
+  material1 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material2 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(pitchColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+  material3 = new THREE.ShaderMaterial({
+    uniforms: {
+      color1: {
+        value: new THREE.Color(multiColor)
+      },
+      color2: {
+        value: new THREE.Color(objColor1)
+      }
+    },
+    vertexShader: `
+      varying vec2 vUv;
+  
+      void main() {
+        vUv = uv;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 color1;
+      uniform vec3 color2;
+    
+      varying vec2 vUv;
+      
+      void main() {
+        
+        gl_FragColor = vec4(mix(color1, color2, vUv.y), 1.0);
+      }
+    `,
+    wireframe: false
+  });
+
+
+
+  compoCenter1 = new THREE.Mesh(geometry, material1);
+  compoCenter1.position.set(-23, 0, 0);
+
+  compoCenter2 = new THREE.Mesh(geometryCenter , material2);
+  compoCenter2.position.set(0, 0, 0);
+
+  compoCenter3 = new THREE.Mesh(geometry, material3);
+  compoCenter3.position.set(23, 0, 0);
+
+  group.add( compoCenter1 );
+  group.add( compoCenter2 );
+  group.add( compoCenter3 );
+}
 
 
 let musicName = document.getElementById("thefile")
 let templateFile = document.getElementById("TemplateFile")
-
-
 
 let visualizationList = []
 let backgroundColorList = []
@@ -2216,11 +2736,7 @@ let objectPositionYList = []
 let objectPositionZList = []
 let timeTableList = [0]
 
-
-
-
 function loadTemplate(buttonId){
-  console.log("Load Button Id : ",buttonId);
   identityVisualization.innerText = visualizationList[buttonId-1];
   setBgColor(backgroundColorList[buttonId-1]);
   setObjColor1(objectColorList[buttonId-1]);
@@ -2246,24 +2762,37 @@ function saveTemplate(){
 }
 
 templateSaveButton.addEventListener('click', function (){
+  console.log("check the template", currentTempleteNumber, visualizationList.length);
   if(identityVisualization.innerText != "" && AudioObject.src != ""){
-    currentTempleteNumber += 1
-    console.log("Template Save Button Click")
-    var button = document.createElement('button');
-    button.type = 'button';
-    button.style = "font-size: 1.4em;" + "background-color: " + saveButtonColorList[(currentTempleteNumber%(saveButtonColorList.length+1))]
-    if(currentTempleteNumber < 10){
-      button.innerHTML = "0" + String(currentTempleteNumber);
+    if(currentTempleteNumber == visualizationList.length){
+      currentTempleteNumber += 1
+      console.log("check the template", currentTempleteNumber, visualizationList.length);
+      console.log("Template Save Button Click")
+      var button = document.createElement('button');
+      button.type = 'button';
+      button.style = "font-size: 1.4em;" + "background-color: " + saveButtonColorList[(currentTempleteNumber%(saveButtonColorList.length+1))]
+      if(currentTempleteNumber < 10){
+        button.innerHTML = "0" + String(currentTempleteNumber);
+      }
+      else{
+        button.innerHTML = String(currentTempleteNumber);
+      }
+      button.onclick = function() {
+        loadTemplate(parseInt(button.innerHTML));
+      };
+      var container = document.getElementById('templateContainer');
+      container.appendChild(button);
+      saveTemplate()
     }
     else{
-      button.innerHTML = String(currentTempleteNumber);
+      visualizationList[currentTempleteNumber] = identityVisualization.innerText;
+      backgroundColorList[currentTempleteNumber] = bgColor;
+      objectColorList[currentTempleteNumber] = objColor1;
+      objectPositionXList[currentTempleteNumber] = camera.position.x
+      objectPositionYList[currentTempleteNumber] = camera.position.y
+      objectPositionZList[currentTempleteNumber] = camera.position.z
+      alert("Template Resaved");
     }
-    button.onclick = function() {
-      loadTemplate(parseInt(button.innerHTML));
-    };
-    var container = document.getElementById('templateContainer');
-    container.appendChild(button);
-    saveTemplate()
   }
 })
 function ButtonMaker(index){
@@ -2283,8 +2812,6 @@ function ButtonMaker(index){
   container.appendChild(button);
 }
 
-
-
 function InitializeAllSetting(){
   //모든 버튼 내용 삭제
   var container = document.getElementById('templateContainer');
@@ -2300,6 +2827,7 @@ function InitializeAllSetting(){
   objectPositionYList = [];
   objectPositionZList = [];
   timeTableList = [0];
+  AudioObject.currentTime = 0;
 }
 
 // 객체를 JSON 파일로 다운로드하는 함수
@@ -2359,6 +2887,7 @@ templateFile.addEventListener('change', function(e){
         for(var i =1; i< visualizationList.length+1; i++){
           ButtonMaker(i)
         }
+        loadTemplate(1);
       }
     };
     reader.readAsText(file);
@@ -2401,17 +2930,20 @@ AudioObject.addEventListener("timeupdate", function(){
   if(currentPlayTime > timeTableList[timeTableList.length-1]){
     $("#slider-range").slider("values", [timeTableList[currentTempleteNumber], currentPlayTime]);
     $("#playTime").val(sec2Timer(timeTableList[currentTempleteNumber])+ " - "+sec2Timer(currentPlayTime));
+    currentTempleteNumber = timeTableList.length-1
+    //console.log(currentTempleteNumber);
   }
   else{
     
-    console.log(timeTableList)
+
     for(let i=0; i<timeTableList.length; i++){
       if(currentPlayTime < timeTableList[i]){
-        console.log("loggin template", i);
+
         if(i-1 != currentTempleteNumber){
           loadTemplate(i);
+          //console.log(currentTempleteNumber);
         }
-        break
+        break;
       }
       //loadTemplate(i+2);
     }
@@ -2429,7 +2961,7 @@ $("#slider").slider({
       AudioObject.currentTime = ui.value;
       // console.log("test", AudioObject.currentTime);
       // console.log("duration", AudioObject.duration);
-      //AudioObject.currentTime = parseFloat(ui.value);
+      // AudioObject.currentTime = parseFloat(ui.value);
   }
 });
 $("#rangeTime").val(sec2Timer($( "#slider" ).slider( "value" )));
@@ -2442,10 +2974,23 @@ $("#slider-range").slider({
     values: [0, 0],
     step: 0.01,
     slide: function(event, ui) {
-        $("#playTime").val(sec2Timer(ui.values[0]) + " - " + sec2Timer(ui.values[1]));
+      if(ui.values[0] != timeTableList[currentTempleteNumber]){
+        $(this).slider("values", timeTableList[currentTempleteNumber], ui.values[1]);
+        console.log("detected")
+      }
+      $("#playTime").val(sec2Timer(timeTableList[currentTempleteNumber]) + " - " + sec2Timer(ui.values[1]));
     }
   });
   $("#playTime").val(sec2Timer($("#slider-range").slider("values", 0)) + " - " + sec2Timer($("#slider-range").slider("values", 1)));
+
+
+
+
+
+
+
+
+
 
 
 
