@@ -11,6 +11,38 @@ let chroma, maxChroma, energy, amplitudeSpectrum;
 
 let filepath = document.getElementById("filepath")
 
+
+// volume control
+
+$("#volume").slider({
+    min: 0,
+    max: 100,
+    value: 0,
+      range: "min",
+    slide: function(event, ui) {
+      setVolume(ui.value / 100);
+    }
+  });
+  
+  var myMedia = document.createElement('audio');
+  $('#player').append(myMedia);
+  myMedia.id = "myMedia";
+
+//   playAudio(audio, 0);
+  
+//   function playAudio(fileName, myVolume) {
+//           myMedia.src = fileName;
+//           myMedia.setAttribute('loop', 'loop');
+//       setVolume(myVolume);
+//       myMedia.play();
+//   }
+  
+  function setVolume(myVolume) {
+  var myMedia = document.getElementById('audio');
+  myMedia.volume = myVolume;
+  }
+
+
 // LOAD MUSIC (vizInit)
 
 function FileInit() {
@@ -74,8 +106,9 @@ function pitchDetector(){
 
 
 
-function AnalyzerPlay(audio_context, src) {
 
+
+function AnalyzerPlay(audio_context, src) {
     analyser = audio_context.createAnalyser();
     src.connect(analyser);
     analyser.connect(audio_context.destination);

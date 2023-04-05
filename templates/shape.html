@@ -27,8 +27,9 @@
             <input type="file" id="thefile" accept="audio/*" />
             <pre id="filepath" style = "display: none;"> None </pre>
         </label>
-        <audio id="audio"  controls></audio>
+        <audio id="audio" style = "display: none;" controls></audio>
         <button class = "playButtonClass" id="playButton">Play</button>
+
 
         <div id="timestamp">
             <h4>Time Stamp</h4>
@@ -163,7 +164,16 @@
             <button id="backgroundColor">Background Color <input id="backgroundColorID" type="text" data-coloris> </button> <button id="backgroundColorSaveButton"> SAVE </button>
             <br>
             <button id="objectColor1">Object Color 1  <input type="text" data-coloris> </button> <button id="objectColor1SaveButton"> SAVE </button>
+
+            <h4>Size Slider</h4>
+            <div id="player">
+                <i class="fa fa-volume-down"></i>
+                <div id="volume"></div>
+                <i class="fa fa-volume-up"></i>
+            </div>
         </div>
+
+        
 
     <div class="saveTemplate">
         <h4>Save Template</h4>
@@ -172,8 +182,6 @@
         <input type="file" id="TemplateFile" style="display:none;">
         <!-- <button class="templateButton" id="template1">Test</button> -->
         <div id="templateContainer">
-            <br>test</br>
-
         </div>
     </div>
 
