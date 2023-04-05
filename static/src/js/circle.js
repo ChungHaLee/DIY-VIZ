@@ -2893,7 +2893,7 @@ templateFile.addEventListener('change', function(e){
         objectPositionYList = jsonObject["objectPositionY"];
         objectPositionZList = jsonObject["objectPositionZ"];
         timeTableList = jsonObject["timeTable"];
-        visualizationList = jsonObject["volume"];
+        volumeList = jsonObject["volume"];
         for(var i =1; i< visualizationList.length+1; i++){
           ButtonMaker(i)
         }
