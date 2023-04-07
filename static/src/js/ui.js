@@ -1,4 +1,5 @@
 // 이펙트 버튼 요소
+const effectButtonGroup = document.getElementsByClassName('effectButtonClass')
 const effectScaleButton = document.getElementById('effectScale');
 const effectBlinkButton = document.getElementById('effectBlink');
 const effectLineButton = document.getElementById('effectLine')
@@ -6,9 +7,11 @@ const effectBloomButton = document.getElementById('effectBloom');
 const effectGradientButton = document.getElementById('effectGradient');
 const effectHorizontalButton = document.getElementById('effectHorizontal');
 
+
 // 보여지는 메뉴
 const wholeMenu = document.getElementsByClassName('customMenu')[0];
 
+const shapemenuGroup = document.getElementsByClassName('shapeMenuClass');
 const shapemenuScale = document.getElementById('shapeMenu-Scale');
 const shapemenuLine = document.getElementById('shapeMenu-Line');
 const shapemenuBlink = document.getElementById('shapeMenu-Blink');
@@ -38,7 +41,7 @@ const obj1Save = document.getElementById('objectColor1SaveButton')
 
 
 var hideColorMenuBG = function() {
-    if (clickList.slice(-1)[0] == 'bloom'){
+    if (clickList.slice(-1)[0] == 'Bloom'){
         bgColor.style.visibility = 'hidden';
         bgSave.style.visibility = 'hidden';
         objColor1.style.visibility = 'visible';
@@ -48,7 +51,7 @@ var hideColorMenuBG = function() {
 
 
 var hideColorMenuOBJ1 = function() {
-    if (clickList.slice(-1)[0] == 'bloom'){
+    if (clickList.slice(-1)[0] == 'Bloom'){
         
         objColor1.style.visibility = 'hidden';
         obj1Save.style.visibility = 'hidden';
@@ -64,177 +67,65 @@ var hideColorMenuOBJ1 = function() {
 
 
 effectScaleButton.addEventListener('click', function(){
-    clickList.push('scale')
-    changeDisplay();
-    changeBorder();
+    clickList.push('Scale')
+    changeDisplay('Scale');
+    changeBorder('Scale');
 });
 
 effectBlinkButton.addEventListener('click', function(){
-    clickList.push('blink')
-    changeDisplay();
-    changeBorder();
+    clickList.push('Blink')
+    changeDisplay('Blink');
+    changeBorder('Blink');
 });
 
 effectLineButton.addEventListener('click', function(){
-    clickList.push('line')
-    changeDisplay();
-    changeBorder();
+    clickList.push('Line')
+    changeDisplay('Line');
+    changeBorder('Line');
 })
 
 
 effectBloomButton.addEventListener('click', function(){
-    clickList.push('bloom')
-    changeDisplay();
-    changeBorder();
+    clickList.push('Bloom')
+    changeDisplay('Bloom');
+    changeBorder('Bloom');
 });
 
 effectGradientButton.addEventListener('click', function(){
-    clickList.push('gradient')
-    changeDisplay();
-    changeBorder();
+    clickList.push('Gradient')
+    changeDisplay('Gradient');
+    changeBorder('Gradient');
 });
 
 effectHorizontalButton.addEventListener('click', function(){
-    clickList.push('horizontal')
-    changeDisplay();
-    changeBorder();
+    clickList.push('Horizontal')
+    changeDisplay('Horizontal');
+    changeBorder('Horizontal');
 })
 
 
 
 
-
-function changeDisplay(){
-    if (clickList.slice(-1)[0] == 'scale'){
-        shapemenuScale.style.display = 'block'
-        shapemenuBlink.style.display  = 'none';
-        shapemenuGradient.style.display  = 'none';
-        shapemenuBloom.style.display  = 'none';
-        shapemenuLine.style.display  = 'none';
-        shapemenuHorizontal.style.display  = 'none';
-
-        objColor1.style.visibility = 'visible';
-        obj1Save.style.visibility = 'visible';
-        bgColor.style.visibility = 'visible';
-        bgSave.style.visibility = 'visible';
-
-    } else if (clickList.slice(-1)[0] == 'blink'){
-        shapemenuBlink.style.display  = 'block';
-        shapemenuScale.style.display  = 'none';
-        shapemenuGradient.style.display  = 'none';
-        shapemenuBloom.style.display  = 'none';
-        shapemenuLine.style.display  = 'none';
-        shapemenuHorizontal.style.display  = 'none';
-
-        objColor1.style.visibility = 'visible';
-        obj1Save.style.visibility = 'visible';
-        bgColor.style.visibility = 'visible';
-        bgSave.style.visibility = 'visible';
-
-    } else if (clickList.slice(-1)[0] == 'line'){
-        shapemenuLine.style.display  = 'block';
-        shapemenuGradient.style.display = 'none';
-        shapemenuScale.style.display  = 'none';
-        shapemenuBlink.style.display  = 'none';
-        shapemenuBloom.style.display  = 'none';
-        shapemenuHorizontal.style.display  = 'none';
-
-        objColor1.style.visibility = 'visible';
-        obj1Save.style.visibility = 'visible';
-        bgColor.style.visibility = 'visible';
-        bgSave.style.visibility = 'visible';
-
-    } else if (clickList.slice(-1)[0] == 'bloom'){
-        shapemenuBloom.style.display  = 'block';
-        shapemenuGradient.style.display = 'none';
-        shapemenuScale.style.display  = 'none';
-        shapemenuBlink.style.display  = 'none';
-        shapemenuLine.style.display  = 'none';
-        shapemenuHorizontal.style.display  = 'none';
-
-    } else if (clickList.slice(-1)[0] == 'gradient'){
-        shapemenuGradient.style.display  = 'block';
-        shapemenuScale.style.display  = 'none';
-        shapemenuBlink.style.display  = 'none';
-        shapemenuBloom.style.display  = 'none';
-        shapemenuLine.style.display  = 'none';
-        shapemenuHorizontal.style.display  = 'none';
-
-        objColor1.style.visibility = 'visible';
-        obj1Save.style.visibility = 'visible';
-        bgColor.style.visibility = 'visible';
-        bgSave.style.visibility = 'visible';
-        
-    } else if (clickList.slice(-1)[0] == 'horizontal'){
-        shapemenuHorizontal.style.display  = 'block';
-        shapemenuScale.style.display  = 'none';
-        shapemenuBlink.style.display  = 'none';
-        shapemenuBloom.style.display  = 'none';
-        shapemenuLine.style.display  = 'none';
-        shapemenuGradient.style.display  = 'none';
-
-        objColor1.style.visibility = 'visible';
-        obj1Save.style.visibility = 'visible';
-        bgColor.style.visibility = 'visible';
-        bgSave.style.visibility = 'visible';
-        
+function changeDisplay(identifier){
+    for (let i=0; i < shapemenuGroup.length; i++ ){
+        if (shapemenuGroup[i].id.slice(10, ) == identifier){
+            shapemenuGroup[i].style.display = 'block'
+        } else {
+            shapemenuGroup[i].style.display = 'none'
+        }
     }
 }
 
 
-
-function changeBorder(){
-    if (clickList.slice(-1)[0] == 'scale'){
-        effectScaleButton.style.border = '3px solid black';
-        effectBlinkButton.style.border = 'none';
-        effectGradientButton.style.border = 'none';
-        effectBloomButton.style.border = 'none';
-        effectLineButton.style.border = 'none';
-        effectHorizontalButton.style.border = 'none';
-
-    } else if (clickList.slice(-1)[0] == 'blink'){
-        effectBlinkButton.style.border = '3px solid black';
-        effectScaleButton.style.border = 'none';
-        effectGradientButton.style.border = 'none';
-        effectBloomButton.style.border = 'none'
-        effectLineButton.style.border = 'none';
-        effectHorizontalButton.style.border = 'none';
-
-    } else if (clickList.slice(-1)[0] == 'line'){
-        effectLineButton.style.border = '3px solid black';
-        effectScaleButton.style.border = 'none'
-        effectGradientButton.style.border = 'none'
-        effectBlinkButton.style.border = 'none'
-        effectBloomButton.style.border = 'none'
-        effectHorizontalButton.style.border = 'none';
-
-    } else if (clickList.slice(-1)[0] == 'bloom'){
-        effectBloomButton.style.border = '3px solid black';
-        effectScaleButton.style.border = 'none';
-        effectGradientButton.style.border = 'none';
-        effectBlinkButton.style.border = 'none';
-        effectLineButton.style.border = 'none';
-        effectHorizontalButton.style.border = 'none';
-
-    } else if (clickList.slice(-1)[0] == 'gradient'){
-        effectGradientButton.style.border = '3px solid black';
-        effectScaleButton.style.border = 'none';
-        effectBloomButton.style.border = 'none';
-        effectBlinkButton.style.border = 'none';
-        effectLineButton.style.border = 'none';
-        effectHorizontalButton.style.border = 'none';
-        
-
-    }  else if (clickList.slice(-1)[0] == 'horizontal'){
-        effectHorizontalButton.style.border = '3px solid black';
-        effectScaleButton.style.border = 'none';
-        effectBloomButton.style.border = 'none';
-        effectBlinkButton.style.border = 'none';
-        effectLineButton.style.border = 'none';
-        effectGradientButton.style.border = 'none';
+function changeBorder(identifier){
+    for (let i=0; i < effectButtonGroup.length; i++ ){
+        if (effectButtonGroup[i].id.slice(6, ) == identifier){
+            effectButtonGroup[i].style.border = '3px solid black';
+        } else {
+            effectButtonGroup[i].style.border = 'none';
+        }
     }
 }
-
 
 
 for (let i = 0; i < bloom2D.length; i++) {
