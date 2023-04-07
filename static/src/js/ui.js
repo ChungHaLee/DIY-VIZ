@@ -30,7 +30,6 @@ const bloom2D = document.getElementsByClassName('shapeButtonClass_2D');
 const bloom3D = document.getElementsByClassName('shapeButtonClass_3D');
 
 
-
 const bgColor = document.getElementById('backgroundColor');
 const objColor1 = document.getElementById('objectColor1');
 
@@ -39,25 +38,40 @@ const obj1Save = document.getElementById('objectColor1SaveButton')
 
 
 
+function hideBG(){
+    bgColor.style.visibility = 'hidden';
+    bgSave.style.visibility = 'hidden';
+    objColor1.style.visibility = 'visible';
+    obj1Save.style.visibility = 'visible';
+}
+
+
+function hideOBJ(){
+    objColor1.style.visibility = 'hidden';
+    obj1Save.style.visibility = 'hidden';
+    bgColor.style.visibility = 'visible';
+    bgSave.style.visibility = 'visible';
+}
+
+function showALL(){
+    objColor1.style.visibility = 'visible';
+    obj1Save.style.visibility = 'visible';
+    bgColor.style.visibility = 'visible';
+    bgSave.style.visibility = 'visible';
+}
 
 var hideColorMenuBG = function() {
     if (clickList.slice(-1)[0] == 'Bloom'){
-        bgColor.style.visibility = 'hidden';
-        bgSave.style.visibility = 'hidden';
-        objColor1.style.visibility = 'visible';
-        obj1Save.style.visibility = 'visible';
-    }
+        hideBG();
+    } 
 }
 
 
 var hideColorMenuOBJ1 = function() {
+    console.log(clickList)
     if (clickList.slice(-1)[0] == 'Bloom'){
-        
-        objColor1.style.visibility = 'hidden';
-        obj1Save.style.visibility = 'hidden';
-        bgColor.style.visibility = 'visible';
-        bgSave.style.visibility = 'visible';
-    } 
+        hideOBJ();
+    }
 }
 
 
@@ -70,18 +84,21 @@ effectScaleButton.addEventListener('click', function(){
     clickList.push('Scale')
     changeDisplay('Scale');
     changeBorder('Scale');
+    showALL();
 });
 
 effectBlinkButton.addEventListener('click', function(){
     clickList.push('Blink')
     changeDisplay('Blink');
     changeBorder('Blink');
+    showALL();
 });
 
 effectLineButton.addEventListener('click', function(){
     clickList.push('Line')
     changeDisplay('Line');
     changeBorder('Line');
+    showALL();
 })
 
 
@@ -95,12 +112,14 @@ effectGradientButton.addEventListener('click', function(){
     clickList.push('Gradient')
     changeDisplay('Gradient');
     changeBorder('Gradient');
+    showALL();
 });
 
 effectHorizontalButton.addEventListener('click', function(){
     clickList.push('Horizontal')
     changeDisplay('Horizontal');
     changeBorder('Horizontal');
+    showALL();
 })
 
 

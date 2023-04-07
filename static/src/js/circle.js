@@ -2775,6 +2775,8 @@ let objectPositionZList = []
 let timeTableList = [0]
 let volumeList =[]
 
+
+// 저장 템플릿 반영하는 코드
 function loadTemplate(buttonId){
   identityVisualization.innerText = visualizationList[buttonId-1];
   setBgColor(backgroundColorList[buttonId-1]);
@@ -2785,6 +2787,7 @@ function loadTemplate(buttonId){
   $("#slider-range").slider("values", [timeTableList[buttonId-1], timeTableList[buttonId]]);
   $("#playTime").val(sec2Timer(timeTableList[buttonId-1])+ " - "+sec2Timer(timeTableList[buttonId]));
   $("#volume").slider("value", volumeList[buttonId-1]);
+  setVolume( $("#volume").slider("value") / 100);
   currentTempleteNumber = buttonId-1;
   //AudioObject.currentTime = timeTableList[buttonId-1];
 }
