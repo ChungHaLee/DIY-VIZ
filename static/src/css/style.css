@@ -25,8 +25,8 @@ div.shapeEffectClass{
 
 button.effectButtonClass{
     width: 5rem;
-    height: 3.05rem;
-    margin-bottom: 2.4rem;
+    height: 2.6rem;
+    margin-bottom: 2rem;
     border: none;
     background-color: whitesmoke;
 }
@@ -76,6 +76,10 @@ div#shapeMenu-Blink{
 }
 
 div#shapeMenu-Line{
+    display: none;
+}
+
+div#shapeMenu-Particles{
     display: none;
 }
 

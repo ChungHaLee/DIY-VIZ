@@ -8,16 +8,19 @@ import { energy, dataArray, analyser, pitchDetector, myNote, octave } from './au
 import { bgColor, objColor1, objColor2, setBgColor, setObjColor1 } from './colorpicker'
 
 
-
+// 시각화 구분자 단어
+let identityVisualization = document.getElementById('identityVisual');
 
 let controls, bloomComposer;
 let camera, scene, renderer;
 let geometry, material, material1, material2, material3;
+let particleMaterial;
+
 let compoCenter, compoCenter1, compoCenter2, compoCenter3;
 let container;
 let FrameRate = 0;
+let mul = 0.05
 
-// let backgroundColor;
 
 let group;
 let ambientLight, spotLight, pointLight;
@@ -26,282 +29,12 @@ var pitchInfo;
 let currentTempleteNumber = 0;
 const saveButtonColorList = ["#FFCC99", "#FFCC00","#99FF99", "#9999FF", "#666699", "#FF66FF", "#FF9999"]
 
-// html 버튼 요소
-
-// Effect: Scale
-const circleButtonScale = document.getElementById('shapeCircle-Scale');
-const triangleButtonScale = document.getElementById('shapeTriangle-Scale');
-const rectangleButtonScale = document.getElementById('shapeRectangle-Scale');
-const pentagonButtonScale = document.getElementById('shapePentagon-Scale');
-const sphereButtonScale = document.getElementById('shapeSphere-Scale');
-const coneButtonScale = document.getElementById('shapeCone-Scale');
-const boxButtonScale = document.getElementById('shapeBox-Scale');
-const dodeButtonScale = document.getElementById('shapeDodecahedron-Scale');
-
-
-// Effect: Blink
-const circleButtonBlink = document.getElementById('shapeCircle-Blink');
-const triangleButtonBlink = document.getElementById('shapeTriangle-Blink');
-const rectangleButtonBlink = document.getElementById('shapeRectangle-Blink');
-const pentagonButtonBlink = document.getElementById('shapePentagon-Blink');
-const sphereButtonBlink = document.getElementById('shapeSphere-Blink');
-const coneButtonBlink = document.getElementById('shapeCone-Blink');
-const boxButtonBlink = document.getElementById('shapeBox-Blink');
-const dodeButtonBlink = document.getElementById('shapeDodecahedron-Blink');
-
-
-// Effect: Line
-const circleButtonLine = document.getElementById('shapeCircle-Line');
-const triangleButtonLine = document.getElementById('shapeTriangle-Line');
-const rectangleButtonLine = document.getElementById('shapeRectangle-Line');
-const pentagonButtonLine = document.getElementById('shapePentagon-Line');
-// const sphereButtonLine = document.getElementById('shapeSphere-Line');
-// const coneButtonLine = document.getElementById('shapeCone-Line');
-// const boxButtonLine = document.getElementById('shapeBox-Line');
-// const dodeButtonLine = document.getElementById('shapeDodecahedron-Line');
-
-
-// Effect: Bloom
-const circleButtonBloom = document.getElementById('shapeCircle-Bloom');
-const triangleButtonBloom = document.getElementById('shapeTriangle-Bloom');
-const rectangleButtonBloom= document.getElementById('shapeRectangle-Bloom');
-const pentagonButtonBloom = document.getElementById('shapePentagon-Bloom');
-const sphereButtonBloom = document.getElementById('shapeSphere-Bloom');
-const coneButtonBloom = document.getElementById('shapeCone-Bloom');
-const boxButtonBloom = document.getElementById('shapeBox-Bloom');
-const dodeButtonBloom = document.getElementById('shapeDodecahedron-Bloom');
-
-
-// Effect: Gradient
-const circleButtonGradient = document.getElementById('shapeCircle-Gradient');
-const triangleButtonGradient = document.getElementById('shapeTriangle-Gradient');
-const rectangleButtonGradient= document.getElementById('shapeRectangle-Gradient');
-const pentagonButtonGradient = document.getElementById('shapePentagon-Gradient');
-const sphereButtonGradient = document.getElementById('shapeSphere-Gradient');
-const coneButtonGradient = document.getElementById('shapeCone-Gradient');
-const boxButtonGradient = document.getElementById('shapeBox-Gradient');
-const dodeButtonGradient = document.getElementById('shapeDodecahedron-Gradient');
-
-
-// Effect: Horizontal
-const circleButtonHorizontal = document.getElementById('shapeCircle-Horizontal');
-const triangleButtonHorizontal = document.getElementById('shapeTriangle-Horizontal');
-const rectangleButtonHorizontal = document.getElementById('shapeRectangle-Horizontal');
-const pentagonButtonHorizontal = document.getElementById('shapePentagon-Horizontal');
-const sphereButtonHorizontal = document.getElementById('shapeSphere-Horizontal');
-const coneButtonHorizontal = document.getElementById('shapeCone-Horizontal');
-const boxButtonHorizontal = document.getElementById('shapeBox-Horizontal');
-const dodeButtonHorizontal = document.getElementById('shapeDodecahedron-Horizontal');
-
 
 
 const templateSaveButton = document.getElementById("templateSave");
 let AudioObject = document.getElementById("audio");
 let playButton  = document.getElementById("playButton")
 let musicDuration = 60;
-
-
-
-// 시각화 구분자 단어
-let identityVisualization = document.getElementById('identityVisual');
-
-
-
-
-
-// 버튼 클릭에 따라 보여주는 시각화가 달라지는 함수
-function optionalVisualization(){
-// Effect: Scale
-  circleButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'circle-scale';
-  })
-
-  triangleButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'triangle-scale';
-  })
-
-  rectangleButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'rectangle-scale';
-  })
-
-  pentagonButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'pentagon-scale';
-  })
-
-  sphereButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'sphere-scale';
-  })
-
-  coneButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'cone-scale'
-  })
-
-  boxButtonScale.addEventListener('click', function( ){
-    identityVisualization.innerText = 'box-scale'
-  })
-
-  dodeButtonScale.addEventListener('click', function (){
-    identityVisualization.innerText = 'dode-scale'
-  })
-
-
-
-  // Effect: Blink
-  circleButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'circle-blink';
-  })
-
-  triangleButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'triangle-blink';
-  })
-
-  rectangleButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'rectangle-blink';
-  })
-
-  pentagonButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'pentagon-blink';
-  })
-
-  sphereButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'sphere-blink';
-  })
-
-  coneButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'cone-blink'
-  })
-
-  boxButtonBlink.addEventListener('click', function( ){
-    identityVisualization.innerText = 'box-blink'
-  })
-
-  dodeButtonBlink.addEventListener('click', function (){
-    identityVisualization.innerText = 'dode-blink'
-  })
-
-
-   // Effect: Line
-   circleButtonLine.addEventListener('click', function (){
-    identityVisualization.innerText = 'circle-line';
-  })
-
-  triangleButtonLine.addEventListener('click', function (){
-    identityVisualization.innerText = 'triangle-line';
-  })
-
-  rectangleButtonLine.addEventListener('click', function (){
-    identityVisualization.innerText = 'rectangle-line';
-  })
-
-  pentagonButtonLine.addEventListener('click', function (){
-    identityVisualization.innerText = 'pentagon-line';
-  })
-
-
-  // Effect: Bloom
-  circleButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'circle-bloom';
-  })
-
-  triangleButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'triangle-bloom';
-  })
-
-  rectangleButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'rectangle-bloom';
-  })
-
-  pentagonButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'pentagon-bloom';
-  })
-
-  sphereButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'sphere-bloom';
-  })
-
-  coneButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'cone-bloom'
-  })
-
-  boxButtonBloom.addEventListener('click', function( ){
-    identityVisualization.innerText = 'box-bloom'
-  })
-
-  dodeButtonBloom.addEventListener('click', function (){
-    identityVisualization.innerText = 'dode-bloom'
-  })
-
-
-   // Effect: Gradient
-   circleButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'circle-gradient';
-  })
-
-  triangleButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'triangle-gradient';
-  })
-
-  rectangleButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'rectangle-gradient';
-  })
-
-  pentagonButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'pentagon-gradient';
-  })
-
-  sphereButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'sphere-gradient';
-  })
-
-  coneButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'cone-gradient'
-  })
-
-  boxButtonGradient.addEventListener('click', function( ){
-    identityVisualization.innerText = 'box-gradient'
-  })
-
-  dodeButtonGradient.addEventListener('click', function (){
-    identityVisualization.innerText = 'dode-gradient'
-  })
-
-
-  // Effect: Horizontal
-
-  circleButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'circle-horizontal';
-  })
-
-  triangleButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'triangle-horizontal';
-  })
-
-  rectangleButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'rectangle-horizontal';
-  })
-
-  pentagonButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'pentagon-horizontal';
-  })
-
-  sphereButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'sphere-horizontal';
-  })
-
-  coneButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'cone-horizontal'
-  })
-
-  boxButtonHorizontal.addEventListener('click', function( ){
-    identityVisualization.innerText = 'box-horizontal'
-  })
-
-  dodeButtonHorizontal.addEventListener('click', function (){
-    identityVisualization.innerText = 'dode-horizontal'
-  })
-
-
-}
 
 
 
@@ -912,6 +645,400 @@ function createPentagonLine(){
 
 
 
+function createCircleParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * mul
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * mul
+      })
+    })
+  }
+
+  geometry = new THREE.CircleGeometry( size / 2 , 80 );
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+function createTriangleParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  }
+
+  geometry = new THREE.CircleGeometry( size / 2 , 0 );
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+
+function createRectangleParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  }
+
+  geometry = new THREE.PlaneGeometry( size/2, size/2 );
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+
+function createPentagonParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  }
+  geometry = new THREE.CircleGeometry( size / 2, 5 );
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+
+
+function createSphereParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.02
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.02
+      })
+    })
+  }
+
+  geometry = new THREE.SphereGeometry( size, 64, 32 );
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+
+function createConeParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.1
+      })
+    })
+  }
+
+  geometry = new THREE.ConeGeometry( size, size, 3, 3);
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+function createBoxParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.07
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.07
+      })
+    })
+  }
+
+  geometry = new THREE.BoxGeometry( size, size, size);
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+
+function createDodecahedronParticles(){
+  let custom_energy = energy * 2;
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  if (bgColor == '#FFFFFF'){
+    scene.background = new THREE.Color( '#000000' );
+  } else {
+    scene.background = new THREE.Color( bgColor );
+  }
+
+  if (objColor1 == '#FFFFFF'){
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: '#FFFFFF',
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.07
+      })
+    })
+  } else {
+    new THREE.TextureLoader().load('/static/src/images/circle_05.png', (texture) => {
+      particleMaterial = new THREE.PointsMaterial({
+        map: texture,
+        color: objColor1,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        size: size * 0.07
+      })
+    })
+  }
+
+  geometry = new THREE.DodecahedronGeometry( size, 0);
+  compoCenter = new THREE.Points(geometry, particleMaterial);
+  compoCenter.boundingSphere = 1;
+  compoCenter.position.set(1, 0, 0);
+  group.add( compoCenter );
+
+
+}
+
+
+
+
+
+
+
+
 
 
 // Effect 4: Bloom
@@ -952,7 +1079,6 @@ function createCircleBloom(){
     material = new THREE.MeshBasicMaterial( { color: objColor1 } );
   }
 
-  // material = new THREE.MeshBasicMaterial( { color: objColor1 } );
 
   compoCenter = new THREE.Mesh(geometry, material);
   compoCenter.position.set(1, 0, 0);
@@ -3179,6 +3305,42 @@ function animate() {
 
 
 
+        if (identityVisualization.innerText == 'circle-particles'){
+          deleteBasics();
+          createCircleParticles();
+          render();
+        } else if(identityVisualization.innerText == 'triangle-particles'){
+          deleteBasics();
+          createTriangleParticles();
+          render();
+        } else if(identityVisualization.innerText == 'rectangle-particles'){
+          deleteBasics();
+          createRectangleParticles();
+          render();
+        } else if(identityVisualization.innerText == 'pentagon-particles'){
+          deleteBasics();
+          createPentagonParticles();
+          render();
+        } else if(identityVisualization.innerText == 'sphere-particles'){
+          deleteBasics();
+          createSphereParticles();
+          render();
+        } else if(identityVisualization.innerText == 'cone-particles'){
+          deleteBasics();
+          createConeParticles();
+          render();
+        } else if(identityVisualization.innerText == 'box-particles'){
+          deleteBasics();
+          createBoxParticles();
+          render();
+        } else if(identityVisualization.innerText == 'dode-particles'){
+          deleteBasics();
+          createDodecahedronParticles();
+          render();
+        }
+
+
+
         // effect: Bloom
         if (identityVisualization.innerText == 'circle-bloom'){
             deleteBasics();
@@ -3322,8 +3484,6 @@ function render() {
 
 
 
-
-optionalVisualization();
 
 
 // BASIC EVENTS

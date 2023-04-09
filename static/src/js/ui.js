@@ -3,6 +3,7 @@ const effectButtonGroup = document.getElementsByClassName('effectButtonClass')
 const effectScaleButton = document.getElementById('effectScale');
 const effectBlinkButton = document.getElementById('effectBlink');
 const effectLineButton = document.getElementById('effectLine')
+const effectParticlesButton = document.getElementById('effectParticles');
 const effectBloomButton = document.getElementById('effectBloom');
 const effectGradientButton = document.getElementById('effectGradient');
 const effectHorizontalButton = document.getElementById('effectHorizontal');
@@ -14,6 +15,7 @@ const wholeMenu = document.getElementsByClassName('customMenu')[0];
 const shapemenuGroup = document.getElementsByClassName('shapeMenuClass');
 const shapemenuScale = document.getElementById('shapeMenu-Scale');
 const shapemenuLine = document.getElementById('shapeMenu-Line');
+const shapemenuParticles = document.getElementById('shapeMenu-Particles');
 const shapemenuBlink = document.getElementById('shapeMenu-Blink');
 const shapemenuBloom = document.getElementById('shapeMenu-Bloom');
 const shapemenuGradient = document.getElementById('shapeMenu-Gradient');
@@ -97,6 +99,13 @@ effectLineButton.addEventListener('click', function(){
     clickList.push('Line')
     changeDisplay('Line');
     changeBorder('Line');
+    showALL();
+})
+
+effectParticlesButton.addEventListener('click', function(){
+    clickList.push('Particles')
+    changeDisplay('Particles');
+    changeBorder('Particles');
     showALL();
 })
 
