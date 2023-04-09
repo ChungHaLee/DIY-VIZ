@@ -25,12 +25,11 @@ const shapemenuHorizontal = document.getElementById('shapeMenu-Horizontal');
 
 let clickList = []
 
-
-
 // 색상 메뉴
 const bloom2D = document.getElementsByClassName('shapeButtonClass_2D');
 const bloom3D = document.getElementsByClassName('shapeButtonClass_3D');
 
+const sizeslider = document.getElementById('sizeslider')
 
 const bgColor = document.getElementById('backgroundColor');
 const objColor1 = document.getElementById('objectColor1');
@@ -39,6 +38,14 @@ const bgSave = document.getElementById('backgroundColorSaveButton')
 const obj1Save = document.getElementById('objectColor1SaveButton')
 
 
+function hideSizeSlider(){
+    sizeslider.style.visibility = 'hidden';
+}
+
+
+function showSizeSlider(){
+    sizeslider.style.visibility = 'visible';
+}
 
 function hideBG(){
     bgColor.style.visibility = 'hidden';
@@ -85,6 +92,7 @@ effectScaleButton.addEventListener('click', function(){
     clickList.push('Scale')
     changeDisplay('Scale');
     changeBorder('Scale');
+    showSizeSlider();
     showALL();
 });
 
@@ -92,6 +100,7 @@ effectBlinkButton.addEventListener('click', function(){
     clickList.push('Blink')
     changeDisplay('Blink');
     changeBorder('Blink');
+    hideSizeSlider();
     showALL();
 });
 
@@ -99,6 +108,7 @@ effectLineButton.addEventListener('click', function(){
     clickList.push('Line')
     changeDisplay('Line');
     changeBorder('Line');
+    showSizeSlider();
     showALL();
 })
 
@@ -106,6 +116,7 @@ effectParticlesButton.addEventListener('click', function(){
     clickList.push('Particles')
     changeDisplay('Particles');
     changeBorder('Particles');
+    showSizeSlider();
     showALL();
 })
 
@@ -114,12 +125,14 @@ effectBloomButton.addEventListener('click', function(){
     clickList.push('Bloom')
     changeDisplay('Bloom');
     changeBorder('Bloom');
+    showSizeSlider();
 });
 
 effectGradientButton.addEventListener('click', function(){
     clickList.push('Gradient')
     changeDisplay('Gradient');
     changeBorder('Gradient');
+    hideSizeSlider();
     showALL();
 });
 
@@ -127,6 +140,7 @@ effectHorizontalButton.addEventListener('click', function(){
     clickList.push('Horizontal')
     changeDisplay('Horizontal');
     changeBorder('Horizontal');
+    showSizeSlider();
     showALL();
 })
 
