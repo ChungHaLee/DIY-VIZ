@@ -157,7 +157,7 @@ function optionalVisualization(){
 
 
    // Effect: Line
-   circleButtonLine.addEventListener('click', function (){
+  circleButtonLine.addEventListener('click', function (){
     identityVisualization.innerText = 'circle-line';
   })
 
@@ -172,6 +172,24 @@ function optionalVisualization(){
   pentagonButtonLine.addEventListener('click', function (){
     identityVisualization.innerText = 'pentagon-line';
   })
+
+  sphereButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'sphere-line';
+  })
+
+  coneButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'cone-line';
+  })
+
+  boxButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'box-line';
+  })
+
+  dodeButtonLine.addEventListener('click', function (){
+    identityVisualization.innerText = 'dode-line';
+  })
+
+
 
   
   // Effect: Particles

@@ -642,6 +642,120 @@ function createPentagonLine(){
 
 
 
+function createSphereLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.SphereGeometry( size/2, 64, 32 );
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 1
+  material.wireframe = true
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+  
+}
+
+
+function createConeLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.ConeGeometry( size/2, size/2, 3 );
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 1
+  material.wireframe = true
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+  
+}
+
+
+function createBoxLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.BoxGeometry( size/2, size/2, size/2 );
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 1
+  material.wireframe = true
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+  
+}
+
+
+
+function createDodecahedronLine(){
+  let custom_energy = energy * 5;
+
+  if(custom_energy > 50){
+    custom_energy = 15;
+  } else if(custom_energy < 10){
+    custom_energy = custom_energy / 2 + 5
+  }
+
+  let size = custom_energy;
+
+  scene.background = new THREE.Color( bgColor );
+  geometry = new THREE.DodecahedronGeometry( size/2, 0);
+  material = new THREE.MeshPhongMaterial( { color: objColor1, emissive: objColor1, specular: objColor1, shininess: 30 } );
+  material.transparent = false
+  material.opacity = 1
+  material.wireframe = true
+
+  compoCenter = new THREE.Mesh(geometry, material);
+  compoCenter.position.set(1, 0, 0);
+
+  scene.add(pointLight);
+
+  group.add( compoCenter );
+  
+}
+
+
+
 
 
 
@@ -1556,6 +1670,8 @@ function colorByPitch(){
         pitchColor = '#4b0082'
     } else if (myNote.name == 'B' || myNote.name == 'B♭'){
         pitchColor = '#ee82ee'
+    } else {
+      pitchColor = '#ffffff'
     }
     return pitchColor;
 }
@@ -1832,6 +1948,8 @@ function colorByPitchMulti(){
       multipitchColor = '#8C19FF'
   } else if (myNote.name == 'B' || myNote.name == 'B♭'){
       multipitchColor = '#FF19DC'
+  } else {
+      multipitchColor = '#ffffff'
   }
   return multipitchColor;
 }
@@ -3161,7 +3279,7 @@ $("#slider-range").slider({
 $("#volume").slider({
   min: 0,
   max: 100,
-  value: 0,
+  value: 50,
     range: "min",
   slide: function(event, ui) {
     setVolume(ui.value / 100);
@@ -3182,8 +3300,8 @@ myMedia.id = "myMedia";
 //   }
 
 function setVolume(myVolume) {
-var myMedia = document.getElementById('audio');
-myMedia.volume = myVolume;
+  var myMedia = document.getElementById('audio');
+  myMedia.volume = myVolume;
 }
 
 
@@ -3285,7 +3403,7 @@ function animate() {
           }
 
           // effect: line
-          if (identityVisualization.innerText == 'circle-line'){
+        if (identityVisualization.innerText == 'circle-line'){
             deleteBasics();
             createCircleLine();
             render();
@@ -3301,7 +3419,23 @@ function animate() {
             deleteBasics();
             createPentagonLine();
             render();
-        } 
+        } else if (identityVisualization.innerText == 'sphere-line'){
+            deleteBasics();
+            createSphereLine();
+            render();
+        } else if (identityVisualization.innerText == 'cone-line'){
+            deleteBasics();
+            createConeLine();
+            render();
+        } else if (identityVisualization.innerText == 'box-line'){
+            deleteBasics();
+            createBoxLine();
+            render();
+        } else if (identityVisualization.innerText == 'dode-line'){
+            deleteBasics();
+            createDodecahedronLine();
+            render();
+        }
 
 
 

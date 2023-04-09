@@ -17,7 +17,7 @@ let filepath = document.getElementById("filepath")
 $("#volume").slider({
     min: 0,
     max: 100,
-    value: 0,
+    value: 50,
       range: "min",
     slide: function(event, ui) {
       setVolume(ui.value / 100);
@@ -62,6 +62,7 @@ function FileChange(){
 
         audio_context.resume();
         audio.load(); //load the new source
+        audio.volume = 0.5
 
         let files = this.files;
 
