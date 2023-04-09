@@ -350,7 +350,6 @@ function createCircle_Vanilla(){
 
     compoCenter = new THREE.Mesh(geometry, material);
     compoCenter.position.set(1, 0, 0);
-    // spotLight.lookAt(compoCenter);
     pointLight = new THREE.PointLight(0xffffff, 1);
     pointLight.position.set(200, 200, 200);
     scene.add(pointLight);
@@ -919,7 +918,6 @@ function createPentagonLine(){
 
 
 function createCircleBloom(){
-
   //bloom renderer
   const renderScene = new RenderPass(scene, camera);
   const bloomPass = new UnrealBloomPass(
@@ -965,7 +963,7 @@ function createCircleBloom(){
   
   bloomComposer = new EffectComposer(renderer);
   bloomComposer.setSize(window.innerWidth, window.innerHeight);
-  bloomComposer.renderToScreen = true;
+  // bloomComposer.renderToScreen = true; 
   bloomComposer.addPass(renderScene);
   bloomComposer.addPass(bloomPass);
 
@@ -982,7 +980,6 @@ function createCircleBloom(){
 
 
 function createTriangleBloom(){
-
     //bloom renderer
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(
@@ -1008,7 +1005,7 @@ function createTriangleBloom(){
   
     let size = custom_energy;
     scene.background = new THREE.Color( '#FFFFFF' );
-    geometry = new THREE.CircleGeometry( size / 6, 0 );
+    geometry = new THREE.CircleGeometry( size / 5, 0 );
   
     if (objColor1 == '#FFFFFF'){
       material = new THREE.MeshBasicMaterial( { color: '#000000' } );
@@ -1025,7 +1022,7 @@ function createTriangleBloom(){
     
     bloomComposer = new EffectComposer(renderer);
     bloomComposer.setSize(window.innerWidth, window.innerHeight);
-    bloomComposer.renderToScreen = true;
+    // bloomComposer.renderToScreen = true;
     bloomComposer.addPass(renderScene);
     bloomComposer.addPass(bloomPass);
   
@@ -1043,7 +1040,6 @@ function createTriangleBloom(){
 
 
 function createRectangleBloom(){
-
       //bloom renderer
       const renderScene = new RenderPass(scene, camera);
       const bloomPass = new UnrealBloomPass(
@@ -1069,7 +1065,7 @@ function createRectangleBloom(){
     
       let size = custom_energy;
       scene.background = new THREE.Color( '#FFFFFF' );
-      geometry = new THREE.PlaneGeometry( size/6, size/6 );
+      geometry = new THREE.PlaneGeometry( size/5, size/5 );
     
       if (objColor1 == '#FFFFFF'){
         material = new THREE.MeshBasicMaterial( { color: '#000000' } );
@@ -1086,7 +1082,7 @@ function createRectangleBloom(){
       
       bloomComposer = new EffectComposer(renderer);
       bloomComposer.setSize(window.innerWidth, window.innerHeight);
-      bloomComposer.renderToScreen = true;
+      // bloomComposer.renderToScreen = true;
       bloomComposer.addPass(renderScene);
       bloomComposer.addPass(bloomPass);
     
@@ -1129,7 +1125,7 @@ function createPentagonBloom(){
 
   let size = custom_energy;
   scene.background = new THREE.Color( '#FFFFFF' );
-  geometry = new THREE.CircleGeometry( size/6, 5 );
+  geometry = new THREE.CircleGeometry( size/5, 5 );
 
   if (objColor1 == '#FFFFFF'){
     material = new THREE.MeshBasicMaterial( { color: '#000000' } );
@@ -1146,7 +1142,7 @@ function createPentagonBloom(){
   
   bloomComposer = new EffectComposer(renderer);
   bloomComposer.setSize(window.innerWidth, window.innerHeight);
-  bloomComposer.renderToScreen = true;
+  // bloomComposer.renderToScreen = true;
   bloomComposer.addPass(renderScene);
   bloomComposer.addPass(bloomPass);
 
@@ -1214,7 +1210,7 @@ function createSphereBloom(){
     
     bloomComposer = new EffectComposer(renderer);
     bloomComposer.setSize(window.innerWidth, window.innerHeight);
-    bloomComposer.renderToScreen = true;
+    // bloomComposer.renderToScreen = true;
     bloomComposer.addPass(renderScene);
     bloomComposer.addPass(bloomPass);
   
@@ -1274,7 +1270,7 @@ function createConeBloom(){
   
   bloomComposer = new EffectComposer(renderer);
   bloomComposer.setSize(window.innerWidth, window.innerHeight);
-  bloomComposer.renderToScreen = true;
+  // bloomComposer.renderToScreen = true;
   bloomComposer.addPass(renderScene);
   bloomComposer.addPass(bloomPass);
 
@@ -1336,7 +1332,7 @@ function createBoxBloom(){
    
    bloomComposer = new EffectComposer(renderer);
    bloomComposer.setSize(window.innerWidth, window.innerHeight);
-   bloomComposer.renderToScreen = true;
+  //  bloomComposer.renderToScreen = true;
    bloomComposer.addPass(renderScene);
    bloomComposer.addPass(bloomPass);
  
@@ -1354,7 +1350,6 @@ function createBoxBloom(){
 
 
 function createDodecahedronBloom(){
-
      //bloom renderer
      const renderScene = new RenderPass(scene, camera);
      const bloomPass = new UnrealBloomPass(
@@ -1396,7 +1391,7 @@ function createDodecahedronBloom(){
      
      bloomComposer = new EffectComposer(renderer);
      bloomComposer.setSize(window.innerWidth, window.innerHeight);
-     bloomComposer.renderToScreen = true;
+    //  bloomComposer.renderToScreen = true;
      bloomComposer.addPass(renderScene);
      bloomComposer.addPass(bloomPass);
    

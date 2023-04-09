@@ -68,7 +68,6 @@ var hideColorMenuBG = function() {
 
 
 var hideColorMenuOBJ1 = function() {
-    console.log(clickList)
     if (clickList.slice(-1)[0] == 'Bloom'){
         hideOBJ();
     }
