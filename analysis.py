@@ -33,6 +33,15 @@ gradientdf = finaldf[finaldf['effect']=='gradient']
 horizontaldf = finaldf[finaldf['effect']=='horizontal']
 
 
+
+
+
+
+
+
+
+
+
 # Expression of Semantic Descriptors
 
 def mean_dataframe_byShape(inputdf, identifier):
@@ -137,17 +146,24 @@ def make_graph():
     mean_dataframe_byEffect(horizontaldf, 'Effect_Horizontal')
 
 
-make_graph()
+# make_graph()
 
 
 
 
 
 # Expression of Music Components
-# sns.boxplot(data=musicdf)
-# plt.title('Expression of Music Components')
-# plt.ylim([0, 8]) 
-# plt.show()
+
+sns.boxplot(data=musicdf, showmeans=True, meanprops={"marker":"s","markerfacecolor":"white", "markeredgecolor":"black"})
+plt.title('Expression of Music Components')
+plt.ylim([0, 8]) 
+plt.show()
+
+print('energy', musicdf['energy'].mean(), musicdf['energy'].std())
+print('beat', musicdf['beat'].mean(), musicdf['beat'].std())
+print('pitch', musicdf['pitch'].mean(), musicdf['pitch'].std())
+print('timbre', musicdf['timbre'].mean(), musicdf['timbre'].std())
+print('mood', musicdf['mood'].mean(), musicdf['mood'].std())
 
 
 
