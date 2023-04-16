@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt
 finaldf = pd.read_excel('finaldf.xlsx',  engine='openpyxl')
 
 musicdf = finaldf[['energy', 'beat', 'pitch', 'timbre', 'mood']]
-
+effectdf = finaldf[['energy', 'beat', 'pitch', 'timbre', 'mood', 'effect']]
 
 # 2D SHAPES
 circledf = finaldf[finaldf['shape']=='circle']
@@ -74,6 +74,7 @@ def mean_dataframe_byShape(inputdf, identifier):
         ax2.set_yticklabels(opposites)
 
 
+
         fig.tight_layout()
         plt.title(f'Expression of Semantic Descriptors: {identifier}')
         plt.xlim([0, 8]) 
@@ -84,9 +85,8 @@ def mean_dataframe_byShape(inputdf, identifier):
 
 
 
+def mean_dataframe_byEffect(inputdf, identifier, word):
 
-def mean_dataframe_byEffect(inputdf, identifier):
-    try:
         low_high = inputdf.groupby("effect")['low-high'].mean()
         weak_loud = inputdf.groupby("effect")['weak-loud'].mean()
         tonal_noisy = inputdf.groupby("effect")['tonal-noisy'].mean()
@@ -114,56 +114,63 @@ def mean_dataframe_byEffect(inputdf, identifier):
         ax2.set_yticks(np.r_[:len(dict)])
         ax2.set_yticklabels(opposites)
 
-
         fig.tight_layout()
-        plt.title(f'Expression of Semantic Descriptors: {identifier}')
+
+        for i in range(len(dict)):
+            plt.title(f'Expression of Semantic Descriptors: {identifier}')
+            plt.text(list(dict.values())[i][word], i, round(list(dict.values())[i][word], 2))
+
         plt.xlim([0, 8]) 
         plt.savefig(f'./result/graphs/effects/{identifier}.png', bbox_inches = 'tight')
-        # plt.show()
-    except:
-        pass
+        plt.show()
+    # except:
+    #     pass
 
 
 
 
 def make_graph():
-    mean_dataframe_byShape(spheredf, 'Shape_Sphere')
-    mean_dataframe_byShape(conedf, 'Shape_Cone')
-    mean_dataframe_byShape(rectangledf, 'Shape_Rectangle')
-    mean_dataframe_byShape(dodedf, 'Shape_Dodecahedron')
-    mean_dataframe_byShape(circledf, 'Shape_Circle')
-    mean_dataframe_byShape(triangledf, 'Shape_Triangle')
-    mean_dataframe_byShape(rectangledf, 'Shape_Rectangle')
-    mean_dataframe_byShape(pentagondf, 'Shape_Pentagon')
+    # mean_dataframe_byShape(spheredf, 'Shape_Sphere')
+    # mean_dataframe_byShape(conedf, 'Shape_Cone')
+    # mean_dataframe_byShape(rectangledf, 'Shape_Rectangle')
+    # mean_dataframe_byShape(dodedf, 'Shape_Dodecahedron')
+    # mean_dataframe_byShape(circledf, 'Shape_Circle')
+    # mean_dataframe_byShape(triangledf, 'Shape_Triangle')
+    # mean_dataframe_byShape(rectangledf, 'Shape_Rectangle')
+    # mean_dataframe_byShape(pentagondf, 'Shape_Pentagon')
 
 
-    mean_dataframe_byEffect(scaledf, 'Effect_Scale')
-    mean_dataframe_byEffect(blinkdf, 'Effect_Blink')
-    mean_dataframe_byEffect(linedf, 'Effect_Line')
-    mean_dataframe_byEffect(particlesdf, 'Effect_Particles')
-    mean_dataframe_byEffect(bloomdf, 'Effect_Bloom')
-    mean_dataframe_byEffect(gradientdf, 'Effect_Gradient')
-    mean_dataframe_byEffect(horizontaldf, 'Effect_Horizontal')
+    mean_dataframe_byEffect(scaledf, 'Effect_Scale', 'scale')
+    # mean_dataframe_byEffect(blinkdf, 'Effect_Blink', 'blink')
+    mean_dataframe_byEffect(linedf, 'Effect_Line', 'line')
+    mean_dataframe_byEffect(particlesdf, 'Effect_Particles', 'particles')
+    mean_dataframe_byEffect(bloomdf, 'Effect_Bloom', 'bloom')
+    mean_dataframe_byEffect(gradientdf, 'Effect_Gradient', 'gradient')
+    mean_dataframe_byEffect(horizontaldf, 'Effect_Horizontal', 'horizontal')
 
 
-# make_graph()
+make_graph()
 
 
 
 
 
 # Expression of Music Components
+# ranks = effectdf.groupby('effect')['energy'].mean().fillna(0).sort_values()[::].index
 
-sns.boxplot(data=musicdf, showmeans=True, meanprops={"marker":"s","markerfacecolor":"white", "markeredgecolor":"black"})
-plt.title('Expression of Music Components')
-plt.ylim([0, 8]) 
-plt.show()
 
-print('energy', musicdf['energy'].mean(), musicdf['energy'].std())
-print('beat', musicdf['beat'].mean(), musicdf['beat'].std())
-print('pitch', musicdf['pitch'].mean(), musicdf['pitch'].std())
-print('timbre', musicdf['timbre'].mean(), musicdf['timbre'].std())
-print('mood', musicdf['mood'].mean(), musicdf['mood'].std())
+# plt.title('Expression of Energy By Music Components')
+
+# sns.boxplot(data=effectdf, x="effect", y="energy", order=ranks)
+
+# plt.ylim([0, 8]) 
+# plt.show()
+
+# print('energy', musicdf['energy'].mean(), musicdf['energy'].std())
+# print('beat', musicdf['beat'].mean(), musicdf['beat'].std())
+# print('pitch', musicdf['pitch'].mean(), musicdf['pitch'].std())
+# print('timbre', musicdf['timbre'].mean(), musicdf['timbre'].std())
+# print('mood', musicdf['mood'].mean(), musicdf['mood'].std())
 
 
 
