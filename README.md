@@ -7,10 +7,10 @@
 
 
 ## Table of contents
-* [About DIY VIZ](#about)
-* [Custom Menus](#custom)
-* [Libraries](#libraries)
-* [Setup](#setup)
+* [About DIY VIZ](#About-DIY-VIZ)
+* [Custom Menus](#Custom-Menus)
+* [Libraries](#Libraries)
+* [Setup](#Setup)
 
 <br>
 
@@ -36,8 +36,6 @@ Try to sketch your image about the music you want to express, customize your own
 
 
 <br>
-
-
 
 
 ## Libraries
