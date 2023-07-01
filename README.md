@@ -50,7 +50,8 @@ Try to sketch your image about the music you want to express, customize your own
 To run this project locally, follow the below.
 
 ```
-$ cd ../DIY-VIZ
+$ cd ../static
 $ npm install
+$ cd ../DIY-VIZ
 $ python app.py
 ```
