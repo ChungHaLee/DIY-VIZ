@@ -1,5 +1,4 @@
 # DIY-VIZ
-*Try out in here*: http://chunghalee.pythonanywhere.com/
 
 <img width="960" alt="image" src="https://github.com/ChungHaLee/DIY-VIZ/assets/59073612/dca3fd9b-10b9-44fd-a2cd-d0e9561cfd4d">
 
